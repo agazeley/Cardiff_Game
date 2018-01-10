@@ -8,7 +8,7 @@ mechanics - drifting, accelleration and breaking better physics
 
 victory system - time, points
 
-theme ideas - tron, monty python, candyland, abstain, pub crawl
+theme ideas - tron, monty python, candyland, pub crawl
 
 instructions screen, more info about menu nav, player controls, tutorial level
 
@@ -29,9 +29,7 @@ adding  multiple levels
 lap based system with tokens modifying speed/affecting opponent
 
 
-
-
-
+level editor in game?
 different levels with different themes and themed racers?
 single player vs ai?
 
