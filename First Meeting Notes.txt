@@ -21,7 +21,7 @@ levels - multiple, google based
 add level creator into main game menu
 
 ----Goals----
-
+3 laps to win/course dependent 
 adjust to theme
 lots of tokens/powerups
 improve car mechanics
