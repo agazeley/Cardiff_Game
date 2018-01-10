@@ -1,0 +1,41 @@
+Team Lead - Elisha
+
+----Design----
+
+Tokens - level up, points?, hinder opponent, modify car size, increase speed, green shell item, point deduction, tokens appear midway through game
+
+mechanics - drifting, accelleration and breaking better physics
+
+victory system - time, points
+
+theme ideas - tron, monty python, candyland, abstain, pub crawl
+
+instructions screen, more info about menu nav, player controls, tutorial level
+
+statistics - save for future, txt based? DB based?
+
+sound effects - theme based
+
+levels - multiple, google based
+
+add level creator into main game menu
+
+----Goals----
+
+adjust to theme
+lots of tokens/powerups
+improve car mechanics
+adding  multiple levels
+lap based system with tokens modifying speed/affecting opponent
+
+
+
+
+
+
+
+
+
+
+
+single player vs ai?
