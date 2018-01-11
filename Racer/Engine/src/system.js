@@ -154,6 +154,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       { name : 'Darth Vader', score : 50 }
     ];
 
+
     // Sort scores array from highest to lowest
     this.sortScores = function() {
 
@@ -331,18 +332,18 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     this.playMusic1 = function() {
 
-      music1.play(0, self.playMusic2);
+      music1.play(0, self.playMusic1);
     }
 
-    this.playMusic2 = function() {
-
-      music2.play(0, self.playMusic3);
-    }
-
-    this.playMusic3 = function() {
-
-      music3.play(0, self.playMusic1);
-    }
+    // this.playMusic2 = function() {
+    //
+    //   music2.play(0, self.playMusic3);
+    // }
+    //
+    // this.playMusic3 = function() {
+    //
+    //   music3.play(0, self.playMusic1);
+    // }
 
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -357,23 +358,24 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.gainNode.connect(this.audioContext.destination);
 
       // Load sound library
-      loadDemoSoundAsync('Assets/Sounds/Kyes_music.m4a', function(buffer) {
+      loadDemoSoundAsync('Assets/Sounds/tron_theme.m4a', function(buffer) {
 
         music1 = new gamelib.AudioResource(buffer);
 
         // Bootstrap - Start playing music1
         self.playMusic1();
+
       });
 
-      loadDemoSoundAsync('Assets/Sounds/Mason_and_jack.m4a', function(buffer) {
-
-        music2 = new gamelib.AudioResource(buffer);
-      });
-
-      loadDemoSoundAsync('Assets/Sounds/Kory_music.m4a', function(buffer) {
-
-        music3 = new gamelib.AudioResource(buffer);
-      });
+      // loadDemoSoundAsync('Assets/Sounds/tron_theme.m4a', function(buffer) {
+      //
+      //   music2 = new gamelib.AudioResource(buffer);
+      // });
+      //
+      // loadDemoSoundAsync('Assets/Sounds/tron_theme.m4a', function(buffer) {
+      //
+      //   music3 = new gamelib.AudioResource(buffer);
+      // });
     }
 
 
