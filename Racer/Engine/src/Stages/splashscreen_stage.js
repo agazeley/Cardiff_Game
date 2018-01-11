@@ -108,7 +108,7 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
     this.mainLoop = function() {
 
       //splash screen will wait 1.5 seconds before transitioning to main menu
-      window.setTimeout(function(){window.requestAnimationFrame(self.initPhaseOut)}, 1500);
+      window.setTimeout(function(){window.requestAnimationFrame(self.initPhaseOut)}, 1000);
 
       // if (self.keyPressed()) {
       //
