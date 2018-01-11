@@ -5,7 +5,7 @@
 
 //Game fonts
 const main_game_font = 'tronregular'
-const secondary_game_font = null;
+const secondary_game_font = 'tronsecondary';
 
 const player1Name = 'Player 1';
 
