@@ -1,4 +1,3 @@
-
 //
 // Engine configuration
 //
@@ -13,13 +12,13 @@ const player2Name = 'Player 2';
 
 const track_friction = 0.05; // Smaller number means more slippery surface
 
-const player_mass = 18; // Larger number means it takes longer to accelerate to top speed
+const player_mass = 20; // Larger number means it takes longer to accelerate to top speed
 
-const player_move_speed = 4; // Bigger number = faster!
+const player_move_speed = 8; // Bigger number = faster!
 
-const player_top_speed = 6;
+const player_top_speed = 10;
 
-const player_rotate_speed = 0.4; // Bigger number = faster!
+const player_rotate_speed = 0.3; // Bigger number = faster!
 
 const pickup_sprite_scale = 0.75; // Bigger number = larger sprite!
 
