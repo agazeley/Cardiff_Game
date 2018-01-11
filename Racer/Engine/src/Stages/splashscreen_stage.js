@@ -6,7 +6,7 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
 
   let overdrive = OverDrive.Game.system;
 
-  let splashScreen = 'Assets/Images/splashscreen.png';
+  let splashScreen = 'Assets/Images/tron_splash.jpg';
   let appearTime = 1; // time in seconds
   let disappearTime = 2; // time in seconds
 
