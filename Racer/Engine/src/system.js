@@ -140,21 +140,14 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       musicVolume : 50
     };
 
-#region Score info region
+
     // Stage graph
     this.stageGraph = null;
 
-    // High scores
-    this.scores = [
 
-      { name : 'Bilbo', score : 150 },
-      { name : 'Woody', score : 120 },
-      { name : 'Buzz', score : 100 },
-      { name : 'BB-8', score : 80 },
-      { name : 'Mr Ploppy', score : 60 },
-      { name : 'Darth Vader', score : 50 }
-    ];
-
+    // High scores, loads from localStorage and parses JSON
+    this.scores = JSON.parse(window.localStorage.getItem('leaderboard'));
+    console.log(this.scores)
 
     // Sort scores array from highest to lowest
     this.sortScores = function() {
@@ -164,7 +157,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
         return b.score - a.score;
       });
     }
-#endregion
+
 
     // Gamepad API
 

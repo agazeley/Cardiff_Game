@@ -444,12 +444,27 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       }
     }
 
+    // function that adds element to scores array and slices off elements past index 9
+    this.insertToLeaderboard = function(wscore,wname){
+      if (overdrive.scores === null){
+        overdrive.scores = [];
+      }
+      overdrive.scores.push({name : wname, score : wscore});
+      overdrive.sortScores();
+      overdrive.scores.splice(9);
+      console.log(overdrive.scores);
+      this.storeLeaderboard();
+    }
+    // Stores leaderboard in JSON format in localStorage
+    this.storeLeaderboard = function(){
+      window.localStorage.setItem('leaderboard',JSON.stringify(overdrive.scores));
+      console.log('Scores added to LS');
+    }
+
     this.leaveStage = function() {
 
-      // Add to leaderboard
-      overdrive.scores.push({name : self.winner.pid, score : self.winner.score});
-      overdrive.sortScores();
-
+      // Add to leaderboard anad store leadboard for later
+      self.insertToLeaderboard(self.winner.score,self.winner.pid)
 
       // Tear-down stage
       $(document).on('keyup', self.onKeyUp);

@@ -65,6 +65,7 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
       self.baseY = 600;
       self.exitLeaderboard = false;
 
+
       if (self.keyDown === null) {
 
         self.keyDown = new Array(256);
@@ -194,14 +195,21 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
       textY += 50;
 
       // Centre-aligned text
-      for (var i=0; i < overdrive.scores.length; ++i) {
+      if (overdrive.scores != null){
+        for (var i=0; i < overdrive.scores.length; ++i) {
 
-        var txt = overdrive.scores[i].name + "     " + overdrive.scores[i].score;
-        var textMetrics = context.measureText(txt);
-        context.fillText(txt, (canvas.width / 2) - (textMetrics.width / 2), textY);
+          var txt = overdrive.scores[i].name + "     " + overdrive.scores[i].score;
+          var textMetrics = context.measureText(txt);
+          context.fillText(txt, (canvas.width / 2) - (textMetrics.width / 2), textY);
 
-        textY += 50;
-      }
+          textY += 50;
+        }
+    }
+    else{
+      var txt = 'No scores :(';
+      var textMetrics = context.measureText(txt);
+      context.fillText(txt,(canvas.width / 2) - (textMetrics.width / 2), textY);
+    }
     }
 
   };
