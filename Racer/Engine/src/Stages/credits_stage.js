@@ -6,7 +6,7 @@ OverDrive.Stages.Credits = (function(stage, canvas, context) {
 
   let overdrive = OverDrive.Game.system;
 
-  var creditFont = '25pt tronregular';
+  var creditFont = '25pt ' + main_game_font;
 
   var credits = [
 

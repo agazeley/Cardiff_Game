@@ -353,7 +353,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
       // Draw countdown
       context.fillStyle = '#FFF';
-      context.font = '50pt Amatic SC';
+      context.font = '30pt ' + main_game_font;
 
       var timeToDisplay = 3 - Math.floor(self.countDownSecondsElapsed);
       var textMetrics = context.measureText(timeToDisplay);
@@ -430,7 +430,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
       // Draw winner message
       context.fillStyle = '#FFF';
-      context.font = '50pt Amatic SC';
+      context.font = '50pt ' + main_game_font;
       var textMetrics = context.measureText(self.winnerMessage);
       context.fillText(self.winnerMessage, canvas.width * 0.5 - textMetrics.width / 2, 300);
 
