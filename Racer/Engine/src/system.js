@@ -140,6 +140,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       musicVolume : 50
     };
 
+#region Score info region
     // Stage graph
     this.stageGraph = null;
 
@@ -163,7 +164,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
         return b.score - a.score;
       });
     }
-
+#endregion
 
     // Gamepad API
 
