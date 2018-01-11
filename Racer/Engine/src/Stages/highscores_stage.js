@@ -45,7 +45,7 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
     // Main game-state specific variables
     this.backgroundImage = null;
     this.baseY = 600;
-    this.exitLeaderboard = false;
+    this.exitLeaderboard = false;1
     this.keyDown = null;
 
 

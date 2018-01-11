@@ -17,6 +17,7 @@
 
 body {
   font-family: 'tronregular';
+  font-size: 11px;
   background-color : #000;
 }
 
@@ -170,7 +171,6 @@ body {
 /* -------------------------- */
 
 .rightKeyLabel {
-
   left : 10px;
   top : 345px;
 }
@@ -185,16 +185,16 @@ body {
 
 #configAcceptButton {
 
-  left : 290px;
+  left : 270px;
   top : 500px;
-  width : 100px;
+  width : 120px;
 }
 
 #configCancelButton {
 
   left : 410px;
   top : 500px;
-  width : 100px;
+  width : 120px;
 }
 
 /* -------------------------- */
