@@ -367,7 +367,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       context.globalAlpha = 1;
 
       context.fillStyle = '#FFF';
-      context.font = '10pt tronregular';
+      context.font = '10pt ' + main_game_font;
 
       var numLines = messageText.length;
       var baseY = 300 - (numLines / 2 * 30);

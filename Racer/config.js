@@ -3,6 +3,10 @@
 // Engine configuration
 //
 
+//Game fonts
+const main_game_font = 'tronregular'
+const secondary_game_font = null;
+
 const player1Name = 'Player 1';
 
 const player2Name = 'Player 2';
@@ -30,4 +34,4 @@ const frictionCoeff = 0.025; // depricated
 const bulletRechargeTime = 1; // depricated
 const bullet_scale = 1.5; // depricated
 const bullet_lifespan = 200; // depricated
-const fps = 60; // depricated 
+const fps = 60; // depricated
