@@ -13,15 +13,14 @@
     font-style: normal;
 
 }
-
 @font-face {
   font-family: 'tronsecondary';
   src:  url('Assets/Fonts/aileron.woff') format('woff'),
         url('Assets/Fonts/aileron.woff2') format('woff2'),
-        url('Assets/Fonts/aileron.ttf') format('ttf');
-  font-weight: normal;
+        url('Assets/Fonts/aileron.ttf') format('ttf');  font-weight: normal;
   font-style: normal;
 }
+
 
 body {
   /*main_game_font*/
@@ -220,6 +219,6 @@ body {
 /* -------------------------- */
 
 #actualTime, #timeDelta, #fps, #spf {
-  font-family: sans-serif;
+  font-family: 'tronsecondary';
   color : white;
 }
