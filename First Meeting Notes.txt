@@ -22,16 +22,21 @@ add level creator into main game menu
 
 ----Goals----
 3 laps to win/course dependent 
-adjust to theme
+4 maps, spell out tron
 lots of tokens/powerups
 improve car mechanics
 adding  multiple levels
 lap based system with tokens modifying speed/affecting opponent
-
-
 level editor in game?
 different levels with different themes and themed racers?
 single player vs ai?
 
 
 craig laumon - UML community 2nd edition
+
+
+
+---- Decisions----
+
+THEME - TRON
+TRON blue -  #18CAE6
