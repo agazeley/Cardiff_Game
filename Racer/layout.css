@@ -5,8 +5,18 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 @import url('https://fonts.googleapis.com/css?family=Faster+One');
 
+@font-face {
+    font-family: 'tronregular';
+    src: url('Assets/Fonts/tron.woff2') format('woff2'),
+         url('Assets/Fonts/tron.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
 body {
-  
+  font-family: 'tronregular';
   background-color : #000;
 }
 
@@ -21,19 +31,19 @@ body {
 }
 
 .settingsField {
-    
+
   position: absolute;
 }
 
 .settingsLabel {
-  
+
   text-align : right;
 }
 
 #GameDiv {
 
   position : relative;
-  
+
   width : 804px;
   height : 604px;
   margin-left : auto;
@@ -44,7 +54,7 @@ body {
 }
 
 #canvas {
-  
+
   position: absolute;
   left : 0px;
   top : 0px;
@@ -56,13 +66,13 @@ body {
 #player1Div {
 
   position : absolute;
-  
+
   width : 350px;
   height : 400px;
-  
+
   left : 35px;
   top : 10px;
-  
+
   border-radius: 5px;
   background-color: #fff9;
 }
@@ -70,13 +80,13 @@ body {
 #player2Div {
 
   position : absolute;
-  
+
   width : 350px;
   height : 400px;
-  
+
   left : 415px;
   top : 10px;
-  
+
   border-radius: 5px;
   background-color: #fff9;
 }
@@ -84,27 +94,27 @@ body {
 
 
 .playerSettingsHeader {
-  
+
   width : 350px;
   text-align : center;
   font-weight : bold;
 }
 
 .playerNameLabel {
-  
+
   left : 10px;
   top : 65px;
 }
 
 .playerNameField {
-  
+
   left: 165px;
   top: 60px;
 }
 
 
 .rinput {
-  
+
   left : 40px;
   top : 110px;
 }
@@ -117,13 +127,13 @@ body {
 
 
 .accelKeyLabel {
-  
+
   left : 10px;
   top : 195px;
 }
 
 .accelKeyField {
-  
+
   left : 165px;
   top : 190px;
 }
@@ -131,14 +141,14 @@ body {
 /* -------------------------- */
 
 .brakeKeyLabel {
-   
+
   left : 10px;
   top : 245px;
-  
+
 }
 
 .brakeKeyField {
-  
+
   left : 165px;
   top : 240px;
 }
@@ -146,13 +156,13 @@ body {
 /* -------------------------- */
 
 .leftKeyLabel {
-   
+
   left : 10px;
   top : 295px;
 }
 
 .leftKeyField {
-  
+
   left : 165px;
   top : 290px;
 }
@@ -160,13 +170,13 @@ body {
 /* -------------------------- */
 
 .rightKeyLabel {
-   
+
   left : 10px;
   top : 345px;
 }
 
 .rightKeyField {
-  
+
   left : 165px;
   top : 340px;
 }
@@ -174,14 +184,14 @@ body {
 /* -------------------------- */
 
 #configAcceptButton {
-  
+
   left : 290px;
   top : 500px;
   width : 100px;
 }
 
 #configCancelButton {
-  
+
   left : 410px;
   top : 500px;
   width : 100px;
@@ -190,7 +200,7 @@ body {
 /* -------------------------- */
 
 #returnToMenuButton {
-  
+
   left : 250px;
   top : 500px;
   width : 300px;
@@ -200,6 +210,6 @@ body {
 /* -------------------------- */
 
 #actualTime, #timeDelta, #fps, #spf {
-  
+
   color : white;
 }
