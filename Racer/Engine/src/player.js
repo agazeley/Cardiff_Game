@@ -1,4 +1,3 @@
-
 //
 // Model main players
 //
@@ -9,11 +8,11 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     // Matter.js module aliases
     var Engine = Matter.Engine,
-        Render = Matter.Render,
-        World = Matter.World,
-        Bodies = Matter.Bodies,
-        Body = Matter.Body,
-        Composite = Matter.Composite;
+      Render = Matter.Render,
+      World = Matter.World,
+      Bodies = Matter.Bodies,
+      Body = Matter.Body,
+      Composite = Matter.Composite;
 
     var self = this;
 
@@ -33,7 +32,10 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
       function(w, h) {
 
-        let size = { width : w * self.scale * config.boundingVolumeScale, height : h * self.scale * config.boundingVolumeScale };
+        let size = {
+          width: w * self.scale * config.boundingVolumeScale,
+          height: h * self.scale * config.boundingVolumeScale
+        };
 
         self.mBody = Bodies.rectangle(config.x, config.y, size.width, size.height);
         Body.setAngle(self.mBody, config.angle);
@@ -46,6 +48,8 @@ OverDrive.Game = (function(gamelib, canvas, context) {
         self.mBody.collisionFilter.mask = OverDrive.Game.CollisionModel.Player.Mask;
 
         self.mBody.frictionAir = track_friction;
+        // Set friction to 0 to fix wall collisions
+        self.mBody.friction = 0.0;
 
         self.mBody.hostObject = self;
 
@@ -96,8 +100,8 @@ OverDrive.Game = (function(gamelib, canvas, context) {
         // Calculate tangent (x basis vector) via perp-dot-product
         var bx = {
 
-          x : -by.y,
-          y : by.x
+          x: -by.y,
+          y: by.x
         }
 
         var pos = this.mBody.position;
@@ -154,7 +158,10 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
         var theta = this.mBody.angle;
 
-        return { x:-Math.sin(-theta), y:-Math.cos(-theta) };
+        return {
+          x: -Math.sin(-theta),
+          y: -Math.cos(-theta)
+        };
       }
     }
 
@@ -170,12 +177,21 @@ OverDrive.Game = (function(gamelib, canvas, context) {
     this.applyTorque = function(pos, t) {
 
       var F = this.forwardDirection();
-      var T = { x : -F.y, y : F.x };
+      var T = {
+        x: -F.y,
+        y: F.x
+      };
 
-      player1.applyForce(pos, { x : T.x * t, y : T.y * t });
+      player1.applyForce(pos, {
+        x: T.x * t,
+        y: T.y * t
+      });
 
       // Apply inverse force to centre of mass to only induce rotation (TOO SPECIFIC TO OVERDRIVE???)
-      player1.applyForce(player1.mBody.position, { x : T.x * -t, y : T.y * -t });
+      player1.applyForce(player1.mBody.position, {
+        x: T.x * -t,
+        y: T.y * -t
+      });
     }
 
 
@@ -215,15 +231,15 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
       otherBody.collideWithPlayer(this, {
 
-        objA : env.objB,
-        objB : env.objA,
-        host : env.host
+        objA: env.objB,
+        objB: env.objA,
+        host: env.host
       });
     }
 
     this.collideWithPlayer = function(otherPlayer, env) {
 
-      console.log('Oi, knock it off ' + otherPlayer.playerNameLabel + '!' );
+      console.log('Oi, knock it off ' + otherPlayer.playerNameLabel + '!');
     }
 
     this.collideWithProjectile = function(projectile, env) {}
@@ -234,9 +250,9 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
       pickup.collideWithPlayer(this, {
 
-        objA : env.objB,
-        objB : env.objA,
-        host : env.host
+        objA: env.objB,
+        objB: env.objA,
+        host: env.host
       });
     }
 
@@ -245,13 +261,13 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       console.log('Ouch from player!');
     }
 
-    this.collideWithPath = function(path, env){
+    this.collideWithPath = function(path, env) {
 
       path.collideWithPlayer(this, {
 
-        objA : env.objB,
-        objB : env.objA,
-        host : env.host
+        objA: env.objB,
+        objB: env.objA,
+        host: env.host
       });
     }
   }

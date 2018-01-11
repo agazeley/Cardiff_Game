@@ -53,10 +53,9 @@ body {
 
 #GameDiv {
 
+  width : 1004px;
+  height : 804px;
   position : relative;
-
-  width : 804px;
-  height : 604px;
   margin-left : auto;
   margin-right : auto;
   border-radius: 5px;
