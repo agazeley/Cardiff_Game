@@ -211,6 +211,6 @@ body {
 /* -------------------------- */
 
 #actualTime, #timeDelta, #fps, #spf {
-
+  font-family: sans-serif;
   color : white;
 }
