@@ -202,7 +202,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       window.requestAnimationFrame(self.player2PreConfirm);
     }
 
-
     this.player2PreConfirm = function() {
 
       player2Message = [];
@@ -230,7 +229,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       window.requestAnimationFrame(self.player2Confirm);
     }
-
 
     this.player2Confirm = function() {
 
