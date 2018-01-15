@@ -54,7 +54,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
     this.init = function() {
 
-      console.log('settings (config) screen opened');
+      console.log('settings (config) screen');
 
       if (self.keyDown === null) {
 
@@ -179,7 +179,8 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
     this.accept = function(event) {
 
       // Extract player 1 settings
-      let p1_new_name = $('#player1NameField').val();
+
+      var p1_new_name = $('#player1NameField').val();
 
       if (p1_new_name !=  overdrive.settings.players[0].name){
         overdrive.settings.players[0].name = $('#player1NameField').val();
@@ -207,8 +208,9 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       }
 
 
+
       // Extract player 2 settings
-      let p2_new_name = $('#player2NameField').val();
+      var p2_new_name = $('#player2NameField').val();
 
       if (p2_new_name !=  overdrive.settings.players[1].name){
         overdrive.settings.players[1].name = $('#player2NameField').val();
@@ -217,8 +219,6 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       else{
         console.log('P2 name not changed');
       }
-
-
 
       overdrive.settings.players[1].keys.forward = $('#p2AccelKeyField').val().toUpperCase();
 
@@ -361,8 +361,8 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var fkInput = document.createElement('input');
           fkInput.setAttribute('type', 'text');
-          fkInput.setAttribute('class', 'form-control ');
-          fkInput.setAttribute('id', 'p1AccelKeyField ');
+          fkInput.setAttribute('class', 'form-control');
+          fkInput.setAttribute('id', 'p1AccelKeyField');
           fkInput.setAttribute('value', overdrive.settings.players[0].keys.forward);
 
           fkFieldDiv.appendChild(fkInput);
@@ -382,7 +382,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var bkInput = document.createElement('input');
           bkInput.setAttribute('type', 'text');
-          bkInput.setAttribute('class', 'form-control ');
+          bkInput.setAttribute('class', 'form-control');
           bkInput.setAttribute('id', 'p1BrakeKeyField');
           bkInput.setAttribute('value', overdrive.settings.players[0].keys.reverse);
 
@@ -403,7 +403,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var lInput = document.createElement('input');
           lInput.setAttribute('type', 'text');
-          lInput.setAttribute('class', 'form-control ');
+          lInput.setAttribute('class', 'form-control');
           lInput.setAttribute('id', 'p1LeftKeyField');
           lInput.setAttribute('value', overdrive.settings.players[0].keys.left);
 
@@ -424,7 +424,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var rInput = document.createElement('input');
           rInput.setAttribute('type', 'text');
-          rInput.setAttribute('class', 'form-control ');
+          rInput.setAttribute('class', 'form-control');
           rInput.setAttribute('id', 'p1RightKeyField');
           rInput.setAttribute('value', overdrive.settings.players[0].keys.right);
 
@@ -547,7 +547,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var fkInput = document.createElement('input');
           fkInput.setAttribute('type', 'text');
-          fkInput.setAttribute('class', 'form-control ');
+          fkInput.setAttribute('class', 'form-control');
           fkInput.setAttribute('id', 'p2AccelKeyField');
           fkInput.setAttribute('value', overdrive.settings.players[1].keys.forward);
 
@@ -568,7 +568,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var bkInput = document.createElement('input');
           bkInput.setAttribute('type', 'text');
-          bkInput.setAttribute('class', 'form-control ');
+          bkInput.setAttribute('class', 'form-control');
           bkInput.setAttribute('id', 'p2BrakeKeyField');
           bkInput.setAttribute('value', overdrive.settings.players[1].keys.reverse);
 
@@ -589,7 +589,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var lInput = document.createElement('input');
           lInput.setAttribute('type', 'text');
-          lInput.setAttribute('class', 'form-control ');
+          lInput.setAttribute('class', 'form-control');
           lInput.setAttribute('id', 'p2LeftKeyField');
           lInput.setAttribute('value', overdrive.settings.players[1].keys.left);
 
@@ -610,7 +610,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
           var rInput = document.createElement('input');
           rInput.setAttribute('type', 'text');
-          rInput.setAttribute('class', 'form-control ');
+          rInput.setAttribute('class', 'form-control');
           rInput.setAttribute('id', 'p2RightKeyField');
           rInput.setAttribute('value', overdrive.settings.players[1].keys.right);
 
