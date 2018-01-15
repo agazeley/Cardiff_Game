@@ -473,7 +473,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       }
       overdrive.scores.push({name : wname, score : wscore});
       overdrive.sortScores();
-      overdrive.scores.splice(9);
+      overdrive.scores.splice(10);
       console.log(overdrive.scores);
       this.storeLeaderboard();
     }
@@ -486,7 +486,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.leaveStage = function() {
 
       // Add to leaderboard anad store leadboard for later
-      self.insertToLeaderboard(self.winner.score,self.winner.pid)
+      self.insertToLeaderboard(self.winner.score,self.winner.pid);
 
       // Tear-down stage
       $(document).on('keyup', self.onKeyUp);
