@@ -456,9 +456,9 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         // How to make this move to next map?
         window.requestAnimationFrame(self.leaveStage);
       }
-      else if (self.keyPressed('')) {
+      //else if (self.keyPressed('')) {
 
-      }
+      //}
       else {
 
         window.requestAnimationFrame(self.phaseOutLoop);
