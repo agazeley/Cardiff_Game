@@ -316,6 +316,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         collisionGroup : 0,
         handler : function(collector) {
 
+          console.log('points pickup');
           collector.addPoints(50);
         }
       } );
@@ -327,6 +328,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         collisionGroup : 0,
         handler : function(collector) {
 
+          console.log('speed pickup');
           collector.addSpeed(0.004);
           collector.addPoints(50);
           setTimeout(function(){collector.addSpeed(-0.004)},2000);
@@ -340,9 +342,39 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         collisionGroup : 0,
         handler : function(collector) {
 
+          console.log('scale pickup');
           collector.increaseSize(0.5);
           collector.addPoints(50);
           setTimeout(function(){collector.increaseSize(-0.5)},5000);
+        }
+      } );
+
+      //wildcard chooses from the available pickups
+      self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
+      {
+        spriteURI : 'Assets//Images//pw4.png',
+        collisionGroup : 0,
+        handler : function(collector) {
+          var numOfPickups = 3;
+          var choice = Math.floor(Math.random() * (numOfPickups)) + 1;
+
+          if (choice == 1){   //add 50 points
+
+            console.log('points pickup');
+            collector.addPoints(50);
+          }
+          else if (choice == 2) {   //increase speed
+
+            console.log('speed pickup');
+            collector.addSpeed(0.004);
+            setTimeout(function(){collector.addSpeed(-0.004)},2000);
+          }
+          else if (choice == 3) {   //increase car size
+
+            console.log('scale pickup');
+            collector.increaseSize(0.5);
+            setTimeout(function(){collector.increaseSize(-0.5)},5000);
+          }
         }
       } );
 
