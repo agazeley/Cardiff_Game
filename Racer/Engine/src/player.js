@@ -212,6 +212,11 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.score = Math.max(0, this.score + scoreDelta);
     }
 
+    //increase and decrease the forward forece by getting a powerup
+    this.addSpeed = function(speedDelta) {
+
+      this.forwardForce += speedDelta;
+    }
 
     this.updateStrength = function(strengthDelta) {
 
