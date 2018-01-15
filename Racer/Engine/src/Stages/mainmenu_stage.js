@@ -6,7 +6,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
   let overdrive = OverDrive.Game.system;
 
-  var menuBackground = 'Assets/Images/tron_splash.jpg';
+  var menuBackground = 'Assets/Images/tron_splash_no_text.jpg';
   var optionFont = '20pt ' + main_game_font;
 
 

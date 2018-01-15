@@ -101,6 +101,9 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       window.requestAnimationFrame(self.mapConfirm);
     }
 
+    // mapPreConfirm->mapConfirm->player1mapPreConfirm->etc
+    // Used to select the map from the list of available
+    // Need a way to pass number selected to OverDrive.Game.MainGame.trackIndex
     this.mapConfirm = function() {
       // mapPreConfirm->mapConfirm->player1mapPreConfirm->etc
 
@@ -132,12 +135,12 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
         if (self.keyPressed('K_1')){
           self.mapSelected = true;
           console.log(1);
-          OverDrive.Game.MainGame.trackIndex = 1;
+          //OverDrive.Game.MainGame.trackIndex = 1;
         }
         else if (self.keyPressed('K_2')) {
           self.mapSelected = true;
           console.log(2);
-          OverDrive.Game.MainGame.trackIndex = 2;
+          //OverDrive.Game.MainGame.trackIndex = 2;
         }
       }
 
