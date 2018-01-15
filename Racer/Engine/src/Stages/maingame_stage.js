@@ -311,21 +311,23 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
       self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType(
       {
-        spriteURI : 'Assets//Images//coin1.png',
+        spriteURI : 'Assets//Images//pw3.png',
         collisionGroup : 0,
         handler : function(collector) {
 
-          collector.addPoints(5000);
+          collector.addPoints(100);
         }
       } );
 
-      self.pickupTypes['points_pickup2'] = new OverDrive.Pickup.PickupType(
+      self.pickupTypes['speed_pickup'] = new OverDrive.Pickup.PickupType(
       {
-        spriteURI : 'Assets//Images//coin2.png',
+        spriteURI : 'Assets//Images//pw2.png',
         collisionGroup : 0,
         handler : function(collector) {
 
+          collector.addSpeed(0.004);
           collector.addPoints(50);
+          setTimeout(function(){collector.addSpeed(-0.004)},2000);
         }
       } );
 
@@ -446,6 +448,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     // function that adds element to scores array and slices off elements past index 9
     this.insertToLeaderboard = function(wscore,wname){
+
       if (overdrive.scores === null){
         overdrive.scores = [];
       }
