@@ -309,16 +309,18 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       self.pickupArray = [];
       self.pickup_timer = pickup_time_delay;
 
+      //gain 100 points
       self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType(
       {
-        spriteURI : 'Assets//Images//pw3.png',
+        spriteURI : 'Assets//Images//pw1.png',
         collisionGroup : 0,
         handler : function(collector) {
 
-          collector.addPoints(100);
+          collector.addPoints(50);
         }
       } );
 
+      //gain temporary speed boost (2 seconds) and 50 points
       self.pickupTypes['speed_pickup'] = new OverDrive.Pickup.PickupType(
       {
         spriteURI : 'Assets//Images//pw2.png',
@@ -328,6 +330,19 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
           collector.addSpeed(0.004);
           collector.addPoints(50);
           setTimeout(function(){collector.addSpeed(-0.004)},2000);
+        }
+      } );
+
+      //increases car size (5 seconds)
+      self.pickupTypes['scale_pickup'] = new OverDrive.Pickup.PickupType(
+      {
+        spriteURI : 'Assets//Images//pw3.png',
+        collisionGroup : 0,
+        handler : function(collector) {
+
+          collector.increaseSize(0.5);
+          collector.addPoints(50);
+          setTimeout(function(){collector.increaseSize(-0.5)},5000);
         }
       } );
 

@@ -208,6 +208,11 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.forwardForce += speedDelta;
     }
 
+    this.increaseSize = function(size) {
+
+      this.scale += size;
+    }
+
     this.updateStrength = function(strengthDelta) {
 
       this.strength = this.strength + strengthDelta;
