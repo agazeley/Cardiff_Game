@@ -1,10 +1,9 @@
-
-
-OverDrive.Stages.Config = (function(stage, canvas, context) {
+OverDrive.Stages.Config = (function(stage) {
 
   // Private API
   let overdrive = OverDrive.Game.system;
-
+  var canvas = OverDrive.fullCanvas;
+  var context = OverDrive.fullContext;
 
   // Public Interface
 
@@ -19,7 +18,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
     this.transitionLinks = {
 
-      mainMenu : null
+      mainMenu: null
     };
 
     this.setTransition = function(id, target) {
@@ -30,8 +29,8 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
     // Exit transition state (picked up by leaveStage)
     this.leaveState = {
 
-      id : null,
-      params : null
+      id: null,
+      params: null
     };
 
 
@@ -61,7 +60,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
         self.keyDown = new Array(256);
       }
 
-      for (var i=0; i<256; ++i) {
+      for (var i = 0; i < 256; ++i) {
 
         self.keyDown[i] = false;
       }
@@ -73,7 +72,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       if (self.backgroundImage) {
 
         context.globalAlpha = 0.4;
-        self.backgroundImage.draw();
+        self.backgroundImage.drawFull();
       }
 
       context.globalAlpha = 1.0;
@@ -119,8 +118,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       if (!self.exitConfig) {
 
         window.requestAnimationFrame(self.mainLoop);
-      }
-      else {
+      } else {
 
         self.leaveState.id = 'mainMenu';
         self.leaveState.params = {};
@@ -181,11 +179,10 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       // Extract player 1 settings
       let p1_new_name = $('#player1NameField').val();
 
-      if (p1_new_name !=  overdrive.settings.players[0].name){
+      if (p1_new_name != overdrive.settings.players[0].name) {
         overdrive.settings.players[0].name = $('#player1NameField').val();
         console.log('Player1 name now: ' + overdrive.settings.players[0].name);
-      }
-      else{
+      } else {
         console.log('P1 name not changed');
       }
 
@@ -200,8 +197,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       if (document.getElementById('p1ControllerButton').checked) {
 
         overdrive.settings.players[0].mode = OverDrive.Game.InputMode.Gamepad;
-      }
-      else if (document.getElementById('p1KeyboardButton').checked) {
+      } else if (document.getElementById('p1KeyboardButton').checked) {
 
         overdrive.settings.players[0].mode = OverDrive.Game.InputMode.Keyboard;
       }
@@ -210,11 +206,10 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       // Extract player 2 settings
       let p2_new_name = $('#player2NameField').val();
 
-      if (p2_new_name !=  overdrive.settings.players[1].name){
+      if (p2_new_name != overdrive.settings.players[1].name) {
         overdrive.settings.players[1].name = $('#player2NameField').val();
         console.log('Player2 name now: ' + overdrive.settings.players[1].name);
-      }
-      else{
+      } else {
         console.log('P2 name not changed');
       }
 
@@ -231,8 +226,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       if (document.getElementById('p2ControllerButton').checked) {
 
         overdrive.settings.players[1].mode = OverDrive.Game.InputMode.Gamepad;
-      }
-      else if (document.getElementById('p2KeyboardButton').checked) {
+      } else if (document.getElementById('p2KeyboardButton').checked) {
 
         overdrive.settings.players[1].mode = OverDrive.Game.InputMode.Keyboard;
       }
@@ -254,377 +248,374 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
     }
 
 
-    this.draw = function() {
-    }
+    this.draw = function() {}
 
 
-    this.createPlayer1Elements = function () {
+    this.createPlayer1Elements = function() {
 
       var player1Div = document.createElement('div');
       player1Div.setAttribute('id', 'player1Div');
 
-        // Header
-        var player1SettingsHeader = document.createElement('h4');
-        player1SettingsHeader.setAttribute('class', 'playerSettingsHeader');
-        var p1HeaderText = document.createTextNode('Player 1 Settings');
-        player1SettingsHeader.appendChild(p1HeaderText);
+      // Header
+      var player1SettingsHeader = document.createElement('h4');
+      player1SettingsHeader.setAttribute('class', 'playerSettingsHeader');
+      var p1HeaderText = document.createTextNode('Player 1 Settings');
+      player1SettingsHeader.appendChild(p1HeaderText);
 
-        player1Div.appendChild(player1SettingsHeader);
+      player1Div.appendChild(player1SettingsHeader);
 
-        // Name field
-        var p1NameDiv = document.createElement('div');
-        p1NameDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel playerNameLabel');
+      // Name field
+      var p1NameDiv = document.createElement('div');
+      p1NameDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel playerNameLabel');
 
-          var p1NameLabel = document.createElement('label');
-          p1NameLabel.appendChild(document.createTextNode('Name'));
+      var p1NameLabel = document.createElement('label');
+      p1NameLabel.appendChild(document.createTextNode('Name'));
 
-          p1NameDiv.appendChild(p1NameLabel);
+      p1NameDiv.appendChild(p1NameLabel);
 
-        var p1NameFieldDiv = document.createElement('div');
-        p1NameFieldDiv.setAttribute('class', 'col-xs-6 settingsField playerNameField');
+      var p1NameFieldDiv = document.createElement('div');
+      p1NameFieldDiv.setAttribute('class', 'col-xs-6 settingsField playerNameField');
 
-          var p1NameInput = document.createElement('input');
-          p1NameInput.setAttribute('type', 'text');
-          p1NameInput.setAttribute('class', 'form-control');
-          p1NameInput.setAttribute('id', 'player1NameField');
-          p1NameInput.setAttribute('value', overdrive.settings.players[0].name);
+      var p1NameInput = document.createElement('input');
+      p1NameInput.setAttribute('type', 'text');
+      p1NameInput.setAttribute('class', 'form-control');
+      p1NameInput.setAttribute('id', 'player1NameField');
+      p1NameInput.setAttribute('value', overdrive.settings.players[0].name);
 
-          p1NameFieldDiv.appendChild(p1NameInput);
+      p1NameFieldDiv.appendChild(p1NameInput);
 
-        player1Div.appendChild(p1NameDiv);
-        player1Div.appendChild(p1NameFieldDiv);
-
-
-        // Controller selection elements
-        var p1ControlDiv = document.createElement('div');
-        p1ControlDiv.setAttribute('class', 'settingsField rinput');
+      player1Div.appendChild(p1NameDiv);
+      player1Div.appendChild(p1NameFieldDiv);
 
 
-        p1ControllerLabel = document.createElement('label');
-        p1ControllerLabel.setAttribute('class', 'radio-inline inputButtonBase');
-
-        var p1CtrlInput = document.createElement('input');
-        p1CtrlInput.setAttribute('type', 'radio');
-        p1CtrlInput.setAttribute('name', 'p1InputMode');
-        p1CtrlInput.setAttribute('id', 'p1ControllerButton');
-
-        var p1CtrlImg = document.createElement('img');
-        p1CtrlImg.setAttribute('src', 'Assets//Images//controller_icon.png');
-
-        p1ControllerLabel.appendChild(p1CtrlInput);
-        p1ControllerLabel.appendChild(p1CtrlImg);
+      // Controller selection elements
+      var p1ControlDiv = document.createElement('div');
+      p1ControlDiv.setAttribute('class', 'settingsField rinput');
 
 
-        p1KeyboardLabel = document.createElement('label');
-        p1KeyboardLabel.setAttribute('class', 'radio-inline');
+      p1ControllerLabel = document.createElement('label');
+      p1ControllerLabel.setAttribute('class', 'radio-inline inputButtonBase');
 
-        var p1KbInput = document.createElement('input');
-        p1KbInput.setAttribute('type', 'radio');
-        p1KbInput.setAttribute('name', 'p1InputMode');
-        p1KbInput.setAttribute('id', 'p1KeyboardButton');
+      var p1CtrlInput = document.createElement('input');
+      p1CtrlInput.setAttribute('type', 'radio');
+      p1CtrlInput.setAttribute('name', 'p1InputMode');
+      p1CtrlInput.setAttribute('id', 'p1ControllerButton');
 
-        var p1KbImg = document.createElement('img');
-        p1KbImg.setAttribute('src', 'Assets//Images//keyboard_icon.png');
+      var p1CtrlImg = document.createElement('img');
+      p1CtrlImg.setAttribute('src', 'Assets//Images//controller_icon.png');
 
-        p1KeyboardLabel.appendChild(p1KbInput);
-        p1KeyboardLabel.appendChild(p1KbImg);
-
-
-        p1ControlDiv.appendChild(p1ControllerLabel);
-        p1ControlDiv.appendChild(p1KeyboardLabel);
+      p1ControllerLabel.appendChild(p1CtrlInput);
+      p1ControllerLabel.appendChild(p1CtrlImg);
 
 
-        if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
+      p1KeyboardLabel = document.createElement('label');
+      p1KeyboardLabel.setAttribute('class', 'radio-inline');
 
-          p1KbInput.setAttribute('checked', 'true');
-        }
-        else if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Gamepad) {
+      var p1KbInput = document.createElement('input');
+      p1KbInput.setAttribute('type', 'radio');
+      p1KbInput.setAttribute('name', 'p1InputMode');
+      p1KbInput.setAttribute('id', 'p1KeyboardButton');
 
-          p1CtrlInput.setAttribute('checked', 'true');
-        }
+      var p1KbImg = document.createElement('img');
+      p1KbImg.setAttribute('src', 'Assets//Images//keyboard_icon.png');
 
-
-        player1Div.appendChild(p1ControlDiv);
-
-
-        // Forward key field
-        var forwardKeyDiv = document.createElement('div');
-        forwardKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel accelKeyLabel');
-
-          var fkNameLabel = document.createElement('label');
-          fkNameLabel.appendChild(document.createTextNode('Forward / Accelerate'));
-
-          forwardKeyDiv.appendChild(fkNameLabel);
-
-        var fkFieldDiv = document.createElement('div');
-        fkFieldDiv.setAttribute('class', 'col-xs-3 settingsField accelKeyField');
-
-          var fkInput = document.createElement('input');
-          fkInput.setAttribute('type', 'text');
-          fkInput.setAttribute('class', 'form-control');
-          fkInput.setAttribute('id', 'p1AccelKeyField');
-          fkInput.setAttribute('value', overdrive.settings.players[0].keys.forward);
-
-          fkFieldDiv.appendChild(fkInput);
+      p1KeyboardLabel.appendChild(p1KbInput);
+      p1KeyboardLabel.appendChild(p1KbImg);
 
 
-        // Reverse key field
-        var reverseKeyDiv = document.createElement('div');
-        reverseKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel brakeKeyLabel');
-
-          var bkNameLabel = document.createElement('label');
-          bkNameLabel.appendChild(document.createTextNode('Reverse / Brake'));
-
-          reverseKeyDiv.appendChild(bkNameLabel);
-
-        var bkFieldDiv = document.createElement('div');
-        bkFieldDiv.setAttribute('class', 'col-xs-3 settingsField brakeKeyField');
-
-          var bkInput = document.createElement('input');
-          bkInput.setAttribute('type', 'text');
-          bkInput.setAttribute('class', 'form-control');
-          bkInput.setAttribute('id', 'p1BrakeKeyField');
-          bkInput.setAttribute('value', overdrive.settings.players[0].keys.reverse);
-
-          bkFieldDiv.appendChild(bkInput);
+      p1ControlDiv.appendChild(p1ControllerLabel);
+      p1ControlDiv.appendChild(p1KeyboardLabel);
 
 
-        // Steer left key field
-        var leftKeyDiv = document.createElement('div');
-        leftKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel leftKeyLabel');
+      if (overdrive.settings.players[0].mode == OverDrive.Game.InputMode.Keyboard) {
 
-          var lNameLabel = document.createElement('label');
-          lNameLabel.appendChild(document.createTextNode('Steer Left'));
+        p1KbInput.setAttribute('checked', 'true');
+      } else if (overdrive.settings.players[0].mode == OverDrive.Game.InputMode.Gamepad) {
 
-          leftKeyDiv.appendChild(lNameLabel);
-
-        var lFieldDiv = document.createElement('div');
-        lFieldDiv.setAttribute('class', 'col-xs-3 settingsField leftKeyField');
-
-          var lInput = document.createElement('input');
-          lInput.setAttribute('type', 'text');
-          lInput.setAttribute('class', 'form-control');
-          lInput.setAttribute('id', 'p1LeftKeyField');
-          lInput.setAttribute('value', overdrive.settings.players[0].keys.left);
-
-          lFieldDiv.appendChild(lInput);
+        p1CtrlInput.setAttribute('checked', 'true');
+      }
 
 
-        // Steer right key field
-        var rightKeyDiv = document.createElement('div');
-        rightKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel rightKeyLabel');
-
-          var rNameLabel = document.createElement('label');
-          rNameLabel.appendChild(document.createTextNode('Steer Right'));
-
-          rightKeyDiv.appendChild(rNameLabel);
-
-        var rFieldDiv = document.createElement('div');
-        rFieldDiv.setAttribute('class', 'col-xs-3 settingsField rightKeyField');
-
-          var rInput = document.createElement('input');
-          rInput.setAttribute('type', 'text');
-          rInput.setAttribute('class', 'form-control');
-          rInput.setAttribute('id', 'p1RightKeyField');
-          rInput.setAttribute('value', overdrive.settings.players[0].keys.right);
-
-          rFieldDiv.appendChild(rInput);
+      player1Div.appendChild(p1ControlDiv);
 
 
-        player1Div.appendChild(forwardKeyDiv);
-        player1Div.appendChild(fkFieldDiv);
-        player1Div.appendChild(reverseKeyDiv);
-        player1Div.appendChild(bkFieldDiv);
-        player1Div.appendChild(leftKeyDiv);
-        player1Div.appendChild(lFieldDiv);
-        player1Div.appendChild(rightKeyDiv);
-        player1Div.appendChild(rFieldDiv);
+      // Forward key field
+      var forwardKeyDiv = document.createElement('div');
+      forwardKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel accelKeyLabel');
+
+      var fkNameLabel = document.createElement('label');
+      fkNameLabel.appendChild(document.createTextNode('Forward / Accelerate'));
+
+      forwardKeyDiv.appendChild(fkNameLabel);
+
+      var fkFieldDiv = document.createElement('div');
+      fkFieldDiv.setAttribute('class', 'col-xs-3 settingsField accelKeyField');
+
+      var fkInput = document.createElement('input');
+      fkInput.setAttribute('type', 'text');
+      fkInput.setAttribute('class', 'form-control');
+      fkInput.setAttribute('id', 'p1AccelKeyField');
+      fkInput.setAttribute('value', overdrive.settings.players[0].keys.forward);
+
+      fkFieldDiv.appendChild(fkInput);
+
+
+      // Reverse key field
+      var reverseKeyDiv = document.createElement('div');
+      reverseKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel brakeKeyLabel');
+
+      var bkNameLabel = document.createElement('label');
+      bkNameLabel.appendChild(document.createTextNode('Reverse / Brake'));
+
+      reverseKeyDiv.appendChild(bkNameLabel);
+
+      var bkFieldDiv = document.createElement('div');
+      bkFieldDiv.setAttribute('class', 'col-xs-3 settingsField brakeKeyField');
+
+      var bkInput = document.createElement('input');
+      bkInput.setAttribute('type', 'text');
+      bkInput.setAttribute('class', 'form-control');
+      bkInput.setAttribute('id', 'p1BrakeKeyField');
+      bkInput.setAttribute('value', overdrive.settings.players[0].keys.reverse);
+
+      bkFieldDiv.appendChild(bkInput);
+
+
+      // Steer left key field
+      var leftKeyDiv = document.createElement('div');
+      leftKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel leftKeyLabel');
+
+      var lNameLabel = document.createElement('label');
+      lNameLabel.appendChild(document.createTextNode('Steer Left'));
+
+      leftKeyDiv.appendChild(lNameLabel);
+
+      var lFieldDiv = document.createElement('div');
+      lFieldDiv.setAttribute('class', 'col-xs-3 settingsField leftKeyField');
+
+      var lInput = document.createElement('input');
+      lInput.setAttribute('type', 'text');
+      lInput.setAttribute('class', 'form-control');
+      lInput.setAttribute('id', 'p1LeftKeyField');
+      lInput.setAttribute('value', overdrive.settings.players[0].keys.left);
+
+      lFieldDiv.appendChild(lInput);
+
+
+      // Steer right key field
+      var rightKeyDiv = document.createElement('div');
+      rightKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel rightKeyLabel');
+
+      var rNameLabel = document.createElement('label');
+      rNameLabel.appendChild(document.createTextNode('Steer Right'));
+
+      rightKeyDiv.appendChild(rNameLabel);
+
+      var rFieldDiv = document.createElement('div');
+      rFieldDiv.setAttribute('class', 'col-xs-3 settingsField rightKeyField');
+
+      var rInput = document.createElement('input');
+      rInput.setAttribute('type', 'text');
+      rInput.setAttribute('class', 'form-control');
+      rInput.setAttribute('id', 'p1RightKeyField');
+      rInput.setAttribute('value', overdrive.settings.players[0].keys.right);
+
+      rFieldDiv.appendChild(rInput);
+
+
+      player1Div.appendChild(forwardKeyDiv);
+      player1Div.appendChild(fkFieldDiv);
+      player1Div.appendChild(reverseKeyDiv);
+      player1Div.appendChild(bkFieldDiv);
+      player1Div.appendChild(leftKeyDiv);
+      player1Div.appendChild(lFieldDiv);
+      player1Div.appendChild(rightKeyDiv);
+      player1Div.appendChild(rFieldDiv);
 
       document.getElementById('GameDiv').appendChild(player1Div);
     }
 
 
-    this.createPlayer2Elements = function () {
+    this.createPlayer2Elements = function() {
 
       var player2Div = document.createElement('div');
       player2Div.setAttribute('id', 'player2Div');
 
-        // Header
-        var player2SettingsHeader = document.createElement('h4');
-        player2SettingsHeader.setAttribute('class', 'playerSettingsHeader');
-        var p2HeaderText = document.createTextNode('Player 2 Settings');
-        player2SettingsHeader.appendChild(p2HeaderText);
+      // Header
+      var player2SettingsHeader = document.createElement('h4');
+      player2SettingsHeader.setAttribute('class', 'playerSettingsHeader');
+      var p2HeaderText = document.createTextNode('Player 2 Settings');
+      player2SettingsHeader.appendChild(p2HeaderText);
 
-        player2Div.appendChild(player2SettingsHeader);
+      player2Div.appendChild(player2SettingsHeader);
 
-        // Name field
-        var p2NameDiv = document.createElement('div');
-        p2NameDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel playerNameLabel');
+      // Name field
+      var p2NameDiv = document.createElement('div');
+      p2NameDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel playerNameLabel');
 
-          var p2NameLabel = document.createElement('label');
-          p2NameLabel.appendChild(document.createTextNode('Name'));
+      var p2NameLabel = document.createElement('label');
+      p2NameLabel.appendChild(document.createTextNode('Name'));
 
-          p2NameDiv.appendChild(p2NameLabel);
+      p2NameDiv.appendChild(p2NameLabel);
 
-        var p2NameFieldDiv = document.createElement('div');
-        p2NameFieldDiv.setAttribute('class', 'col-xs-6 settingsField playerNameField');
+      var p2NameFieldDiv = document.createElement('div');
+      p2NameFieldDiv.setAttribute('class', 'col-xs-6 settingsField playerNameField');
 
-          var p2NameInput = document.createElement('input');
-          p2NameInput.setAttribute('type', 'text');
-          p2NameInput.setAttribute('class', 'form-control');
-          p2NameInput.setAttribute('id', 'player2NameField');
-          p2NameInput.setAttribute('value', overdrive.settings.players[1].name);
+      var p2NameInput = document.createElement('input');
+      p2NameInput.setAttribute('type', 'text');
+      p2NameInput.setAttribute('class', 'form-control');
+      p2NameInput.setAttribute('id', 'player2NameField');
+      p2NameInput.setAttribute('value', overdrive.settings.players[1].name);
 
-          p2NameFieldDiv.appendChild(p2NameInput);
+      p2NameFieldDiv.appendChild(p2NameInput);
 
-        player2Div.appendChild(p2NameDiv);
-        player2Div.appendChild(p2NameFieldDiv);
-
-
-        // Controller selection elements
-        var p2ControlDiv = document.createElement('div');
-        p2ControlDiv.setAttribute('class', 'settingsField rinput');
+      player2Div.appendChild(p2NameDiv);
+      player2Div.appendChild(p2NameFieldDiv);
 
 
-        p2ControllerLabel = document.createElement('label');
-        p2ControllerLabel.setAttribute('class', 'radio-inline inputButtonBase');
-
-        var p2CtrlInput = document.createElement('input');
-        p2CtrlInput.setAttribute('type', 'radio');
-        p2CtrlInput.setAttribute('name', 'p2InputMode');
-        p2CtrlInput.setAttribute('id', 'p2ControllerButton');
-
-        var p2CtrlImg = document.createElement('img');
-        p2CtrlImg.setAttribute('src', 'Assets//Images//controller_icon.png');
-
-        p2ControllerLabel.appendChild(p2CtrlInput);
-        p2ControllerLabel.appendChild(p2CtrlImg);
+      // Controller selection elements
+      var p2ControlDiv = document.createElement('div');
+      p2ControlDiv.setAttribute('class', 'settingsField rinput');
 
 
-        p2KeyboardLabel = document.createElement('label');
-        p2KeyboardLabel.setAttribute('class', 'radio-inline');
+      p2ControllerLabel = document.createElement('label');
+      p2ControllerLabel.setAttribute('class', 'radio-inline inputButtonBase');
 
-        var p2KbInput = document.createElement('input');
-        p2KbInput.setAttribute('type', 'radio');
-        p2KbInput.setAttribute('name', 'p2InputMode');
-        p2KbInput.setAttribute('id', 'p2KeyboardButton');
+      var p2CtrlInput = document.createElement('input');
+      p2CtrlInput.setAttribute('type', 'radio');
+      p2CtrlInput.setAttribute('name', 'p2InputMode');
+      p2CtrlInput.setAttribute('id', 'p2ControllerButton');
 
-        var p2KbImg = document.createElement('img');
-        p2KbImg.setAttribute('src', 'Assets//Images//keyboard_icon.png');
+      var p2CtrlImg = document.createElement('img');
+      p2CtrlImg.setAttribute('src', 'Assets//Images//controller_icon.png');
 
-        p2KeyboardLabel.appendChild(p2KbInput);
-        p2KeyboardLabel.appendChild(p2KbImg);
-
-
-        p2ControlDiv.appendChild(p2ControllerLabel);
-        p2ControlDiv.appendChild(p2KeyboardLabel);
+      p2ControllerLabel.appendChild(p2CtrlInput);
+      p2ControllerLabel.appendChild(p2CtrlImg);
 
 
-        if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Keyboard) {
+      p2KeyboardLabel = document.createElement('label');
+      p2KeyboardLabel.setAttribute('class', 'radio-inline');
 
-          p2KbInput.setAttribute('checked', 'true');
-        }
-        else if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Gamepad) {
+      var p2KbInput = document.createElement('input');
+      p2KbInput.setAttribute('type', 'radio');
+      p2KbInput.setAttribute('name', 'p2InputMode');
+      p2KbInput.setAttribute('id', 'p2KeyboardButton');
 
-          p2CtrlInput.setAttribute('checked', 'true');
-        }
+      var p2KbImg = document.createElement('img');
+      p2KbImg.setAttribute('src', 'Assets//Images//keyboard_icon.png');
 
-
-        player2Div.appendChild(p2ControlDiv);
-
-
-        // Forward key field
-        var forwardKeyDiv = document.createElement('div');
-        forwardKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel accelKeyLabel');
-
-          var fkNameLabel = document.createElement('label');
-          fkNameLabel.appendChild(document.createTextNode('Forward / Accelerate'));
-
-          forwardKeyDiv.appendChild(fkNameLabel);
-
-        var fkFieldDiv = document.createElement('div');
-        fkFieldDiv.setAttribute('class', 'col-xs-3 settingsField accelKeyField');
-
-          var fkInput = document.createElement('input');
-          fkInput.setAttribute('type', 'text');
-          fkInput.setAttribute('class', 'form-control');
-          fkInput.setAttribute('id', 'p2AccelKeyField');
-          fkInput.setAttribute('value', overdrive.settings.players[1].keys.forward);
-
-          fkFieldDiv.appendChild(fkInput);
+      p2KeyboardLabel.appendChild(p2KbInput);
+      p2KeyboardLabel.appendChild(p2KbImg);
 
 
-        // Reverse key field
-        var reverseKeyDiv = document.createElement('div');
-        reverseKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel brakeKeyLabel');
-
-          var bkNameLabel = document.createElement('label');
-          bkNameLabel.appendChild(document.createTextNode('Reverse / Brake'));
-
-          reverseKeyDiv.appendChild(bkNameLabel);
-
-        var bkFieldDiv = document.createElement('div');
-        bkFieldDiv.setAttribute('class', 'col-xs-3 settingsField brakeKeyField');
-
-          var bkInput = document.createElement('input');
-          bkInput.setAttribute('type', 'text');
-          bkInput.setAttribute('class', 'form-control');
-          bkInput.setAttribute('id', 'p2BrakeKeyField');
-          bkInput.setAttribute('value', overdrive.settings.players[1].keys.reverse);
-
-          bkFieldDiv.appendChild(bkInput);
+      p2ControlDiv.appendChild(p2ControllerLabel);
+      p2ControlDiv.appendChild(p2KeyboardLabel);
 
 
-        // Steer left key field
-        var leftKeyDiv = document.createElement('div');
-        leftKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel leftKeyLabel');
+      if (overdrive.settings.players[1].mode == OverDrive.Game.InputMode.Keyboard) {
 
-          var lNameLabel = document.createElement('label');
-          lNameLabel.appendChild(document.createTextNode('Steer Left'));
+        p2KbInput.setAttribute('checked', 'true');
+      } else if (overdrive.settings.players[1].mode == OverDrive.Game.InputMode.Gamepad) {
 
-          leftKeyDiv.appendChild(lNameLabel);
-
-        var lFieldDiv = document.createElement('div');
-        lFieldDiv.setAttribute('class', 'col-xs-3 settingsField leftKeyField');
-
-          var lInput = document.createElement('input');
-          lInput.setAttribute('type', 'text');
-          lInput.setAttribute('class', 'form-control');
-          lInput.setAttribute('id', 'p2LeftKeyField');
-          lInput.setAttribute('value', overdrive.settings.players[1].keys.left);
-
-          lFieldDiv.appendChild(lInput);
+        p2CtrlInput.setAttribute('checked', 'true');
+      }
 
 
-        // Steer right key field
-        var rightKeyDiv = document.createElement('div');
-        rightKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel rightKeyLabel');
-
-          var rNameLabel = document.createElement('label');
-          rNameLabel.appendChild(document.createTextNode('Steer Right'));
-
-          rightKeyDiv.appendChild(rNameLabel);
-
-        var rFieldDiv = document.createElement('div');
-        rFieldDiv.setAttribute('class', 'col-xs-3 settingsField rightKeyField');
-
-          var rInput = document.createElement('input');
-          rInput.setAttribute('type', 'text');
-          rInput.setAttribute('class', 'form-control');
-          rInput.setAttribute('id', 'p2RightKeyField');
-          rInput.setAttribute('value', overdrive.settings.players[1].keys.right);
-
-          rFieldDiv.appendChild(rInput);
+      player2Div.appendChild(p2ControlDiv);
 
 
-        player2Div.appendChild(forwardKeyDiv);
-        player2Div.appendChild(fkFieldDiv);
-        player2Div.appendChild(reverseKeyDiv);
-        player2Div.appendChild(bkFieldDiv);
-        player2Div.appendChild(leftKeyDiv);
-        player2Div.appendChild(lFieldDiv);
-        player2Div.appendChild(rightKeyDiv);
-        player2Div.appendChild(rFieldDiv);
+      // Forward key field
+      var forwardKeyDiv = document.createElement('div');
+      forwardKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel accelKeyLabel');
+
+      var fkNameLabel = document.createElement('label');
+      fkNameLabel.appendChild(document.createTextNode('Forward / Accelerate'));
+
+      forwardKeyDiv.appendChild(fkNameLabel);
+
+      var fkFieldDiv = document.createElement('div');
+      fkFieldDiv.setAttribute('class', 'col-xs-3 settingsField accelKeyField');
+
+      var fkInput = document.createElement('input');
+      fkInput.setAttribute('type', 'text');
+      fkInput.setAttribute('class', 'form-control');
+      fkInput.setAttribute('id', 'p2AccelKeyField');
+      fkInput.setAttribute('value', overdrive.settings.players[1].keys.forward);
+
+      fkFieldDiv.appendChild(fkInput);
+
+
+      // Reverse key field
+      var reverseKeyDiv = document.createElement('div');
+      reverseKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel brakeKeyLabel');
+
+      var bkNameLabel = document.createElement('label');
+      bkNameLabel.appendChild(document.createTextNode('Reverse / Brake'));
+
+      reverseKeyDiv.appendChild(bkNameLabel);
+
+      var bkFieldDiv = document.createElement('div');
+      bkFieldDiv.setAttribute('class', 'col-xs-3 settingsField brakeKeyField');
+
+      var bkInput = document.createElement('input');
+      bkInput.setAttribute('type', 'text');
+      bkInput.setAttribute('class', 'form-control');
+      bkInput.setAttribute('id', 'p2BrakeKeyField');
+      bkInput.setAttribute('value', overdrive.settings.players[1].keys.reverse);
+
+      bkFieldDiv.appendChild(bkInput);
+
+
+      // Steer left key field
+      var leftKeyDiv = document.createElement('div');
+      leftKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel leftKeyLabel');
+
+      var lNameLabel = document.createElement('label');
+      lNameLabel.appendChild(document.createTextNode('Steer Left'));
+
+      leftKeyDiv.appendChild(lNameLabel);
+
+      var lFieldDiv = document.createElement('div');
+      lFieldDiv.setAttribute('class', 'col-xs-3 settingsField leftKeyField');
+
+      var lInput = document.createElement('input');
+      lInput.setAttribute('type', 'text');
+      lInput.setAttribute('class', 'form-control');
+      lInput.setAttribute('id', 'p2LeftKeyField');
+      lInput.setAttribute('value', overdrive.settings.players[1].keys.left);
+
+      lFieldDiv.appendChild(lInput);
+
+
+      // Steer right key field
+      var rightKeyDiv = document.createElement('div');
+      rightKeyDiv.setAttribute('class', 'col-xs-6 settingsField settingsLabel rightKeyLabel');
+
+      var rNameLabel = document.createElement('label');
+      rNameLabel.appendChild(document.createTextNode('Steer Right'));
+
+      rightKeyDiv.appendChild(rNameLabel);
+
+      var rFieldDiv = document.createElement('div');
+      rFieldDiv.setAttribute('class', 'col-xs-3 settingsField rightKeyField');
+
+      var rInput = document.createElement('input');
+      rInput.setAttribute('type', 'text');
+      rInput.setAttribute('class', 'form-control');
+      rInput.setAttribute('id', 'p2RightKeyField');
+      rInput.setAttribute('value', overdrive.settings.players[1].keys.right);
+
+      rFieldDiv.appendChild(rInput);
+
+
+      player2Div.appendChild(forwardKeyDiv);
+      player2Div.appendChild(fkFieldDiv);
+      player2Div.appendChild(reverseKeyDiv);
+      player2Div.appendChild(bkFieldDiv);
+      player2Div.appendChild(leftKeyDiv);
+      player2Div.appendChild(lFieldDiv);
+      player2Div.appendChild(rightKeyDiv);
+      player2Div.appendChild(rFieldDiv);
 
       document.getElementById('GameDiv').appendChild(player2Div);
     }
@@ -633,4 +624,4 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
 
   return stage;
 
-})((OverDrive.Stages.Config || {}), OverDrive.canvas, OverDrive.context);
+})(OverDrive.Stages.Config || {});

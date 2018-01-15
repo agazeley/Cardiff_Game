@@ -1,6 +1,4 @@
-
-
-OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
+OverDrive.Stages.MainMenu = (function(stage) {
 
   // Private API
 
@@ -8,7 +6,8 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
   var menuBackground = 'Assets/Images/tron_splash.jpg';
   var optionFont = '20pt ' + main_game_font;
-
+  var context = OverDrive.fullContext;
+  var canvas = OverDrive.fullCanvas;
 
 
   //
@@ -28,10 +27,10 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
     this.transitionLinks = {
 
-      mainGame : null,
-      config : null,
-      highScores : null,
-      credits : null
+      mainGame: null,
+      config: null,
+      highScores: null,
+      credits: null
     };
 
     this.setTransition = function(id, target) {
@@ -42,8 +41,8 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
     // Exit transition state (picked up by leaveStage)
     this.leaveState = {
 
-      id : null,
-      params : null
+      id: null,
+      params: null
     };
 
 
@@ -53,7 +52,9 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
     this.selectedOption = -1;
     this.menuOptions = null;
     this.optionMetrics = null;
-    this.optionExtent = { maxWidth : 0 };
+    this.optionExtent = {
+      maxWidth: 0
+    };
 
 
     //
@@ -78,7 +79,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
         self.keyDown = new Array(256);
       }
 
-      for (var i=0; i<256; ++i) {
+      for (var i = 0; i < 256; ++i) {
 
         self.keyDown[i] = false;
       }
@@ -92,10 +93,26 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
         self.menuOptions = [
 
-          { optionNumber : overdrive.Keys.K_1, optionText : '1. Start Game', target : 'mainGame' },
-          { optionNumber : overdrive.Keys.K_2, optionText : '2. Settings', target : 'config' },
-          { optionNumber : overdrive.Keys.K_3, optionText : '3. High Scores', target : 'highScores' },
-          { optionNumber : overdrive.Keys.K_4, optionText : '4. Credits', target : 'credits' }
+          {
+            optionNumber: overdrive.Keys.K_1,
+            optionText: '1. Start Game',
+            target: 'mainGame'
+          },
+          {
+            optionNumber: overdrive.Keys.K_2,
+            optionText: '2. Settings',
+            target: 'config'
+          },
+          {
+            optionNumber: overdrive.Keys.K_3,
+            optionText: '3. High Scores',
+            target: 'highScores'
+          },
+          {
+            optionNumber: overdrive.Keys.K_4,
+            optionText: '4. Credits',
+            target: 'credits'
+          }
         ];
       }
 
@@ -105,11 +122,13 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
         self.optionMetrics = [];
 
-        for (var i=0; i < self.menuOptions.length; ++i) {
+        for (var i = 0; i < self.menuOptions.length; ++i) {
 
           var textMetrics = context.measureText(self.menuOptions[i].optionText);
 
-          self.optionMetrics.push({ width : textMetrics.width });
+          self.optionMetrics.push({
+            width: textMetrics.width
+          });
 
           self.optionExtent.maxWidth = Math.max(self.optionExtent.maxWidth, textMetrics.width);
         }
@@ -131,7 +150,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       self.draw();
 
       // Get menu option
-      for (var i=0; i<self.menuOptions.length; ++i) {
+      for (var i = 0; i < self.menuOptions.length; ++i) {
 
         if (self.keyDown[self.menuOptions[i].optionNumber]) {
 
@@ -145,8 +164,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       if (self.selectedOption == -1) {
 
         window.requestAnimationFrame(self.mainLoop);
-      }
-      else {
+      } else {
 
         window.requestAnimationFrame(self.initPhaseOut);
       }
@@ -171,7 +189,9 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
       // Setup leave state parameters and target - this is explicit!
       self.leaveState.id = self.menuOptions[self.selectedOption].target;
-      self.leaveState.params = { backgroundImage : self.backgroundImage }; // params setup as required by target state
+      self.leaveState.params = {
+        backgroundImage: self.backgroundImage
+      }; // params setup as required by target state
 
       if (self.leaveState.id == 'mainGame') {
 
@@ -213,7 +233,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       if (this.backgroundImage) {
 
         context.globalAlpha = 0.4;
-        this.backgroundImage.draw();
+        this.backgroundImage.drawFull();
       }
 
       context.globalAlpha = 1;
@@ -225,7 +245,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       var baseX = (canvas.width - this.optionExtent.maxWidth) / 2;
       var textY = 250;
 
-      for (var i=0; i < this.menuOptions.length; ++i) {
+      for (var i = 0; i < this.menuOptions.length; ++i) {
 
         context.fillText(this.menuOptions[i].optionText, baseX, textY);
 
@@ -238,4 +258,4 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
 
   return stage;
 
-})((OverDrive.Stages.MainMenu || {}), OverDrive.canvas, OverDrive.context);
+})(OverDrive.Stages.MainMenu || {});

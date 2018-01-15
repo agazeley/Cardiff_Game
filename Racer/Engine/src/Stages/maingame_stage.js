@@ -1,19 +1,28 @@
-
 OverDrive.Game = (function(gamelib) {
 
-  gamelib.InputMode = { Keyboard : 0, Gamepad : 1 };
+  gamelib.InputMode = {
+    Keyboard: 0,
+    Gamepad: 1
+  };
 
-  gamelib.CameraMode = { Test : 0, Normal : 1, Fixed : 2 };
+  gamelib.CameraMode = {
+    Test: 0,
+    Normal: 1,
+    Fixed: 2
+  };
   gamelib.cameraWindowScale = 5;
 
   // Model orthographic projection camera that follows players around the canvas.  The aspect ratio of the camera IS ALWAYS THE SAME as the aspect ratio of the canvas.
   gamelib.OrthoCamera = function(initMode, self) {
 
-      this.pos = { x : self.canvas.width / 2, y : self.canvas.height / 2};
-      this.width = self.canvas.width;
-      this.height = self.canvas.height;
-      this.netRotation = 0;
-      this.mode = initMode;
+    this.pos = {
+      x: self.canvas.width / 2,
+      y: self.canvas.height / 2
+    };
+    this.width = self.canvas.width;
+    this.height = self.canvas.height;
+    this.netRotation = 0;
+    this.mode = initMode;
 
     this.calculateCameraWindow = function(player) {
 
@@ -23,7 +32,7 @@ OverDrive.Game = (function(gamelib) {
         //return x * gamelib.cameraWindowScale; // linear
 
         // Exponential window scale decay
-        const sigma = 0.0025;//0.005;
+        const sigma = 0.0025; //0.005;
         const phi = 2.5;
         return (1 / Math.exp(x * sigma) * phi + 1) * x;
       }
@@ -42,8 +51,7 @@ OverDrive.Game = (function(gamelib) {
         if (this.pos.x - (this.width / 2) < 0) {
 
           //self.pos.x = self.width / 2;
-        }
-        else if (this.pos.x + (this.width / 2) >= self.canvas.width) {
+        } else if (this.pos.x + (this.width / 2) >= self.canvas.width) {
 
           //self.pos.x = canvas.width - (self.width / 2);
         }
@@ -51,8 +59,7 @@ OverDrive.Game = (function(gamelib) {
         if (this.pos.y - (this.height / 2) < 0) {
 
           //self.pos.y = self.height / 2;
-        }
-        else if (this.pos.y + (this.height / 2) >= self.canvas.height) {
+        } else if (this.pos.y + (this.height / 2) >= self.canvas.height) {
 
           //self.pos.y = canvas.height - (self.height / 2);
         }
@@ -117,10 +124,12 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.context = context;
     this.canvas2 = OverDrive.canvas2;
     this.context2 = OverDrive.context2;
+    this.canvasFull = OverDrive.fullCanvas;
+    this.contextFull = OverDrive.fullContext;
 
     this.transitionLinks = {
 
-      mainMenu : null
+      mainMenu: null
     };
 
     this.setTransition = function(id, target) {
@@ -131,8 +140,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     // Exit transition state (picked up by leaveStage)
     this.leaveState = {
 
-      id : null,
-      params : null
+      id: null,
+      params: null
     };
 
 
@@ -183,7 +192,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         self.keyDown = new Array(256);
       }
 
-      for (var i=0; i<256; ++i) {
+      for (var i = 0; i < 256; ++i) {
 
         self.keyDown[i] = false;
       }
@@ -209,10 +218,18 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
 
       // Add bounds so you cannot go off the screen
-      var b0 = Matter.Bodies.rectangle(-50, self.canvas.height / 2, 100, self.canvas.height, { isStatic: true });
-      var b1 = Matter.Bodies.rectangle(self.canvas.width + 50, self.canvas.height / 2, 100, self.canvas.height, { isStatic: true });
-      var b2 = Matter.Bodies.rectangle(self.canvas.width / 2, -50, self.canvas.width, 100, { isStatic: true });
-      var b3 = Matter.Bodies.rectangle(self.canvas.width / 2, self.canvas.height + 50, self.canvas.width, 100, { isStatic: true });
+      var b0 = Matter.Bodies.rectangle(-50, self.canvas.height / 2, 100, self.canvas.height, {
+        isStatic: true
+      });
+      var b1 = Matter.Bodies.rectangle(self.canvas.width + 50, self.canvas.height / 2, 100, self.canvas.height, {
+        isStatic: true
+      });
+      var b2 = Matter.Bodies.rectangle(self.canvas.width / 2, -50, self.canvas.width, 100, {
+        isStatic: true
+      });
+      var b3 = Matter.Bodies.rectangle(self.canvas.width / 2, self.canvas.height + 50, self.canvas.width, 100, {
+        isStatic: true
+      });
 
       b0.collisionFilter.group = 0;
       b0.collisionFilter.category = OverDrive.Game.CollisionModel.StaticScene.Category;
@@ -238,17 +255,16 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         let pairs = event.pairs;
 
-        for (var i=0; i<pairs.length; ++i) {
+        for (var i = 0; i < pairs.length; ++i) {
 
           if (pairs[i].bodyA.hostObject !== undefined &&
-              pairs[i].bodyB.hostObject !== undefined) {
+            pairs[i].bodyB.hostObject !== undefined) {
 
             pairs[i].bodyA.hostObject.doCollision(
-              pairs[i].bodyB.hostObject,
-              {
-                objA : pairs[i].bodyA,
-                objB : pairs[i].bodyB,
-                host : self // host environment
+              pairs[i].bodyB.hostObject, {
+                objA: pairs[i].bodyA,
+                objB: pairs[i].bodyB,
+                host: self // host environment
               }
             ); // objA === collider of first dispatch responder
           }
@@ -261,10 +277,10 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         var world = event.source.world;
 
-        for (var i=0; i < world.bodies.length; ++i) {
+        for (var i = 0; i < world.bodies.length; ++i) {
 
           if (world.bodies[i].hostObject !== undefined &&
-              world.bodies[i].hostObject.preUpdate !== undefined) {
+            world.bodies[i].hostObject.preUpdate !== undefined) {
 
             world.bodies[i].hostObject.preUpdate(world.bodies[i].hostObject, OverDrive.Game.system.gameClock.deltaTime, self);
           }
@@ -277,10 +293,10 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         var world = event.source.world;
 
-        for (var i=0; i < world.bodies.length; ++i) {
+        for (var i = 0; i < world.bodies.length; ++i) {
 
           if (world.bodies[i].hostObject !== undefined &&
-              world.bodies[i].hostObject.postUpdate !== undefined) {
+            world.bodies[i].hostObject.postUpdate !== undefined) {
 
             world.bodies[i].hostObject.postUpdate(world.bodies[i].hostObject, OverDrive.Game.system.gameClock.deltaTime, self);
           }
@@ -293,25 +309,23 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       self.pickupArray = [];
       self.pickup_timer = pickup_time_delay;
 
-      self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//coin1.png',
-        collisionGroup : 0,
-        handler : function(collector) {
+      self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType({
+        spriteURI: 'Assets//Images//coin1.png',
+        collisionGroup: 0,
+        handler: function(collector) {
 
           collector.addPoints(50);
         }
-      } );
+      });
 
-      self.pickupTypes['points_pickup2'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//coin2.png',
-        collisionGroup : 0,
-        handler : function(collector) {
+      self.pickupTypes['points_pickup2'] = new OverDrive.Pickup.PickupType({
+        spriteURI: 'Assets//Images//coin2.png',
+        collisionGroup: 0,
+        handler: function(collector) {
 
           collector.addPoints(50);
         }
-      } );
+      });
 
 
       self.countDownSecondsElapsed = 0;
@@ -336,24 +350,25 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       self.renderMainScene();
       self.renderSecondScene();
 
+      self.contextFull.clearRect(0, 0, self.canvasFull.width, self.canvasFull.height);
+
       // Draw countdown
-      self.context.fillStyle = '#FFF';
-      self.context.font = '30pt ' + main_game_font;
+      self.contextFull.fillStyle = '#FFF';
+      self.contextFull.font = '30pt ' + main_game_font;
 
       var timeToDisplay = 3 - Math.floor(self.countDownSecondsElapsed);
-      var textMetrics = self.context.measureText(timeToDisplay);
+      var textMetrics = self.contextFull.measureText(timeToDisplay);
 
-      self.context.fillText(timeToDisplay, self.canvas.width * 0.5 - textMetrics.width / 2, 300);
+      self.contextFull.fillText(timeToDisplay, self.canvasFull.width * 0.5 - textMetrics.width / 2, 300);
 
       // Draw Status
       OverDrive.Game.drawHUD(self.player1, self.player2, false, self.lapTime, self.path.maxIterations);
 
       // Iterate through countdown
-      if (self.countDownSecondsElapsed<3) {
+      if (self.countDownSecondsElapsed < 3) {
 
         window.requestAnimationFrame(self.phaseInLoop);
-      }
-      else {
+      } else {
 
         // Reset clock base time and goto main game loop
 
@@ -414,42 +429,44 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       self.renderSecondScene();
 
       // Draw winner message
-      self.context.fillStyle = '#FFF';
-      self.context.font = '30pt ' + main_game_font;
-      var textMetrics = self.context.measureText(self.winnerMessage);
-      self.context.fillText(self.winnerMessage, self.canvas.width * 0.5 - textMetrics.width / 2, 300);
+      self.contextFull.fillStyle = '#FFF';
+      self.contextFull.font = '30pt ' + main_game_font;
+      var textMetrics = self.contextFull.measureText(self.winnerMessage);
+      self.contextFull.fillText(self.winnerMessage, self.canvasFull.width * 0.5 - textMetrics.width / 2, 300);
 
       if (self.keyPressed('ESC')) {
 
         window.requestAnimationFrame(self.leaveStage);
-      }
-      else {
+      } else {
 
         window.requestAnimationFrame(self.phaseOutLoop);
       }
     }
 
     // function that adds element to scores array and slices off elements past index 9
-    this.insertToLeaderboard = function(wscore,wname){
-      if (overdrive.scores === null){
+    this.insertToLeaderboard = function(wscore, wname) {
+      if (overdrive.scores === null) {
         overdrive.scores = [];
       }
-      overdrive.scores.push({name : wname, score : wscore});
+      overdrive.scores.push({
+        name: wname,
+        score: wscore
+      });
       overdrive.sortScores();
       overdrive.scores.splice(9);
       console.log(overdrive.scores);
       this.storeLeaderboard();
     }
     // Stores leaderboard in JSON format in localStorage
-    this.storeLeaderboard = function(){
-      window.localStorage.setItem('leaderboard',JSON.stringify(overdrive.scores));
+    this.storeLeaderboard = function() {
+      window.localStorage.setItem('leaderboard', JSON.stringify(overdrive.scores));
       console.log('Scores added to LS');
     }
 
     this.leaveStage = function() {
 
       // Add to leaderboard anad store leadboard for later
-      self.insertToLeaderboard(self.winner.score,self.winner.pid)
+      self.insertToLeaderboard(self.winner.score, self.winner.pid)
 
       // Tear-down stage
       $(document).on('keyup', self.onKeyUp);
@@ -522,17 +539,15 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         self.context.save();
 
         self.context.scale(self.canvas.width / self.orthoCamera.width, self.canvas.height / self.orthoCamera.height);
-        self.context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)),
-                        -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
+        self.context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
 
         // Center rotation axis on player
         self.context.translate(self.orthoCamera.pos.x,
-                        self.orthoCamera.pos.y);
+          self.orthoCamera.pos.y);
         // Rotate map to align with player orientation
         self.context.rotate(-self.orthoCamera.netRotation);
         // Revert canvas to original position
-        self.context.translate(-self.orthoCamera.pos.x,
-                        -self.orthoCamera.pos.y);
+        self.context.translate(-self.orthoCamera.pos.x, -self.orthoCamera.pos.y);
       }
 
 
@@ -543,8 +558,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
 
         self.context.restore();
-      }
-      else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
+      } else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
 
         self.orthoCamera.drawTestWindow();
       }
@@ -560,17 +574,15 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         self.context2.save();
 
         self.context2.scale(self.canvas2.width / self.orthoCamera.width, self.canvas2.height / self.orthoCamera.height);
-        self.context2.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)),
-                        -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
+        self.context2.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
 
         // Center rotation axis on player
         self.context2.translate(self.orthoCamera.pos.x,
-                        self.orthoCamera.pos.y);
+          self.orthoCamera.pos.y);
         // Rotate map to align with player orientation
         self.context2.rotate(-self.orthoCamera.netRotation);
         // Revert canvas to original position
-        self.context2.translate(-self.orthoCamera.pos.x,
-                        -self.orthoCamera.pos.y);
+        self.context2.translate(-self.orthoCamera.pos.x, -self.orthoCamera.pos.y);
       }
 
       // Render latest frame
@@ -580,8 +592,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
 
         self.context2.restore();
-      }
-      else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
+      } else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
 
         self.orthoCamera.drawTestWindow();
       }
@@ -666,8 +677,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       if (p1InputMethod == OverDrive.Game.InputMode.Gamepad) {
 
         this.handleGamepadInput(player, 0, deltaTime);
-      }
-      else if (p1InputMethod == OverDrive.Game.InputMode.Keyboard) {
+      } else if (p1InputMethod == OverDrive.Game.InputMode.Keyboard) {
 
         // Keyboard input
 
@@ -675,26 +685,32 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
           var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
+          player.applyForce(player.mBody.position, {
+            x: F.x * player.forwardForce,
+            y: F.y * player.forwardForce
+          });
         }
 
         if (this.keyPressed(overdrive.settings.players[0].keys.reverse)) {
 
           var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce, y : -F.y * player.forwardForce });
+          player.applyForce(player.mBody.position, {
+            x: -F.x * player.forwardForce,
+            y: -F.y * player.forwardForce
+          });
         }
 
         if (this.keyPressed(overdrive.settings.players[0].keys.left)) {
 
           Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((-Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+          player.rotate((-Math.PI / 180) * player.rotateSpeed * (deltaTime / 1000));
         }
 
         if (this.keyPressed(overdrive.settings.players[0].keys.right)) {
 
           Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+          player.rotate((Math.PI / 180) * player.rotateSpeed * (deltaTime / 1000));
         }
       }
 
@@ -721,34 +737,39 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       if (inputMethod == OverDrive.Game.InputMode.Gamepad) {
 
         this.handleGamepadInput(player, 1, deltaTime);
-      }
-      else if (inputMethod == OverDrive.Game.InputMode.Keyboard) {
+      } else if (inputMethod == OverDrive.Game.InputMode.Keyboard) {
 
         if (this.keyPressed(overdrive.settings.players[1].keys.forward)) {
 
           var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
+          player.applyForce(player.mBody.position, {
+            x: F.x * player.forwardForce,
+            y: F.y * player.forwardForce
+          });
         }
 
         if (this.keyPressed(overdrive.settings.players[1].keys.reverse)) {
 
           var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce, y : -F.y * player.forwardForce });
+          player.applyForce(player.mBody.position, {
+            x: -F.x * player.forwardForce,
+            y: -F.y * player.forwardForce
+          });
         }
 
         if (this.keyPressed(overdrive.settings.players[1].keys.left)) {
 
           Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((-Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+          player.rotate((-Math.PI / 180) * player.rotateSpeed * (deltaTime / 1000));
           //player.rotate(-Math.PI * player.rotateSpeed);
         }
 
         if (this.keyPressed(overdrive.settings.players[1].keys.right)) {
 
           Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+          player.rotate((Math.PI / 180) * player.rotateSpeed * (deltaTime / 1000));
           //player.rotate(Math.PI * player.rotateSpeed);
         }
       }
@@ -769,14 +790,20 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
           var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
+          player.applyForce(player.mBody.position, {
+            x: F.x * player.forwardForce,
+            y: F.y * player.forwardForce
+          });
         }
 
         if (pad.buttons[1].pressed) {
 
           var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce * 0.25, y : -F.y * player.forwardForce *0.25 }); // scale reverse force
+          player.applyForce(player.mBody.position, {
+            x: -F.x * player.forwardForce * 0.25,
+            y: -F.y * player.forwardForce * 0.25
+          }); // scale reverse force
         }
 
         // Calculate turn as a continuous function of pad.axes[0]
@@ -784,7 +811,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         if (Math.abs(pad.axes[0]) > 0.1) {
 
-          player.rotate((Math.PI/180) * player.rotateSpeed * pad.axes[0] * (deltaTime / 1000));
+          player.rotate((Math.PI / 180) * player.rotateSpeed * pad.axes[0] * (deltaTime / 1000));
         }
       }
     }

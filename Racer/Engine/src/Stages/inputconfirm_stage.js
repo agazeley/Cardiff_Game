@@ -1,11 +1,11 @@
-
 // Pre-start stage where players get to press 'go' on their chosen method of control
 
-OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
+OverDrive.Stages.InputConfirm = (function(stage) {
 
   // Private API
   let overdrive = OverDrive.Game.system;
-
+  var canvas = OverDrive.fullCanvas;
+  var context = OverDrive.fullContext;
 
   // Public Interface
 
@@ -20,8 +20,8 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
     this.transitionLinks = {
 
-      mainGame : null,
-      mainMenu : null // Allow option to go back to main menu and change settings
+      mainGame: null,
+      mainMenu: null // Allow option to go back to main menu and change settings
     };
 
     this.setTransition = function(id, target) {
@@ -32,8 +32,8 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
     // Exit transition state (picked up by leaveStage)
     this.leaveState = {
 
-      id : null,
-      params : null
+      id: null,
+      params: null
     };
 
 
@@ -69,7 +69,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
         self.keyDown = new Array(256);
       }
 
-      for (var i=0; i<256; ++i) {
+      for (var i = 0; i < 256; ++i) {
 
         self.keyDown[i] = false;
       }
@@ -111,19 +111,17 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       player1Message = [];
 
-      if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
+      if (overdrive.settings.players[0].mode == OverDrive.Game.InputMode.Keyboard) {
 
         player1Message.push(overdrive.settings.players[0].name + ' - Press the Accelerate key to start');
-      }
-      else if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Gamepad) {
+      } else if (overdrive.settings.players[0].mode == OverDrive.Game.InputMode.Gamepad) {
 
         let gamepads = overdrive.Gamepad.getUnboundGamepadArray();
 
         if (gamepads.length > 0) {
 
           player1Message.push(overdrive.settings.players[0].name + ' - Press any button on your gamepad to start!');
-        }
-        else {
+        } else {
 
           player1Message.push(overdrive.settings.players[0].name + ' - Plug in a controller...');
           player1Message.push('...and press any button to start!');
@@ -142,14 +140,13 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       self.draw(player1Message);
 
 
-      if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
+      if (overdrive.settings.players[0].mode == OverDrive.Game.InputMode.Keyboard) {
 
         if (self.keyPressed(overdrive.settings.players[0].keys.forward)) {
 
           self.player1Selected = true;
         }
-      }
-      else if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Gamepad) {
+      } else if (overdrive.settings.players[0].mode == OverDrive.Game.InputMode.Gamepad) {
 
         let gamepads = overdrive.Gamepad.getUnboundGamepadArray();
 
@@ -157,7 +154,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
           let gamepadSelected = false;
 
-          for (var i=0; i<gamepads.length && !gamepadSelected;) {
+          for (var i = 0; i < gamepads.length && !gamepadSelected;) {
 
             gamepadSelected = overdrive.Gamepad.gamepadButtonPressed(gamepads[i]);
 
@@ -184,13 +181,11 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       if (self.player1Selected) {
 
         window.requestAnimationFrame(self.player1PostConfirm);
-      }
-      else if (self.returnToMainMenu) {
+      } else if (self.returnToMainMenu) {
 
         self.leaveState.id = 'mainMenu';
         window.requestAnimationFrame(self.leaveStage);
-      }
-      else {
+      } else {
 
         window.requestAnimationFrame(self.player1Confirm);
       }
@@ -207,19 +202,17 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       player2Message = [];
 
-      if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Keyboard) {
+      if (overdrive.settings.players[1].mode == OverDrive.Game.InputMode.Keyboard) {
 
         player2Message.push(overdrive.settings.players[1].name + ' - Press the Accelerate key to start');
-      }
-      else if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Gamepad) {
+      } else if (overdrive.settings.players[1].mode == OverDrive.Game.InputMode.Gamepad) {
 
         let gamepads = overdrive.Gamepad.getUnboundGamepadArray();
 
         if (gamepads.length > 0) {
 
           player2Message.push(overdrive.settings.players[1].name + ' - Press any button on your gamepad to start!');
-        }
-        else {
+        } else {
 
           player2Message.push(overdrive.settings.players[1].name + ' - Plug in a controller...');
           player2Message.push('...and press any button to start!');
@@ -236,14 +229,13 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       self.draw(player2Message);
 
-      if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Keyboard) {
+      if (overdrive.settings.players[1].mode == OverDrive.Game.InputMode.Keyboard) {
 
         if (self.keyPressed(overdrive.settings.players[1].keys.forward)) {
 
           self.player2Selected = true;
         }
-      }
-      else if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Gamepad) {
+      } else if (overdrive.settings.players[1].mode == OverDrive.Game.InputMode.Gamepad) {
 
         let gamepads = overdrive.Gamepad.getUnboundGamepadArray();
 
@@ -251,7 +243,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
           let gamepadSelected = false;
 
-          for (var i=0; i<gamepads.length && !gamepadSelected;) {
+          for (var i = 0; i < gamepads.length && !gamepadSelected;) {
 
             gamepadSelected = overdrive.Gamepad.gamepadButtonPressed(gamepads[i]);
 
@@ -278,13 +270,11 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       if (self.player2Selected) {
 
         window.requestAnimationFrame(self.player2PostConfirm);
-      }
-      else if (self.returnToMainMenu) {
+      } else if (self.returnToMainMenu) {
 
         self.leaveState.id = 'mainMenu';
         window.requestAnimationFrame(self.leaveStage);
-      }
-      else {
+      } else {
 
         window.requestAnimationFrame(self.player2Confirm);
       }
@@ -296,7 +286,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       self.leaveState.id = 'mainGame';
       self.leaveState.params = {
-        level : 1
+        level: 1
       };
 
       window.requestAnimationFrame(self.leaveStage);
@@ -359,7 +349,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       if (self.backgroundImage) {
 
         context.globalAlpha = 0.4;
-        self.backgroundImage.draw();
+        self.backgroundImage.drawFull();
       }
 
       // Render message text
@@ -372,7 +362,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       var numLines = messageText.length;
       var baseY = 300 - (numLines / 2 * 30);
 
-      for (var i=0; i<numLines; ++i, baseY+=44) {
+      for (var i = 0; i < numLines; ++i, baseY += 44) {
 
         var textMetrics = context.measureText(messageText[i]);
         context.fillText(messageText[i], canvas.width * 0.5 - textMetrics.width / 2, baseY);
@@ -384,4 +374,4 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
   return stage;
 
-})((OverDrive.Stages.InputConfirm || {}), OverDrive.canvas, OverDrive.context);
+})(OverDrive.Stages.InputConfirm || {});

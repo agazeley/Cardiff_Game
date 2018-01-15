@@ -1,5 +1,3 @@
-
-
 OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
 
   // Private API
@@ -29,7 +27,7 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
 
     this.transitionLinks = {
 
-      mainMenu : null
+      mainMenu: null
     };
 
     this.setTransition = function(id, target) {
@@ -40,8 +38,8 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
     // Exit transition state (picked up by leaveStage)
     this.leaveState = {
 
-      id : null,
-      params : null
+      id: null,
+      params: null
     };
 
 
@@ -69,7 +67,7 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
         self.keyDown = new Array(256);
       }
 
-      for (var i=0; i<256; ++i) {
+      for (var i = 0; i < 256; ++i) {
 
         self.keyDown[i] = false;
       }
@@ -86,18 +84,17 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
 
       self.timeElapsed += overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
 
-      context.globalAlpha = self.timeElapsed / appearTime;
+      OverDrive.fullContext.globalAlpha = self.timeElapsed / appearTime;
 
       if (self.backgroundImage) {
 
-        self.backgroundImage.draw();
+        self.backgroundImage.drawFull();
       }
 
       if (self.timeElapsed < appearTime) {
 
         window.requestAnimationFrame(self.phaseInLoop);
-      }
-      else {
+      } else {
 
         // Stop clock and proceed to main loop
         overdrive.gameClock.stop();
@@ -108,7 +105,9 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
     this.mainLoop = function() {
 
       //splash screen will wait 1.0 seconds before transitioning to main menu
-      window.setTimeout(function(){window.requestAnimationFrame(self.initPhaseOut)}, 1000);
+      window.setTimeout(function() {
+        window.requestAnimationFrame(self.initPhaseOut)
+      }, 1000);
 
       // if (self.keyPressed()) {
       //
@@ -135,18 +134,17 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
 
       self.timeElapsed += overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
 
-      context.globalAlpha = 1 - (self.timeElapsed / disappearTime);
+      OverDrive.fullContext.globalAlpha = 1 - (self.timeElapsed / disappearTime);
 
       if (self.backgroundImage) {
 
-        self.backgroundImage.draw();
+        self.backgroundImage.drawFull();
       }
 
       if (self.timeElapsed < disappearTime) {
 
         window.requestAnimationFrame(self.phaseOutLoop);
-      }
-      else {
+      } else {
 
         window.requestAnimationFrame(self.leaveStage);
       }
