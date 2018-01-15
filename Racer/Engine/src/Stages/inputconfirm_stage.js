@@ -56,7 +56,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
     // Pre-start stage with relevant parameters
     // Not called for initial state!
     this.preTransition = function(params) {
-
       this.backgroundImage = params.backgroundImage;
     }
 
@@ -97,10 +96,65 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       self.player2Selected = false;
 
       overdrive.Gamepad.clearBindings();
+      // Change this to mapConfirm at some point to
 
-      window.requestAnimationFrame(self.player1PreConfirm);
+      window.requestAnimationFrame(self.mapConfirm);
     }
 
+    this.mapConfirm = function() {
+      // mapPreConfirm->mapConfirm->player1mapPreConfirm->etc
+
+      // Draw background
+      if (self.backgroundImage) {
+
+        context.globalAlpha = .4;
+        self.backgroundImage.draw();
+      }
+
+      context.globalAlpha = 1;
+      var tracks = OverDrive.Game.tracks;
+
+      tracks.forEach(function(track){
+        console.log(track);
+      });
+
+      track1 = new Image;
+      track1.src = tracks[0].trackImage.imageURL;
+      console.log(track1.src);
+      self.drawMapIMG(track1,100,60,'Track1',100,40);
+
+      track2 = new Image;
+      track2.src = tracks[1].trackImage.imageURL;
+      console.log(track2.src);
+      self.drawMapIMG(track2,300,60,'Track2',300,40)
+
+      if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
+        if (self.keyPressed('K_1')){
+          self.mapSelected = true;
+          console.log(1);
+          OverDrive.Game.MainGame.trackIndex = 1;
+        }
+        else if (self.keyPressed('K_2')) {
+          self.mapSelected = true;
+          console.log(2);
+          OverDrive.Game.MainGame.trackIndex = 2;
+        }
+      }
+
+
+      if (self.mapSelected) {
+
+        window.requestAnimationFrame(self.player1PreConfirm);
+      }
+      else if (self.returnToMainMenu) {
+
+        self.leaveState.id = 'mainMenu';
+        window.requestAnimationFrame(self.leaveStage);
+      }
+      else {
+        window.requestAnimationFrame(self.mapConfirm);
+      }
+    }
 
     // Called prior to allowing player 1 to confirm input
     this.player1PreConfirm = function() {
@@ -135,7 +189,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       window.requestAnimationFrame(self.player1Confirm);
     }
-
 
     this.player1Confirm = function() {
 
@@ -377,6 +430,10 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       }
     }
 
+    this.drawMapIMG = function(image, x, y,text,tx,ty) {
+      context.fillText(text,tx,ty);
+      context.drawImage(image,x,y,200,200);1
+    }
   };
 
 
