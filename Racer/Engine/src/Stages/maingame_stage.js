@@ -112,8 +112,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
   let tracks = OverDrive.Game.tracks;
   let scenery = OverDrive.Game.scenery;
 
-
-  let lapsToWin = 3;
+  // Should be 3, currently is 1 for testing
+  let lapsToWin = 1;
 
 
   //
@@ -152,7 +152,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     // Main game-state specific variables
     this.level = 1;
-    this.trackIndex = 0;
+    this.trackIndex = 0; //Sets starting track index?
 
     this.backgroundImage = null;
 
@@ -437,8 +437,12 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       context.fillText(self.winnerMessage, canvas.width * 0.5 - textMetrics.width / 2, 300);
 
       if (self.keyPressed('ESC')) {
-
+        // When game is over you need to hit escape to exit.
+        // How to make this move to next map?
         window.requestAnimationFrame(self.leaveStage);
+      }
+      else if (self.keyPressed('')) {
+
       }
       else {
 
