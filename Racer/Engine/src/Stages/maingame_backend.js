@@ -135,7 +135,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
                           } );
   }
 
-
   stage.MainGame.prototype.createPlayer2 = function() {
 
     var self = this;
