@@ -2,144 +2,137 @@
 
 OverDrive.Game = (function(gamelib, canvas, context) {
 
-  // Function to iterate through an array and draw contained objects
-  gamelib.drawObjects = function(collection) {
+    // Function to iterate through an array and draw contained objects
+    gamelib.drawObjects = function(collection) {
 
-    for (i=0;i<collection.length; ++i) {
+        for (i = 0; i < collection.length; ++i) {
 
-      if (collection[i]) {
+            if (collection[i]) {
 
-        collection[i].draw();
-      }
-    }
-  }
-
-
-  // canvas event handler to enter fullscreen mode
-  gamelib.enterFullscreen = function(element) {
-
-    if (element.requestFullscreen) {
-
-      // Generic
-      if (document.fullScreenElement) {
-
-        document.cancelFullScreen();
-        console.log("cancelFullScreen");
-      }
-      else {
-
-        element.requestFullscreen();
-        console.log("requestFullscreen");
-      }
-    }
-    else if (element.msRequestFullscreen) {
-
-      // Edge / IE
-      if (document.msFullscreenElement) {
-
-        document.msExitFullscreen();
-        console.log("msExitFullscreen");
-      }
-      else {
-
-        element.msRequestFullscreen();
-        console.log("msRequestFullscreen");
-      }
-
-    }
-    else if (element.mozRequestFullScreen) {
-
-      // Firefox
-      if (document.mozFullScreenElement) {
-
-        document.mozCancelFullScreen();
-        console.log("mozCancelFullScreen");
-      }
-      else {
-
-        element.mozRequestFullScreen();
-        console.log("mozRequestFullScreen");
-      }
-    }
-    else if (element.webkitRequestFullscreen) {
-
-      // Chrome
-      if (document.webkitFullscreenElement) {
-
-        document.webkitCancelFullScreen();
-        console.log("webkitCancelFullScreen");
-      }
-      else {
-
-        element.webkitRequestFullscreen();
-        console.log("webkitRequestFullscreen");
-      }
-    }
-  }
-
-
-// This is where everything gets drawn while in game12
-  gamelib.drawHUD = function(player1, player2, showActualTime, elapsedSeconds, maxLaps) {
-
-    // Draw HUD
-    context.fillStyle = '#FFF';1
-    // player title fonts
-    context.font = '15pt ' + main_game_font;
-    //context.font = '30pt Faster One';
-
-    var textMetrics = context.measureText(player1.pid);
-    context.fillText(player1.pid, canvas.width * 0.2 - textMetrics.width / 2, 50);
-
-    var textMetrics = context.measureText(player2.pid);
-    context.fillText(player2.pid, canvas.width * 0.8 - textMetrics.width / 2, 50);
-
-    // laps and points font
-    context.font = '15px ' + main_game_font;
-
-    var textMetrics = context.measureText('Points: ' + player1.score);
-    context.fillText('Points: ' + player1.score, canvas.width * 0.2 - textMetrics.width / 2, 110);
-
-    var textMetrics = context.measureText('Points: ' + player2.score);
-    context.fillText('Points: ' + player2.score, canvas.width * 0.8 - textMetrics.width / 2, 110);
-
-
-    var p1Lap = Math.min(player1.pathLocation.currentIteration + 1, maxLaps);
-    var p2Lap = Math.min(player2.pathLocation.currentIteration + 1, maxLaps);
-
-    var textMetrics = context.measureText('Lap: ' + p1Lap);
-    context.fillText('Lap: ' + p1Lap, canvas.width * 0.2 - textMetrics.width / 2, 80);
-
-    var textMetrics = context.measureText('Lap: ' + p2Lap);
-    context.fillText('Lap: ' + p2Lap, canvas.width * 0.8 - textMetrics.width / 2, 80);
-
-    // Draw main clock
-
-    var clockString;
-
-    if (showActualTime) {
-
-      var secs = Math.floor(elapsedSeconds % 60);
-      var mins = Math.floor(elapsedSeconds / 60);
-
-      var minsPrefix = (mins < 10) ? '0' : '';
-      var secsPrefix = (secs < 10) ? '0' : '';
-
-      clockString = minsPrefix + mins + ' : ' + secsPrefix + secs;
-    }
-    else {
-
-      clockString = '00 : 00';
+                collection[i].draw();
+            }
+        }
     }
 
-    // clock font1
-    context.font = '24pt ' + main_game_font;
 
-    var textMetrics = context.measureText(clockString);
-    context.fillText(clockString, canvas.width * 0.5 - textMetrics.width / 2, 50);
+    // canvas event handler to enter fullscreen mode
+    gamelib.enterFullscreen = function(element) {
 
-  }
+        if (element.requestFullscreen) {
+
+            // Generic
+            if (document.fullScreenElement) {
+
+                document.cancelFullScreen();
+                console.log("cancelFullScreen");
+            } else {
+
+                element.requestFullscreen();
+                console.log("requestFullscreen");
+            }
+        } else if (element.msRequestFullscreen) {
+
+            // Edge / IE
+            if (document.msFullscreenElement) {
+
+                document.msExitFullscreen();
+                console.log("msExitFullscreen");
+            } else {
+
+                element.msRequestFullscreen();
+                console.log("msRequestFullscreen");
+            }
+
+        } else if (element.mozRequestFullScreen) {
+
+            // Firefox
+            if (document.mozFullScreenElement) {
+
+                document.mozCancelFullScreen();
+                console.log("mozCancelFullScreen");
+            } else {
+
+                element.mozRequestFullScreen();
+                console.log("mozRequestFullScreen");
+            }
+        } else if (element.webkitRequestFullscreen) {
+
+            // Chrome
+            if (document.webkitFullscreenElement) {
+
+                document.webkitCancelFullScreen();
+                console.log("webkitCancelFullScreen");
+            } else {
+
+                element.webkitRequestFullscreen();
+                console.log("webkitRequestFullscreen");
+            }
+        }
+    }
 
 
-  return gamelib;
+    // This is where everything gets drawn while in game12
+    gamelib.drawHUD = function(player1, player2, showActualTime, elapsedSeconds, maxLaps) {
+
+        // Draw HUD
+        context.fillStyle = '#FFF';
+        1
+        // player title fonts
+        context.font = '15pt ' + main_game_font;
+        //context.font = '30pt Faster One';
+
+        var textMetrics = context.measureText(player1.pid);
+        context.fillText(player1.pid, canvas.width * 0.2 - textMetrics.width / 2, 50);
+
+        var textMetrics = context.measureText(player2.pid);
+        context.fillText(player2.pid, canvas.width * 0.8 - textMetrics.width / 2, 50);
+
+        // laps and points font
+        context.font = '15px ' + main_game_font;
+
+        var textMetrics = context.measureText('Points: ' + player1.score);
+        context.fillText('Points: ' + player1.score, canvas.width * 0.2 - textMetrics.width / 2, 110);
+
+        var textMetrics = context.measureText('Points: ' + player2.score);
+        context.fillText('Points: ' + player2.score, canvas.width * 0.8 - textMetrics.width / 2, 110);
+
+
+        var p1Lap = Math.min(player1.pathLocation.currentIteration + 1, maxLaps);
+        var p2Lap = Math.min(player2.pathLocation.currentIteration + 1, maxLaps);
+
+        var textMetrics = context.measureText('Lap: ' + p1Lap);
+        context.fillText('Lap: ' + p1Lap, canvas.width * 0.2 - textMetrics.width / 2, 80);
+
+        var textMetrics = context.measureText('Lap: ' + p2Lap);
+        context.fillText('Lap: ' + p2Lap, canvas.width * 0.8 - textMetrics.width / 2, 80);
+
+        // Draw main clock
+
+        var clockString;
+
+        if (showActualTime) {
+
+            var secs = Math.floor(elapsedSeconds % 60);
+            var mins = Math.floor(elapsedSeconds / 60);
+
+            var minsPrefix = (mins < 10) ? '0' : '';
+            var secsPrefix = (secs < 10) ? '0' : '';
+
+            clockString = minsPrefix + mins + ' : ' + secsPrefix + secs;
+        } else {
+
+            clockString = '00 : 00';
+        }
+
+        // clock font1
+        context.font = '24pt ' + main_game_font;
+
+        var textMetrics = context.measureText(clockString);
+        context.fillText(clockString, canvas.width * 0.5 - textMetrics.width / 2, 50);
+
+    }
+
+
+    return gamelib;
 
 })((OverDrive.Game || {}), OverDrive.canvas, OverDrive.context);

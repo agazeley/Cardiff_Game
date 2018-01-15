@@ -5,7 +5,7 @@
 
 
 
-OverDrive.Stages.MainGame = (function(stage, canvas, context) {
+OverDrive.Stages.MainGame = (function(stage) {
 
   stage.MainGame.prototype.setup = function() {
 
@@ -45,4 +45,4 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
   return stage;
 
-})((OverDrive.Stages.MainGame || {}), OverDrive.canvas, OverDrive.context);
+})(OverDrive.Stages.MainGame || {});

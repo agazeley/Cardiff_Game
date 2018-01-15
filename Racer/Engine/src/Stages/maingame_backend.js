@@ -3,7 +3,7 @@
 // Main game backend
 //
 
-OverDrive.Stages.MainGame = (function(stage, canvas, context) {
+OverDrive.Stages.MainGame = (function(stage) {
 
 
   // Private API
@@ -11,7 +11,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
   let overdrive = OverDrive.Game.system;
   let tracks = OverDrive.Game.tracks;
   let scenery = OverDrive.Game.scenery;
-
 
   stage.MainGame.prototype.createTrack = function() {
 
@@ -67,8 +66,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       // Get centre coord
       for (var j=0; j<self.sceneryRegions[i].collisionModel.vertices.length; ++j) {
 
-        centre.x += self.sceneryRegions[i].collisionModel.vertices[j].x * canvas.width;
-        centre.y += self.sceneryRegions[i].collisionModel.vertices[j].y * canvas.height;
+        centre.x += self.sceneryRegions[i].collisionModel.vertices[j].x * self.canvas.width;
+        centre.y += self.sceneryRegions[i].collisionModel.vertices[j].y * self.canvas.height;
       }
 
       centre.x /= self.sceneryRegions[i].collisionModel.vertices.length;
@@ -77,8 +76,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       for (var j=0; j<self.sceneryRegions[i].collisionModel.vertices.length; ++j) {
 
         scaledVertices.push({
-          x : self.sceneryRegions[i].collisionModel.vertices[j].x * canvas.width,
-          y : self.sceneryRegions[i].collisionModel.vertices[j].y * canvas.height});
+          x : self.sceneryRegions[i].collisionModel.vertices[j].x * self.canvas.width,
+          y : self.sceneryRegions[i].collisionModel.vertices[j].y * self.canvas.height});
       }
 
       var collisionRegion = Matter.Bodies.fromVertices(centre.x, centre.y, scaledVertices, { isStatic : true });
@@ -105,7 +104,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     var self = this;
 
-    self.orthoCamera = new OverDrive.Game.OrthoCamera(OverDrive.Game.CameraMode.Normal);
+    self.orthoCamera = new OverDrive.Game.OrthoCamera(OverDrive.Game.CameraMode.Normal, self);
   }
 
 
@@ -116,8 +115,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     self.player1 = new OverDrive.Game.Player( {
                             pid : overdrive.settings.players[0].name,
-                            x : track.players[0].pos.x * canvas.width,
-                            y : track.players[0].pos.y * canvas.height,
+                            x : track.players[0].pos.x * self.canvas.width,
+                            y : track.players[0].pos.y * self.canvas.height,
                             angle : track.players[0].angle,
                             scale : track.players[0].scale,
                             rotateSpeed : 180,//0.04,
@@ -143,8 +142,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     self.player2 = new OverDrive.Game.Player( {
                             pid : overdrive.settings.players[1].name,
-                            x : track.players[1].pos.x * canvas.width,
-                            y : track.players[1].pos.y * canvas.height,
+                            x : track.players[1].pos.x * self.canvas.width,
+                            y : track.players[1].pos.y * self.canvas.height,
                             angle : track.players[1].angle,
                             scale : track.players[1].scale,
                             rotateSpeed : 180,//0.01,
@@ -197,6 +196,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     var self = this;
 
     self.renderMainScene();
+    self.renderSecondScene();
 
     // Draw Status
     OverDrive.Game.drawHUD(self.player1, self.player2, true, self.lapTime, self.path.maxIterations);
@@ -260,4 +260,4 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
   return stage;
 
-})((OverDrive.Stages.MainGame || {}), OverDrive.canvas, OverDrive.context);
+})(OverDrive.Stages.MainGame || {});
