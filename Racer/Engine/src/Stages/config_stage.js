@@ -444,7 +444,6 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
       document.getElementById('GameDiv').appendChild(player1Div);
     }
 
-
     this.createPlayer2Elements = function () {
 
       var player2Div = document.createElement('div');

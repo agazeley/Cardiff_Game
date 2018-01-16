@@ -180,7 +180,7 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
       }
 
       context.globalAlpha = 1;
-      context.fillStyle = '#FFF';
+      context.fillStyle = tron_blue;
       context.font = leaderboardFont;
 
       var textY = self.baseY;

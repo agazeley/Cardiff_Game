@@ -217,7 +217,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       }
 
       context.globalAlpha = 1;
-      context.fillStyle = '#FFF';
+      context.fillStyle = tron_blue;
       context.font = optionFont;
 
 

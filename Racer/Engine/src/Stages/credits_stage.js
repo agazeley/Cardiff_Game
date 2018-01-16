@@ -194,7 +194,7 @@ OverDrive.Stages.Credits = (function(stage, canvas, context) {
       }
 
       context.globalAlpha = 1;
-      context.fillStyle = '#FFF';
+      context.fillStyle = tron_blue;
       context.font = creditFont;
 
       var textY = self.baseY;
