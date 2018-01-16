@@ -335,7 +335,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
-      //increases car size (5 seconds)
+      //increases car size (5 seconds) and 50 points
       self.pickupTypes['scale_pickup'] = new OverDrive.Pickup.PickupType(
       {
         spriteURI : 'Assets//Images//pw3.png',
