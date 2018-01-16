@@ -213,6 +213,11 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.scale += size;
     }
 
+    this.friction = function(frictionDelta) {
+
+      this.rotateSpeed = frictionDelta;
+    }
+
     this.updateStrength = function(strengthDelta) {
 
       this.strength = this.strength + strengthDelta;
