@@ -223,6 +223,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.scale += size;
     }
 
+
     this.updateStrength = function(strengthDelta) {
 
       this.strength = this.strength + strengthDelta;
