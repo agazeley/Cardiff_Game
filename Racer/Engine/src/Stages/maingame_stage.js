@@ -349,8 +349,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
-<<<<<<< HEAD
-=======
       //decrease car size (5 seconds)
       self.pickupTypes['scaledown_pickup'] = new OverDrive.Pickup.PickupType(
       {
@@ -405,7 +403,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
->>>>>>> 5f840d53f3445f003121efafb8e5c90537bf6bce
       //wildcard chooses from the available pickups
       self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
       {
@@ -432,8 +429,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             collector.increaseSize(0.5);
             setTimeout(function(){collector.increaseSize(-0.5)},5000);
           }
-<<<<<<< HEAD
-=======
+
           else if (choice == 4) { //decrease car size
 
             console.log('scaledown pickup');
@@ -465,7 +461,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             }
           }
 
->>>>>>> 5f840d53f3445f003121efafb8e5c90537bf6bce
+
         }
       } );
 

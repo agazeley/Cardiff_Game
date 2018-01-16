@@ -101,6 +101,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       window.requestAnimationFrame(self.mapPreConfirm);
     }
 
+    // mapPreConfirm->mapConfirm->player1mapPreConfirm->etc
     this.mapPreConfirm = function() {
       self.mapSelected = false;
       console.log('Map confirm pre-start screen');
@@ -433,7 +434,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
     this.drawMapIMG = function(image, x, y,text,tx,ty) {
       context.fillText(text,tx,ty);
-      context.drawImage(image,x,y,200,200);1
+      context.drawImage(image,x,y,200,200);
     }
   };
 
