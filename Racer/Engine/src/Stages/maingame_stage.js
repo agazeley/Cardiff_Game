@@ -151,7 +151,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
 
     // Main game-state specific variables
-    this.level = OverDrive.Stages.trackIndex;
+    this.level = OverDrive.Stages.MainGame.trackIndex;
     this.trackIndex = 0; //Sets starting track index?
 
     this.backgroundImage = null;
@@ -460,7 +460,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       // Add 200 points for winner
       self.winner.score += 200;
       //.toFixed(4)
-      self.winner.time = self.lapTime;
+      self.winner.time = self.lapTime.toFixed(2);
       console.log('Winner time: ' + self.winner.time);
       self.winnerMessage = self.winner.pid + ' Wins!!!!!';
 
@@ -505,7 +505,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       overdrive.scores.push({name : wname, score : wscore, time : wtime, track : wtrack});
       overdrive.sortScores();
       overdrive.scores.splice(10);
-      console.log(overdrive.scores);
       this.storeLeaderboard();
     }
     // Stores leaderboard in JSON format in localStorage
@@ -517,7 +516,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.leaveStage = function() {
 
       // Add to leaderboard anad store leadboard for later
-      self.insertToLeaderboard(self.winner.score, self.winner.pid, self.winner.time, OverDrive.Stages.trackIndex);
+      self.insertToLeaderboard(self.winner.score, self.winner.pid, self.winner.time, OverDrive.Stages.MainGame.trackIndex);
 
       // Tear-down stage
       $(document).on('keyup', self.onKeyUp);

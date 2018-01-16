@@ -136,12 +136,10 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
         if (self.keyPressed('K_1')){
           self.mapSelected = true;
           OverDrive.Stages.MainGame.trackIndex = 0;
-          console.log(OverDrive.Stages.MainGame.trackIndex);
         }
         else if (self.keyPressed('K_2')) {
           self.mapSelected = true;
           OverDrive.Stages.MainGame.trackIndex = 1;
-          console.log(OverDrive.Stages.MainGame.trackIndex);
         }
       }
 
@@ -350,7 +348,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       self.leaveState.id = 'mainGame';
       self.leaveState.params = {
-        level : 1
+        level : OverDrive.Stages.MainGame.trackIndex
       };
 
       window.requestAnimationFrame(self.leaveStage);

@@ -14,9 +14,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
 
   stage.MainGame.prototype.createTrack = function() {
-    console.log('Creating Track');
     var self = this;
-
+    console.log('Creating Track with trackIndex: ' + OverDrive.Stages.MainGame.trackIndex);
     var track = tracks[self.trackIndex];
 
     // Setup region model for track
