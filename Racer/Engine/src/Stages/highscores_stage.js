@@ -95,10 +95,13 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
 
       self.draw();
 
-      self.baseY -= 50 * overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
+      self.baseY -= 200 * overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
 
       if (self.keyPressed('ESC')) {
 
+        self.exitLeaderboard = true;
+      }
+      else if (self.baseY < -300) {
         self.exitLeaderboard = true;
       }
 

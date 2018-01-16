@@ -14,57 +14,13 @@ OverDrive.Stages.Credits = (function(stage, canvas, context) {
     'Elisha Parslow',
 
     ' ',
-
+    ' ',
     'Our Crew',
     '---------------------',
     'Andrew Gazeley',
     'Andrew Peacock',
     'Kathleen Levi'
-    // 'The Wonky Donkey Crew',
-    // '---------------------',
-    // 'Jade',
-    // 'Hayley',
-    // 'Nick',
-    // 'Owen',
-    // 'Paul',
-    // 'Joshua',
-    // 'Beth',
-    // 'Will',
-    // 'Megan',
-    // 'Hollie',
-    // 'Bethan',
-    // 'Anna',
-    //
-    // ' ',
-    //
-    // 'Erin',
-    // 'Lewis',
-    // 'Tegan',
-    // 'Krystal',
-    // 'Kye',
-    // 'Maisie',
-    // 'Alisha',
-    // 'Leon',
-    // 'Ben',
-    // 'Finley',
-    // 'Charlie',
-    // 'Joshua',
-    // 'Connor',
-    // 'Jenna',
-    // 'Mason',
-    // 'Tia',
-    // 'Joey',
-    // 'Lowrie',
-    // 'Kory',
-    // 'Bethan',
-    // 'Nicky',
-    // 'Jack',
-    // 'Chole',
-    // 'Madison',
-    // 'Amba',
-    // 'Delyth',
-    // 'Laila',
-    // 'Livvi'
+
 	];
 
 
@@ -153,10 +109,13 @@ OverDrive.Stages.Credits = (function(stage, canvas, context) {
 
       self.draw();
 
-      self.baseY -= 50 * overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
+      self.baseY -= 250 * overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
 
       if (self.keyPressed('ESC')) {
 
+        self.exitCredits = true;
+      }
+      else if (self.baseY < -500) {
         self.exitCredits = true;
       }
 
