@@ -198,7 +198,7 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
       if (overdrive.scores != null){
         for (var i=0; i < overdrive.scores.length; ++i) {
 
-          var txt = overdrive.scores[i].name + "     " + overdrive.scores[i].score;
+          var txt = overdrive.scores[i].name + "     " + overdrive.scores[i].time + '     ' + overdrive.scores[i].score;
           var textMetrics = context.measureText(txt);
           context.fillText(txt, (canvas.width / 2) - (textMetrics.width / 2), textY);
 

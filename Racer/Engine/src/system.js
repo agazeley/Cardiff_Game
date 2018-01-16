@@ -147,7 +147,6 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     // High scores, loads from localStorage and parses JSON
     this.scores = JSON.parse(window.localStorage.getItem('leaderboard'));
-    //console.log(JSON.stringify(this.scores,null,2));
 
     // Sort scores array from highest to lowest
     this.sortScores = function() {
@@ -168,6 +167,11 @@ OverDrive.Game = (function(gamelib, canvas, context) {
     }
     */
     // Gamepad API
+    this.sortTimes = function() {
+      this.scores.sort(function(a,b){
+        return b.time - a.time;
+      });
+    }
 
     this.Gamepad = {
 
