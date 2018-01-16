@@ -9,7 +9,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
   // Public Interface
 
   stage.Create = function() {
-
+    console.log('Creating ConfigStage');
     return new stage.ConfigStage;
   }
 

@@ -123,7 +123,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
   // Factory method
 
   stage.Create = function() {
-
+    console.log('Creating maingame_stage');
     return new stage.MainGame();
   }
 

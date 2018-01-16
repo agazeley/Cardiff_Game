@@ -4,7 +4,6 @@
 //
 
 
-
 OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
   stage.MainGame.prototype.setup = function() {

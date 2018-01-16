@@ -18,7 +18,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
   // Factory method
 
   stage.Create = function() {
-
+    console.log('Creating MainMenu');
     return new stage.MainMenu();
   }
 

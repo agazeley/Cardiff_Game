@@ -18,7 +18,7 @@ OverDrive.Stages.SplashScreen = (function(stage, canvas, context) {
   // Factory method
 
   stage.Create = function() {
-
+    console.log('Creating SplashScreen');
     return new stage.SplashScreen();
   }
 

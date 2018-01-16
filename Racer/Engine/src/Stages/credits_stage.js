@@ -75,7 +75,7 @@ OverDrive.Stages.Credits = (function(stage, canvas, context) {
   // Factory method
 
   stage.Create = function() {
-
+    console.log('Creating CreditStage');
     return new stage.CreditsStage();
   }
 

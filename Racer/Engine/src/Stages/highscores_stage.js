@@ -16,7 +16,7 @@ OverDrive.Stages.Leaderboard = (function(stage, canvas, context) {
   // Factory method
 
   stage.Create = function() {
-
+    console.log('Creating Leaderboard Stage');
     return new stage.LeaderboardStage();
   }
 

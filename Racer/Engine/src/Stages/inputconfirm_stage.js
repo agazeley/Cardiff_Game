@@ -10,7 +10,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
   // Public Interface
 
   stage.Create = function() {
-
+    console.log('Creating InputConfirmStage');
     return new stage.InputConfirmStage;
   }
 
