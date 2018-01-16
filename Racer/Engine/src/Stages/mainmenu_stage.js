@@ -212,7 +212,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       // Draw background
       if (this.backgroundImage) {
 
-        context.globalAlpha = 0.4;
+        context.globalAlpha = 0.9;
         this.backgroundImage.draw();
       }
 
