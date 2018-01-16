@@ -117,20 +117,17 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       context.globalAlpha = 1;
       var tracks = OverDrive.Game.tracks;
 
-      tracks.forEach(function(track){
-        console.log(track);
-      });
-
       track1 = new Image;
       track1.src = tracks[0].trackImage.imageURL;
-      console.log(track1.src);
+      //console.log(track1.src);
       self.drawMapIMG(track1,100,60,'Track1',100,40);
 
       track2 = new Image;
       track2.src = tracks[1].trackImage.imageURL;
-      console.log(track2.src);
+      //console.log(track2.src);
       self.drawMapIMG(track2,300,60,'Track2',300,40)
 
+      // Need to make it so when the 'returnToMenuButton' is clicked that the 'mapSelected' property becomes false again
       if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
         if (self.keyPressed('K_1')){
           self.mapSelected = true;
@@ -150,7 +147,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
         window.requestAnimationFrame(self.player1PreConfirm);
       }
       else if (self.returnToMainMenu) {
-
         self.leaveState.id = 'mainMenu';
         window.requestAnimationFrame(self.leaveStage);
       }
@@ -393,7 +389,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
     }
 
     this.goBackToMenu = function(event) {
-
+      self.mapSelected = false;
       self.returnToMainMenu = true;
     }
 
