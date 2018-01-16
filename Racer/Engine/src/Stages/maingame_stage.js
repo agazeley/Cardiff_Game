@@ -152,7 +152,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     // Main game-state specific variables
     this.level = OverDrive.Stages.trackIndex;
-    this.trackIndex = 0; //Sets starting track index?
+    //Sets starting track index?
+    //this.trackIndex = 0;
 
     this.backgroundImage = null;
 

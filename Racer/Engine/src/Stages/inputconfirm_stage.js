@@ -350,7 +350,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       self.leaveState.id = 'mainGame';
       self.leaveState.params = {
-        level : 1
+        level : OverDrive.Stages.MainGame.trackIndex
       };
 
       window.requestAnimationFrame(self.leaveStage);

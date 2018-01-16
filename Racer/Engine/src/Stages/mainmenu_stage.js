@@ -18,7 +18,7 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
   // Factory method
 
   stage.Create = function() {
-    console.log('Creating MainMenu');
+    console.log('Creating mainmenu_stage');
     return new stage.MainMenu();
   }
 
@@ -174,8 +174,11 @@ OverDrive.Stages.MainMenu = (function(stage, canvas, context) {
       self.leaveState.params = { backgroundImage : self.backgroundImage }; // params setup as required by target state
 
       if (self.leaveState.id == 'mainGame') {
-
-        self.leaveState.params.level = 1; // Initialise level
+        if( OverDrive.Stages.trackIndex == null){
+          console.log('Setting default trackIndex');
+          OverDrive.Stages.trackIndex = 0;
+        }
+        self.leaveState.params.level = OverDrive.Stages.trackIndex; // Initialise level
       }
 
       var target = self.transitionLinks[self.leaveState.id];
