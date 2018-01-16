@@ -151,7 +151,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
 
     // Main game-state specific variables
-    this.level = 1;
+    this.level = OverDrive.Stages.trackIndex;
     this.trackIndex = 0; //Sets starting track index?
 
     this.backgroundImage = null;
@@ -185,9 +185,9 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.preTransition = function(params) {
 
       self.level = params.level;
-      self.trackIndex = self.level - 1;
+      self.trackIndex = self.level;
 
-      console.log('entering level ' + self.level);
+      console.log('entering level ' + self.trackIndex);
     }
 
     this.init = function() {

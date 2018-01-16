@@ -98,6 +98,12 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       overdrive.Gamepad.clearBindings();
       // Change this to mapConfirm at some point to
 
+      window.requestAnimationFrame(self.mapPreConfirm);
+    }
+
+    this.mapPreConfirm = function() {
+      self.mapSelected = false;
+      console.log('Map confirm pre-start screen');
       window.requestAnimationFrame(self.mapConfirm);
     }
 
@@ -106,10 +112,8 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
     // Need a way to pass number selected to OverDrive.Game.MainGame.trackIndex
     this.mapConfirm = function() {
       // mapPreConfirm->mapConfirm->player1mapPreConfirm->etc
-
       // Draw background
       if (self.backgroundImage) {
-
         context.globalAlpha = .4;
         self.backgroundImage.draw();
       }
@@ -131,13 +135,13 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
         if (self.keyPressed('K_1')){
           self.mapSelected = true;
-          console.log(1);
-          //OverDrive.Game.MainGame.trackIndex = 1;
+          OverDrive.Stages.MainGame.trackIndex = 0;
+          console.log(OverDrive.Stages.MainGame.trackIndex);
         }
         else if (self.keyPressed('K_2')) {
           self.mapSelected = true;
-          console.log(2);
-          //OverDrive.Game.MainGame.trackIndex = 2;
+          OverDrive.Stages.MainGame.trackIndex = 1;
+          console.log(OverDrive.Stages.MainGame.trackIndex);
         }
       }
 
