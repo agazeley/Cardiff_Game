@@ -158,7 +158,15 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       });
     }
 
+    // Sort Scores array based on Time from highest to lowest
+    /*this.sortTimes = function() {
 
+      this.scores.sort(function(a,b){
+
+        return b.time - a.time;
+      });
+    }
+    */
     // Gamepad API
 
     this.Gamepad = {

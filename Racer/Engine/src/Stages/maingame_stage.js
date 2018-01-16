@@ -459,7 +459,9 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
       // Add 200 points for winner
       self.winner.score += 200;
-
+      //.toFixed(4)
+      self.winner.time = self.lapTime;
+      console.log('Winner time: ' + self.winner.time);
       self.winnerMessage = self.winner.pid + ' Wins!!!!!';
 
       window.requestAnimationFrame(self.phaseOutLoop);
@@ -495,12 +497,12 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     }
 
     // function that adds element to scores array and slices off elements past index 9
-    this.insertToLeaderboard = function(wscore,wname){
+    this.insertToLeaderboard = function(wscore,wname,wtime,wtrack){
 
       if (overdrive.scores === null){
         overdrive.scores = [];
       }
-      overdrive.scores.push({name : wname, score : wscore});
+      overdrive.scores.push({name : wname, score : wscore, time : wtime, track : wtrack});
       overdrive.sortScores();
       overdrive.scores.splice(10);
       console.log(overdrive.scores);
@@ -515,7 +517,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.leaveStage = function() {
 
       // Add to leaderboard anad store leadboard for later
-      self.insertToLeaderboard(self.winner.score,self.winner.pid);
+      self.insertToLeaderboard(self.winner.score, self.winner.pid, self.winner.time, OverDrive.Stages.trackIndex);
 
       // Tear-down stage
       $(document).on('keyup', self.onKeyUp);
