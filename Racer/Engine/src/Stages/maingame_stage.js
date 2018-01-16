@@ -345,12 +345,9 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
       self.countDownSecondsElapsed += secondsDelta;
 
-
       // Redraw scene
       self.renderMainScene();
       self.renderSecondScene();
-
-      self.contextFull.clearRect(0, 0, self.canvasFull.width, self.canvasFull.height);
 
       // Draw countdown
       self.contextFull.fillStyle = '#FFF';
@@ -538,16 +535,16 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         self.context.save();
 
-        self.context.scale(self.canvas.width / self.orthoCamera.width, self.canvas.height / self.orthoCamera.height);
-        self.context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
+        //self.context.scale(self.canvas.width / self.orthoCamera.width, self.canvas.height / self.orthoCamera.height);
+        //self.context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
 
         // Center rotation axis on player
-        self.context.translate(self.orthoCamera.pos.x,
-          self.orthoCamera.pos.y);
+        //self.context.translate(self.orthoCamera.pos.x,
+        //  self.orthoCamera.pos.y);
         // Rotate map to align with player orientation
-        self.context.rotate(-self.orthoCamera.netRotation);
+        //self.context.rotate(-self.orthoCamera.netRotation);
         // Revert canvas to original position
-        self.context.translate(-self.orthoCamera.pos.x, -self.orthoCamera.pos.y);
+        //self.context.translate(-self.orthoCamera.pos.x, -self.orthoCamera.pos.y);
       }
 
 
@@ -567,7 +564,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.renderSecondScene = function() {
 
       // Update camera
-      self.orthoCamera.calculateCameraWindow(self.player2);
+      self.orthoCamera.calculateCameraWindow(self.player1);
 
       if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
 
