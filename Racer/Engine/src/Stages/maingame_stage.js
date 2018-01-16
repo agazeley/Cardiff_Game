@@ -349,13 +349,65 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
+      //decrease car size (5 seconds)
+      self.pickupTypes['scaledown_pickup'] = new OverDrive.Pickup.PickupType(
+      {
+        spriteURI : 'Assets//Images//pw5.png',
+        collisionGroup : 0,
+        handler : function(collector) {
+
+          console.log('scaledown pickup');
+          collector.increaseSize(-0.5);
+          collector.addPoints(50);
+          setTimeout(function(){collector.increaseSize(0.5)},5000);
+        }
+      } );
+
+      //slowdown opponent (3 seconds)
+      self.pickupTypes['slowdown_pickup'] = new OverDrive.Pickup.PickupType(
+      {
+        spriteURI : 'Assets//Images//pw6.png',
+        collisionGroup : 0,
+        handler : function(collector) {
+
+          console.log('slowdown pickup');
+          if(collector.mBody.id == 56){
+            self.player1.addSpeed(-0.004);
+            setTimeout(function(){self.player1.addSpeed(0.004)},3000);
+          }
+          else {
+            self.player2.addSpeed(-0.004);
+            setTimeout(function(){self.player2.addSpeed(0.004)},3000);
+          }
+        }
+      } );
+
+      //decreases friction of opponent (5 seconds)
+      self.pickupTypes['friction_pickup'] = new OverDrive.Pickup.PickupType(
+      {
+        spriteURI : 'Assets//Images//pw7.png',
+        collisionGroup : 0,
+        handler : function(collector) {
+
+          console.log('friction pickup');
+          if(collector.mBody.id == 56){
+            self.player1.friction(500);
+            setTimeout(function(){self.player1.friction(180)},5000);
+          }
+          else {
+            self.player2.friction(500);
+            setTimeout(function(){self.player2.friction(180)},5000);
+          }
+        }
+      } );
+
       //wildcard chooses from the available pickups
       self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
       {
         spriteURI : 'Assets//Images//pw4.png',
         collisionGroup : 0,
         handler : function(collector) {
-          var numOfPickups = 3;
+          var numOfPickups = 6;
           var choice = Math.floor(Math.random() * (numOfPickups)) + 1;
 
           if (choice == 1){   //add 50 points
@@ -375,6 +427,37 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             collector.increaseSize(0.5);
             setTimeout(function(){collector.increaseSize(-0.5)},5000);
           }
+          else if (choice == 4) { //decrease car size
+
+            console.log('scaledown pickup');
+            collector.increaseSize(-0.5);
+            setTimeout(function(){collector.increaseSize(0.5)},5000);
+          }
+          else if (choice == 5) {   //slowdown opponent
+
+            console.log('slowdown pickup');
+            if(collector.mBody.id == 56){
+              self.player1.addSpeed(-0.004);
+              setTimeout(function(){self.player1.addSpeed(0.004)},3000);
+            }
+            else {
+              self.player2.addSpeed(-0.004);
+              setTimeout(function(){self.player2.addSpeed(0.004)},3000);
+            }
+          }
+          else if (choice == 6) {   //rotate speed set to 500
+
+            console.log('friction pickup');
+            if(collector.mBody.id == 56){
+              self.player1.friction(500);
+              setTimeout(function(){self.player1.friction(180)},5000);
+            }
+            else {
+              self.player2.friction(500);
+              setTimeout(function(){self.player2.friction(180)},5000);
+            }
+          }
+
         }
       } );
 
