@@ -111,10 +111,11 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
     this.mainLoop = function() {
 
       if (self.keyPressed('ESC')) {
-
         self.exitConfig = true;
       }
-
+      else if (self.keyPressed('RETURN')){
+        self.accept();
+      }
       // Repeat until exit condition met
       if (!self.exitConfig) {
 

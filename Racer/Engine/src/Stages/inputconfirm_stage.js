@@ -140,6 +140,9 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
           self.mapSelected = true;
           OverDrive.Stages.MainGame.trackIndex = 1;
         }
+        else if (self.keyPressed('ESC')) {
+          self.returnToMainMenu = true;
+        }
       }
 
 

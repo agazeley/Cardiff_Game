@@ -27,23 +27,6 @@ function loadDemoSoundAsync(soundURL, fn) {
   sfxRequest.send();
 }
 
-/*
-function playTestSound(sound) {
-
-  console.log('playing sound!');
-
-  var audioContext = OverDrive.Game.system.audioContext;
-
-  var source = audioContext.createBufferSource();
-  source.buffer = sound.buffer;
-
-  //source.connect(audioContext.destination);
-  source.connect(OverDrive.Game.system.gainNode);
-
-  source.start(0);
-}
-*/
-
 
 // Model singleton system object
 
