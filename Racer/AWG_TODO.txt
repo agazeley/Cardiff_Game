@@ -1,0 +1,15 @@
+TODO
+
+Leadboard
+- Add time
+- Add map based leaderboard
+
+TrackSelect
+- make it pretty
+- add more tracks
+- robustness?
+
+MainMenu
+- Test for bugs you havent found
+- formatting?
+
