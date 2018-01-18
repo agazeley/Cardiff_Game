@@ -238,6 +238,24 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.rechargeRate = this.rechargeRate * fireRateScale;
     }
 
+    this.increaseDiskCount = function(count){
+      if(this.diskCount != 0){
+      this.diskCount = this.diskCount + count;
+      }
+      else {
+        this.diskCount = count;
+      }
+    }
+
+    this.fireDisk = function(){
+      if(this.diskCount > 0){
+        // Now you can fire a shell
+        // config requirements
+        // type, owner, type.range, type.strength, type.mass, type.range,type.rechargeTime,type.spriteURI
+        
+        Matter.World.add(overdrive.engine.world, []);
+      }
+    }
     //
     // Collision interface
     //
@@ -258,6 +276,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
     }
 
     this.collideWithPlayer = function(otherPlayer, env) {
+
       console.log('Oi, knock it off!');
     }
 

@@ -152,7 +152,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
     // Main game-state specific variables
     this.level = OverDrive.Stages.MainGame.trackIndex;
-    this.trackIndex = 0; //Sets starting track index?
+    this.trackIndex = 0; //Sets starting track index
 
     this.backgroundImage = null;
 
@@ -403,17 +403,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
-      //tron disk pickup
-      self.pickupTypes['disk_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw9.png',#
-        collisionGroup : 0,
-        handler : function(collector){
-          console.log('Disk pickup');
-
-        }
-      } );
-
       //wildcard chooses from the available pickups
       self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
       {
@@ -547,6 +536,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         Matter.World.add(overdrive.engine.world, [pickupStatus.newPickup.mBody]);
         self.pickupArray.push(pickupStatus.newPickup);
+      else if(shell){}
       }
 
 
