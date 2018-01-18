@@ -25,6 +25,7 @@ const pickup_sprite_scale = 0.75; // Bigger number = larger sprite!
 
 const pickup_time_delay = 5; // Delay (in seconds) between coins appearing
 
+const starting_pickups = 5;
 
 const points_on_hit = 100; // depricated
 const player_sprite_scale = 2.5; // depricated

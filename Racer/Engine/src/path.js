@@ -170,9 +170,6 @@ OverDrive.Game = (function(gamelib, canvas, context) {
           }
         }
       }
-      else{
-        console.log('Not valid region?');
-      }
 
     }
 
