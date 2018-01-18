@@ -372,11 +372,11 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
           console.log('slowdown pickup');
           //console.log(collector.mBody.id)
-          if(collector.mBody.id === 60){
+          if(collector.pid === self.player2.pid){
             self.player1.addSpeed(-0.004);
             setTimeout(function(){self.player1.addSpeed(0.004)},3000);
           }
-          else {
+          else if(collector.pid === self.player1.pid){
             self.player2.addSpeed(-0.004);
             setTimeout(function(){self.player2.addSpeed(0.004)},3000);
           }
@@ -392,14 +392,14 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
           console.log('friction pickup');
           //console.log(collector.mBody.id);
-          if(collector.mBody.id === 60){
+          if(collector.pid === self.player2.pid){
             self.player1.friction(500);
             setTimeout(function(){self.player1.friction(180)},5000);
           }
-          else {
-            self.player2.friction(500);
-            setTimeout(function(){self.player2.friction(180)},5000);
-          }
+          else if (collector.pid === self.player1.pid) {
+             self.player2.addSpeed(-0.004);
+             setTimeout(function(){self.player2.addSpeed(0.004)},3000);
+           }
         }
       } );
 
@@ -439,11 +439,11 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
           else if (choice == 5) {   //slowdown opponent
 
             console.log('slowdown pickup');
-            if(collector.mBody.id === 60){
+            if(collector.pid === self.player2.pid){
               self.player1.addSpeed(-0.004);
               setTimeout(function(){self.player1.addSpeed(0.004)},3000);
             }
-            else {
+            else if(collector.pid === self.player1.pid){
               self.player2.addSpeed(-0.004);
               setTimeout(function(){self.player2.addSpeed(0.004)},3000);
             }
@@ -451,14 +451,14 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
           else if (choice == 6) {   //rotate speed set to 500
 
             console.log('friction pickup');
-            if(collector.mBody.id === 60){
+            if(collector.pid === self.player2.pid){
               self.player1.friction(500);
               setTimeout(function(){self.player1.friction(180)},5000);
             }
-            else {
-              self.player2.friction(500);
-              setTimeout(function(){self.player2.friction(180)},5000);
-            }
+            else if (collector.pid === self.player1.pid) {
+               self.player2.addSpeed(-0.004);
+               setTimeout(function(){self.player2.addSpeed(0.004)},3000);
+             }
           }
 
 
