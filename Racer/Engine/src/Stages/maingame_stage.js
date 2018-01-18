@@ -403,6 +403,17 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
+      //tron disk pickup
+      self.pickupTypes['disk_pickup'] = new OverDrive.Pickup.PickupType(
+      {
+        spriteURI : 'Assets//Images//pw9.png',#
+        collisionGroup : 0,
+        handler : function(collector){
+          console.log('Disk pickup');
+
+        }
+      } );
+
       //wildcard chooses from the available pickups
       self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
       {
