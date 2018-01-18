@@ -257,625 +257,630 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         for (var i=0; i<pairs.length; ++i) {
 
           if (pairs[i].bodyA.hostObject !== undefined &&
-              pairs[i].bodyB.hostObject !== undefined) {
+            pairs[i].bodyB.hostObject !== undefined) {
 
-            pairs[i].bodyA.hostObject.doCollision(
-              pairs[i].bodyB.hostObject,
-              {
-                objA : pairs[i].bodyA,
-                objB : pairs[i].bodyB,
-                host : self // host environment
-              }
-            ); // objA === collider of first dispatch responder
+              pairs[i].bodyA.hostObject.doCollision(
+                pairs[i].bodyB.hostObject,
+                {
+                  objA : pairs[i].bodyA,
+                  objB : pairs[i].bodyB,
+                  host : self // host environment
+                }
+              ); // objA === collider of first dispatch responder
+            }
           }
-        }
-      });
+        });
 
 
-      // Register pre-update call (handle app-specific stuff)
-      Matter.Events.on(OverDrive.Game.system.engine, 'beforeUpdate', function(event) {
+        // Register pre-update call (handle app-specific stuff)
+        Matter.Events.on(OverDrive.Game.system.engine, 'beforeUpdate', function(event) {
 
-        var world = event.source.world;
+          var world = event.source.world;
 
-        for (var i=0; i < world.bodies.length; ++i) {
+          for (var i=0; i < world.bodies.length; ++i) {
 
-          if (world.bodies[i].hostObject !== undefined &&
+            if (world.bodies[i].hostObject !== undefined &&
               world.bodies[i].hostObject.preUpdate !== undefined) {
 
-            world.bodies[i].hostObject.preUpdate(world.bodies[i].hostObject, OverDrive.Game.system.gameClock.deltaTime, self);
-          }
-        };
-      });
-
-
-      // Register post-update call (handle app-specific stuff)
-      Matter.Events.on(OverDrive.Game.system.engine, 'afterUpdate', function(event) {
-
-        var world = event.source.world;
-
-        for (var i=0; i < world.bodies.length; ++i) {
-
-          if (world.bodies[i].hostObject !== undefined &&
-              world.bodies[i].hostObject.postUpdate !== undefined) {
-
-            world.bodies[i].hostObject.postUpdate(world.bodies[i].hostObject, OverDrive.Game.system.gameClock.deltaTime, self);
-          }
-        };
-      });
-
-
-      // Register pickups
-      self.pickupTypes = [];
-      self.pickupArray = [];
-      self.pickup_timer = pickup_time_delay;
-
-      //gain 100 points
-      self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw1.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('points pickup');
-          collector.addPoints(50);
-        }
-      } );
-
-      //gain temporary speed boost (2 seconds) and 50 points
-      self.pickupTypes['speed_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw2.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('speed pickup');
-          collector.addSpeed(0.004);
-          collector.addPoints(50);
-          setTimeout(function(){collector.addSpeed(-0.004)},2000);
-        }
-      } );
-
-      //increases car size (5 seconds) and 50 points
-      self.pickupTypes['scale_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw3.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('scale pickup');
-          collector.increaseSize(0.5);
-          collector.addPoints(50);
-          setTimeout(function(){collector.increaseSize(-0.5)},5000);
-        }
-      } );
-
-      //decrease car size (5 seconds)
-      self.pickupTypes['scaledown_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw5.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('scaledown pickup');
-          collector.increaseSize(-0.5);
-          collector.addPoints(50);
-          setTimeout(function(){collector.increaseSize(0.5)},5000);
-        }
-      } );
-
-      //slowdown opponent (3 seconds)
-      self.pickupTypes['slowdown_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw6.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('slowdown pickup');
-          //console.log(collector.mBody.id)
-          if(collector.pid === self.player2.pid){
-            self.player1.addSpeed(-0.004);
-            setTimeout(function(){self.player1.addSpeed(0.004)},3000);
-          }
-          else if(collector.pid === self.player1.pid){
-            self.player2.addSpeed(-0.004);
-            setTimeout(function(){self.player2.addSpeed(0.004)},3000);
-          }
-        }
-      } );
-
-      //decreases friction of opponent (5 seconds)
-      self.pickupTypes['friction_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw7.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('friction pickup');
-          //console.log(collector.mBody.id);
-          if(collector.pid === self.player2.pid){
-            self.player1.friction(500);
-            setTimeout(function(){self.player1.friction(180)},5000);
-          }
-          else if (collector.pid === self.player1.pid) {
-             self.player2.addSpeed(-0.004);
-             setTimeout(function(){self.player2.addSpeed(0.004)},3000);
-           }
-        }
-      } );
-
-      //wildcard chooses from the available pickups
-      self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw4.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-          var numOfPickups = 3;
-          var choice = Math.floor(Math.random() * (numOfPickups)) + 1;
-
-          if (choice == 1){   //add 50 points
-
-            console.log('points pickup');
-            collector.addPoints(50);
-          }
-          else if (choice == 2) {   //increase speed
+                world.bodies[i].hostObject.preUpdate(world.bodies[i].hostObject, OverDrive.Game.system.gameClock.deltaTime, self);
+              }
+            };
+          });
+
+
+          // Register post-update call (handle app-specific stuff)
+          Matter.Events.on(OverDrive.Game.system.engine, 'afterUpdate', function(event) {
+
+            var world = event.source.world;
+
+            for (var i=0; i < world.bodies.length; ++i) {
+
+              if (world.bodies[i].hostObject !== undefined &&
+                world.bodies[i].hostObject.postUpdate !== undefined) {
+
+                  world.bodies[i].hostObject.postUpdate(world.bodies[i].hostObject, OverDrive.Game.system.gameClock.deltaTime, self);
+                }
+              };
+            });
+
+
+            // Register pickups
+            self.pickupTypes = [];
+            self.pickupArray = [];
+            self.pickup_timer = pickup_time_delay;
+
+            //gain 100 points
+            self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType(
+              {
+                spriteURI : 'Assets//Images//pw1.png',
+                collisionGroup : 0,
+                handler : function(collector) {
+
+                  console.log('points pickup');
+                  collector.addPoints(50);
+                }
+              } );
+
+              //gain temporary speed boost (2 seconds) and 50 points
+              self.pickupTypes['speed_pickup'] = new OverDrive.Pickup.PickupType(
+                {
+                  spriteURI : 'Assets//Images//pw2.png',
+                  collisionGroup : 0,
+                  handler : function(collector) {
+
+                    console.log('speed pickup');
+                    collector.addSpeed(0.004);
+                    setTimeout(function(){collector.addSpeed(-0.004)},2000);
+                    //add 10 points for collecting a pickup
+                    collector.addPoints(10);
+                  }
+                } );
+
+                //increases car size (5 seconds)
+                self.pickupTypes['scale_pickup'] = new OverDrive.Pickup.PickupType(
+                  {
+                    spriteURI : 'Assets//Images//pw3.png',
+                    collisionGroup : 0,
+                    handler : function(collector) {
+
+                      console.log('scale pickup');
+                      collector.increaseSize(0.5);
+                      setTimeout(function(){collector.increaseSize(-0.5)},5000);
+                      //add 10 points for collecting a pickup
+                      collector.addPoints(10);
+                    }
+                  } );
+
+                  //decrease car size (5 seconds)
+                  self.pickupTypes['scaledown_pickup'] = new OverDrive.Pickup.PickupType(
+                    {
+                      spriteURI : 'Assets//Images//pw5.png',
+                      collisionGroup : 0,
+                      handler : function(collector) {
+
+                        console.log('scaledown pickup');
+                        collector.increaseSize(-0.5);
+                        setTimeout(function(){collector.increaseSize(0.5)},5000);
+                        //add 10 points for collecting a pickup
+                        collector.addPoints(10);
+                      }
+                    } );
+
+                    //slowdown opponent (3 seconds)
+                    self.pickupTypes['slowdown_pickup'] = new OverDrive.Pickup.PickupType(
+                      {
+                        spriteURI : 'Assets//Images//pw6.png',
+                        collisionGroup : 0,
+                        handler : function(collector) {
+
+                          console.log('slowdown pickup');
+                          if(collector.pid === self.player2.pid){
+                            self.player1.addSpeed(-0.004);
+                            setTimeout(function(){self.player1.addSpeed(0.004)},3000);
+                          }
+                          else if(collector.pid === self.player1.pid) {
+                            self.player2.addSpeed(-0.004);
+                            setTimeout(function(){self.player2.addSpeed(0.004)},3000);
+                          }
+                          //add 10 points for collecting a pickup
+                          collector.addPoints(10);
+                        }
+                      } );
+
+                      //decreases friction of opponent (5 seconds)
+                      self.pickupTypes['friction_pickup'] = new OverDrive.Pickup.PickupType(
+                        {
+                          spriteURI : 'Assets//Images//pw7.png',
+                          collisionGroup : 0,
+                          handler : function(collector) {
+
+                            console.log('friction pickup');
+                            if(collector.pid === self.player2.pid){
+                              self.player1.friction(500);
+                              setTimeout(function(){self.player1.friction(180)},5000);
+                            }
+                            else if(collector.pid === self.player1.pid) {
+                              self.player2.friction(500);
+                              setTimeout(function(){self.player2.friction(180)},5000);
+                            }
+                            //add 10 points for collecting a pickup
+                            collector.addPoints(10);
+                          }
+                        } );
+
+                        //wildcard chooses from the available pickups
+                        self.pickupTypes['random_pickup'] = new OverDrive.Pickup.PickupType(
+                          {
+                            spriteURI : 'Assets//Images//pw4.png',
+                            collisionGroup : 0,
+                            handler : function(collector) {
+                              var numOfPickups = 6;
+                              var choice = Math.floor(Math.random() * (numOfPickups)) + 1;
+
+                              if (choice == 1){   //add 50 points
+
+                                console.log('points pickup');
+                                collector.addPoints(50);
+                              }
+                              else if (choice == 2) {   //increase speed
+
+                                console.log('speed pickup');
+                                collector.addSpeed(0.004);
+                                setTimeout(function(){collector.addSpeed(-0.004)},2000);
+                              }
+                              else if (choice == 3) {   //increase car size
+
+                                console.log('scale pickup');
+                                collector.increaseSize(0.5);
+                                setTimeout(function(){collector.increaseSize(-0.5)},5000);
+                              }
+                              else if (choice == 4) { //decrease car size
+
+                                console.log('scaledown pickup');
+                                collector.increaseSize(-0.5);
+                                setTimeout(function(){collector.increaseSize(0.5)},5000);
+                              }
+                              else if (choice == 5) {   //slowdown opponent
+
+                                console.log('slowdown pickup');
+                                if(collector.pid === self.player2.pid){
+                                  self.player1.addSpeed(-0.004);
+                                  setTimeout(function(){self.player1.addSpeed(0.004)},3000);
+                                }
+                                else if(collector.pid === self.player1.pid) {
+                                  self.player2.addSpeed(-0.004);
+                                  setTimeout(function(){self.player2.addSpeed(0.004)},3000);
+                                }
+                              }
+                              else if (choice == 6) {   //rotate speed set to 500
+
+                                console.log('friction pickup');
+                                if(collector.pid === self.player2.pid){
+                                  self.player1.friction(500);
+                                  setTimeout(function(){self.player1.friction(180)},5000);
+                                }
+                                else if(collector.pid === self.player1.pid) {
+                                  self.player2.friction(500);
+                                  setTimeout(function(){self.player2.friction(180)},5000);
+                                }
+                                //add 10 points for collecting a pickup
+                                collector.addPoints(10);
+                              }
 
-            console.log('speed pickup');
-            collector.addSpeed(0.004);
-            setTimeout(function(){collector.addSpeed(-0.004)},2000);
-          }
-          else if (choice == 3) {   //increase car size
+                            }
+                          } );
 
-            console.log('scale pickup');
-            collector.increaseSize(0.5);
-            setTimeout(function(){collector.increaseSize(-0.5)},5000);
-          }
-
-          else if (choice == 4) { //decrease car size
-
-            console.log('scaledown pickup');
-            collector.increaseSize(-0.5);
-            setTimeout(function(){collector.increaseSize(0.5)},5000);
-          }
-          else if (choice == 5) {   //slowdown opponent
 
-            console.log('slowdown pickup');
-            if(collector.pid === self.player2.pid){
-              self.player1.addSpeed(-0.004);
-              setTimeout(function(){self.player1.addSpeed(0.004)},3000);
-            }
-            else if(collector.pid === self.player1.pid){
-              self.player2.addSpeed(-0.004);
-              setTimeout(function(){self.player2.addSpeed(0.004)},3000);
-            }
-          }
-          else if (choice == 6) {   //rotate speed set to 500
+                          self.countDownSecondsElapsed = 0;
+                          overdrive.gameClock.tick();
 
-            console.log('friction pickup');
-            if(collector.pid === self.player2.pid){
-              self.player1.friction(500);
-              setTimeout(function(){self.player1.friction(180)},5000);
-            }
-            else if (collector.pid === self.player1.pid) {
-               self.player2.addSpeed(-0.004);
-               setTimeout(function(){self.player2.addSpeed(0.004)},3000);
-             }
-          }
+                          self.raceStarted = false;
+
+                          window.requestAnimationFrame(self.phaseInLoop);
+                        }
 
+                        this.phaseInLoop = function() {
+
+                          // Update clock
+                          overdrive.gameClock.tick();
+
+                          var secondsDelta = overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
+
+                          self.countDownSecondsElapsed += secondsDelta;
+
+
+                          // Redraw scene
+                          self.renderMainScene();
+
+                          // Draw countdown
+                          context.fillStyle = '#FFF';
+                          context.font = '30pt ' + main_game_font;
+
+                          var timeToDisplay = 3 - Math.floor(self.countDownSecondsElapsed);
+                          var textMetrics = context.measureText(timeToDisplay);
+
+                          context.fillText(timeToDisplay, canvas.width * 0.5 - textMetrics.width / 2, 300);
+
+                          // Draw Status
+                          OverDrive.Game.drawHUD(self.player1, self.player2, false, self.lapTime, self.path.maxIterations);
+
+                          // Iterate through countdown
+                          if (self.countDownSecondsElapsed<3) {
+
+                            window.requestAnimationFrame(self.phaseInLoop);
+                          }
+                          else {
+
+                            // Reset clock base time and goto main game loop
+
+                            self.paused = false;
+                            self.levelComplete = false;
+
+                            self.baseTime = overdrive.gameClock.gameTimeElapsed();
+                            self.lapTime = 0;
+
+                            self.raceStarted = true;
+
+                            window.requestAnimationFrame(self.mainLoopActual);
+                          }
+                        }
 
-        }
-      } );
+                        this.mainLoopActual = function() {
 
+                          // Manage pickups
+                          let pickupStatus = OverDrive.Pickup.processPickups(
+                            self.pickupTypes,
+                            overdrive.engine,
+                            self.pickup_timer,
+                            overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime),
+                            self.regions);
 
-      self.countDownSecondsElapsed = 0;
-      overdrive.gameClock.tick();
+                            self.pickup_timer = pickupStatus.timer;
 
-      self.raceStarted = false;
+                            if (pickupStatus.newPickup) {
 
-      window.requestAnimationFrame(self.phaseInLoop);
-    }
+                              Matter.World.add(overdrive.engine.world, [pickupStatus.newPickup.mBody]);
+                              self.pickupArray.push(pickupStatus.newPickup);
+                            }
 
-    this.phaseInLoop = function() {
 
-      // Update clock
-      overdrive.gameClock.tick();
+                            self.mainLoop();
+                          }
 
-      var secondsDelta = overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime);
+                          this.initPhaseOut = function() {
 
-      self.countDownSecondsElapsed += secondsDelta;
+                            // Add 200 points for winner
+                            self.winner.score += 200;
+                            //.toFixed(4)
+                            self.winner.time = self.lapTime.toFixed(2);
+                            console.log('Winner time: ' + self.winner.time);
+                            self.winnerMessage = self.winner.pid + ' Wins!!!!!';
 
+                            window.requestAnimationFrame(self.phaseOutLoop);
+                          }
 
-      // Redraw scene
-      self.renderMainScene();
+                          this.phaseOutLoop = function() {
 
-      // Draw countdown
-      context.fillStyle = '#FFF';
-      context.font = '30pt ' + main_game_font;
+                            // Update system clock
+                            OverDrive.Game.system.gameClock.tick();
 
-      var timeToDisplay = 3 - Math.floor(self.countDownSecondsElapsed);
-      var textMetrics = context.measureText(timeToDisplay);
+                            self.lapTime = overdrive.gameClock.gameTimeElapsed() - self.baseTime;
 
-      context.fillText(timeToDisplay, canvas.width * 0.5 - textMetrics.width / 2, 300);
+                            // Update main physics engine state
+                            Matter.Engine.update(overdrive.engine, overdrive.gameClock.deltaTime);
 
-      // Draw Status
-      OverDrive.Game.drawHUD(self.player1, self.player2, false, self.lapTime, self.path.maxIterations);
+                            self.renderMainScene();
 
-      // Iterate through countdown
-      if (self.countDownSecondsElapsed<3) {
+                            // Draw winner message
+                            context.fillStyle = '#FFF';
+                            context.font = '30pt ' + main_game_font;
+                            var textMetrics = context.measureText(self.winnerMessage);
+                            context.fillText(self.winnerMessage, canvas.width * 0.5 - textMetrics.width / 2, 300);
 
-        window.requestAnimationFrame(self.phaseInLoop);
-      }
-      else {
+                            if (self.keyPressed('ESC')) {
+                              // When game is over you need to hit escape to exit.
+                              // How to make this move to next map?
+                              window.requestAnimationFrame(self.leaveStage);
+                            }
+                            else {
 
-        // Reset clock base time and goto main game loop
+                              window.requestAnimationFrame(self.phaseOutLoop);
+                            }
+                          }
 
-        self.paused = false;
-        self.levelComplete = false;
+                          // function that adds element to scores array and slices off elements past index 9
+                          this.insertToLeaderboard = function(wscore,wname,wtime,wtrack){
 
-        self.baseTime = overdrive.gameClock.gameTimeElapsed();
-        self.lapTime = 0;
+                            if (overdrive.scores === null){
+                              overdrive.scores = [];
+                            }
+                            overdrive.scores.push({name : wname, score : wscore, time : wtime, track : wtrack});
+                            overdrive.sortScores();
+                            overdrive.scores.splice(10);
+                            this.storeLeaderboard();
+                          }
+                          // Stores leaderboard in JSON format in localStorage
+                          this.storeLeaderboard = function(){
+                            window.localStorage.setItem('leaderboard',JSON.stringify(overdrive.scores));
+                            console.log('Scores added to LS');
+                          }
 
-        self.raceStarted = true;
+                          this.leaveStage = function() {
 
-        window.requestAnimationFrame(self.mainLoopActual);
-      }
-    }
+                            // Add to leaderboard anad store leadboard for later
+                            self.insertToLeaderboard(self.winner.score, self.winner.pid, self.winner.time, OverDrive.Stages.MainGame.trackIndex);
 
-    this.mainLoopActual = function() {
+                            // Tear-down stage
+                            $(document).on('keyup', self.onKeyUp);
+                            $(document).on('keydown', self.onKeyDown);
 
-      // Manage pickups
-      let pickupStatus = OverDrive.Pickup.processPickups(
-        self.pickupTypes,
-        overdrive.engine,
-        self.pickup_timer,
-        overdrive.gameClock.convertTimeIntervalToSeconds(overdrive.gameClock.deltaTime),
-        self.regions);
+                            Matter.Events.off(OverDrive.Game.system.engine);
 
-      self.pickup_timer = pickupStatus.timer;
+                            Matter.World.clear(overdrive.engine.world, false);
 
-      if (pickupStatus.newPickup) {
+                            self.backgroundImage = null;
 
-        Matter.World.add(overdrive.engine.world, [pickupStatus.newPickup.mBody]);
-        self.pickupArray.push(pickupStatus.newPickup);
-      }
+                            self.orthoCamera = null;
 
+                            self.gamepads = {};
 
-      self.mainLoop();
-    }
+                            self.paused = false; // show paused menu
+                            self.levelComplete = false;
+                            self.winner = null;
 
-    this.initPhaseOut = function() {
+                            self.regions = null; // track regions
+                            self.sceneryRegions = null;
 
-      // Add 200 points for winner
-      self.winner.score += 200;
-      //.toFixed(4)
-      self.winner.time = self.lapTime.toFixed(2);
-      console.log('Winner time: ' + self.winner.time);
-      self.winnerMessage = self.winner.pid + ' Wins!!!!!';
+                            self.baseTime = 0;
+                            self.lapTime = 0;
 
-      window.requestAnimationFrame(self.phaseOutLoop);
-    }
+                            self.pickupTypes = null;
+                            self.pickupArray = null;
 
-    this.phaseOutLoop = function() {
+                            // Setup leave state parameters and target - this is explicit!
+                            self.leaveState.id = 'mainMenu';
+                            self.leaveState.params = {}; // params setup as required by target state
 
-      // Update system clock
-      OverDrive.Game.system.gameClock.tick();
 
-      self.lapTime = overdrive.gameClock.gameTimeElapsed() - self.baseTime;
+                            var target = self.transitionLinks[self.leaveState.id];
 
-      // Update main physics engine state
-      Matter.Engine.update(overdrive.engine, overdrive.gameClock.deltaTime);
+                            // Handle pre-transition (in target, not here! - encapsulation!)
+                            target.preTransition(self.leaveState.params);
 
-      self.renderMainScene();
+                            // Final transition from current stage
+                            window.requestAnimationFrame(target.init);
 
-      // Draw winner message
-      context.fillStyle = '#FFF';
-      context.font = '30pt ' + main_game_font;
-      var textMetrics = context.measureText(self.winnerMessage);
-      context.fillText(self.winnerMessage, canvas.width * 0.5 - textMetrics.width / 2, 300);
+                            // Clear leave state once done
+                            self.leaveState.id = null;
+                            self.leaveState.params = null;
+                          }
 
-      if (self.keyPressed('ESC')) {
-        // When game is over you need to hit escape to exit.
-        // How to make this move to next map?
-        window.requestAnimationFrame(self.leaveStage);
-      }
-      else {
 
-        window.requestAnimationFrame(self.phaseOutLoop);
-      }
-    }
+                          // Event handling functions
 
-    // function that adds element to scores array and slices off elements past index 9
-    this.insertToLeaderboard = function(wscore,wname,wtime,wtrack){
+                          this.onKeyDown = function(event) {
 
-      if (overdrive.scores === null){
-        overdrive.scores = [];
-      }
-      overdrive.scores.push({name : wname, score : wscore, time : wtime, track : wtrack});
-      overdrive.sortTimes();
-      overdrive.scores.splice(10);
-      this.storeLeaderboard();
-    }
-    // Stores leaderboard in JSON format in localStorage
-    this.storeLeaderboard = function(){
-      window.localStorage.setItem('leaderboard',JSON.stringify(overdrive.scores));
-      console.log('Scores added to LS');
-    }
+                            self.keyDown[event.keyCode] = true;
+                          }
 
-    this.leaveStage = function() {
+                          this.onKeyUp = function(event) {
 
-      // Add to leaderboard anad store leadboard for later
-      self.insertToLeaderboard(self.winner.score, self.winner.pid, self.winner.time, OverDrive.Stages.MainGame.trackIndex);
+                            self.keyDown[event.keyCode] = false;
+                          }
 
-      // Tear-down stage
-      $(document).on('keyup', self.onKeyUp);
-      $(document).on('keydown', self.onKeyDown);
 
-      Matter.Events.off(OverDrive.Game.system.engine);
+                          // Stage processing functions
 
-      Matter.World.clear(overdrive.engine.world, false);
+                          this.renderMainScene = function() {
 
-      self.backgroundImage = null;
+                            // Update camera
+                            self.orthoCamera.calculateCameraWindow(self.player1, self.player2);
 
-      self.orthoCamera = null;
+                            if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
 
-      self.gamepads = {};
+                              context.save();
 
-      self.paused = false; // show paused menu
-      self.levelComplete = false;
-      self.winner = null;
+                              context.scale(canvas.width / self.orthoCamera.width, canvas.height / self.orthoCamera.height);
+                              context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)),
+                              -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
+                            }
 
-      self.regions = null; // track regions
-      self.sceneryRegions = null;
 
-      self.baseTime = 0;
-      self.lapTime = 0;
+                            // Render latest frame
+                            self.drawLevel();
 
-      self.pickupTypes = null;
-      self.pickupArray = null;
 
-      // Setup leave state parameters and target - this is explicit!
-      self.leaveState.id = 'mainMenu';
-      self.leaveState.params = {}; // params setup as required by target state
+                            if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
 
+                              context.restore();
+                            }
+                            else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
 
-      var target = self.transitionLinks[self.leaveState.id];
+                              self.orthoCamera.drawTestWindow();
+                            }
+                          }
 
-      // Handle pre-transition (in target, not here! - encapsulation!)
-      target.preTransition(self.leaveState.params);
 
-      // Final transition from current stage
-      window.requestAnimationFrame(target.init);
+                          this.drawLevel = function() {
 
-      // Clear leave state once done
-      self.leaveState.id = null;
-      self.leaveState.params = null;
-    }
+                            // Draw background
+                            if (self.backgroundImage) {
 
+                              self.backgroundImage.draw();
+                            }
 
-    // Event handling functions
+                            // Draw player1
+                            if (self.player1) {
 
-    this.onKeyDown = function(event) {
+                              self.player1.draw();
+                              //self.player1.drawBoundingVolume('#FFF');
+                            }
 
-      self.keyDown[event.keyCode] = true;
-    }
+                            // Draw player2
+                            if (self.player2) {
 
-    this.onKeyUp = function(event) {
+                              self.player2.draw();
+                              //self.player2.drawBoundingVolume('#FFF');
+                            }
 
-      self.keyDown[event.keyCode] = false;
-    }
+                            // Render pickups
+                            OverDrive.Game.drawObjects(self.pickupArray);
+                          }
 
 
-    // Stage processing functions
+                          // Return true if any key is pressed at the time the function is called
+                          this.keyPressed = function(keyCode) {
 
-    this.renderMainScene = function() {
+                            return this.keyDown[overdrive.Keys[keyCode]];
+                          }
 
-      // Update camera
-      self.orthoCamera.calculateCameraWindow(self.player1, self.player2);
 
-      if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
+                          this.updatePlayer1 = function(player, deltaTime, env) {
 
-        context.save();
+                            // Limit player velocity
+                            if (player.mBody.speed > player_top_speed) {
 
-        context.scale(canvas.width / self.orthoCamera.width, canvas.height / self.orthoCamera.height);
-        context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)),
-                        -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
-      }
+                              var vel = Matter.Vector.normalise(player.mBody.velocity);
 
+                              vel.x *= player_top_speed;
+                              vel.y *= player_top_speed;
 
-      // Render latest frame
-      self.drawLevel();
+                              Matter.Body.setVelocity(player.mBody, vel);
+                            }
 
+                            const p1InputMethod = overdrive.settings.players[0].mode;
 
-      if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
+                            // Gamepad input
+                            if (p1InputMethod == OverDrive.Game.InputMode.Gamepad) {
 
-        context.restore();
-      }
-      else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
+                              this.handleGamepadInput(player, 0, deltaTime);
+                            }
+                            else if (p1InputMethod == OverDrive.Game.InputMode.Keyboard) {
 
-        self.orthoCamera.drawTestWindow();
-      }
-    }
+                              // Keyboard input
 
+                              if (this.keyPressed(overdrive.settings.players[0].keys.forward)) {
 
-    this.drawLevel = function() {
+                                var F = player.forwardDirection();
 
-      // Draw background
-      if (self.backgroundImage) {
+                                player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
+                              }
 
-        self.backgroundImage.draw();
-      }
+                              if (this.keyPressed(overdrive.settings.players[0].keys.reverse)) {
 
-      // Draw player1
-      if (self.player1) {
+                                var F = player.forwardDirection();
 
-        self.player1.draw();
-        //self.player1.drawBoundingVolume('#FFF');
-      }
+                                player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce, y : -F.y * player.forwardForce });
+                              }
 
-      // Draw player2
-      if (self.player2) {
+                              if (this.keyPressed(overdrive.settings.players[0].keys.left)) {
 
-        self.player2.draw();
-        //self.player2.drawBoundingVolume('#FFF');
-      }
+                                Matter.Body.setAngularVelocity(player.mBody, 0);
+                                player.rotate((-Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+                              }
 
-      // Render pickups
-      OverDrive.Game.drawObjects(self.pickupArray);
-    }
+                              if (this.keyPressed(overdrive.settings.players[0].keys.right)) {
 
+                                Matter.Body.setAngularVelocity(player.mBody, 0);
+                                player.rotate((Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+                              }
+                            }
 
-    // Return true if any key is pressed at the time the function is called
-    this.keyPressed = function(keyCode) {
 
-      return this.keyDown[overdrive.Keys[keyCode]];
-    }
+                          }
 
 
-    this.updatePlayer1 = function(player, deltaTime, env) {
+                          this.updatePlayer2 = function(player, deltaTime, env) {
 
-      // Limit player velocity
-      if (player.mBody.speed > player_top_speed) {
+                            // Limit player velocity
+                            if (player.mBody.speed > player_top_speed) {
 
-        var vel = Matter.Vector.normalise(player.mBody.velocity);
+                              var vel = Matter.Vector.normalise(player.mBody.velocity);
 
-        vel.x *= player_top_speed;
-        vel.y *= player_top_speed;
+                              vel.x *= player_top_speed;
+                              vel.y *= player_top_speed;
 
-        Matter.Body.setVelocity(player.mBody, vel);
-      }
+                              Matter.Body.setVelocity(player.mBody, vel);
+                            }
 
-      const p1InputMethod = overdrive.settings.players[0].mode;
+                            const inputMethod = overdrive.settings.players[1].mode;
 
-      // Gamepad input
-      if (p1InputMethod == OverDrive.Game.InputMode.Gamepad) {
+                            // Gamepad input
+                            if (inputMethod == OverDrive.Game.InputMode.Gamepad) {
 
-        this.handleGamepadInput(player, 0, deltaTime);
-      }
-      else if (p1InputMethod == OverDrive.Game.InputMode.Keyboard) {
+                              this.handleGamepadInput(player, 1, deltaTime);
+                            }
+                            else if (inputMethod == OverDrive.Game.InputMode.Keyboard) {
 
-        // Keyboard input
+                              if (this.keyPressed(overdrive.settings.players[1].keys.forward)) {
 
-        if (this.keyPressed(overdrive.settings.players[0].keys.forward)) {
+                                var F = player.forwardDirection();
 
-          var F = player.forwardDirection();
+                                player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
+                              }
 
-          player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
-        }
+                              if (this.keyPressed(overdrive.settings.players[1].keys.reverse)) {
 
-        if (this.keyPressed(overdrive.settings.players[0].keys.reverse)) {
+                                var F = player.forwardDirection();
 
-          var F = player.forwardDirection();
+                                player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce, y : -F.y * player.forwardForce });
+                              }
 
-          player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce, y : -F.y * player.forwardForce });
-        }
+                              if (this.keyPressed(overdrive.settings.players[1].keys.left)) {
 
-        if (this.keyPressed(overdrive.settings.players[0].keys.left)) {
+                                Matter.Body.setAngularVelocity(player.mBody, 0);
+                                player.rotate((-Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+                                //player.rotate(-Math.PI * player.rotateSpeed);
+                              }
 
-          Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((-Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
-        }
+                              if (this.keyPressed(overdrive.settings.players[1].keys.right)) {
 
-        if (this.keyPressed(overdrive.settings.players[0].keys.right)) {
+                                Matter.Body.setAngularVelocity(player.mBody, 0);
+                                player.rotate((Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
+                                //player.rotate(Math.PI * player.rotateSpeed);
+                              }
+                            }
+                          }
 
-          Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
-        }
-      }
 
+                          // Controller input handlers
+                          this.handleGamepadInput = function(player, playerIndex, deltaTime) {
 
-    }
+                            const gamepadIndex = overdrive.Gamepad.bindings[playerIndex].gamepadIndex;
 
+                            // Ensure still connected
+                            var pad = overdrive.Gamepad.gamepads[gamepadIndex];
 
-    this.updatePlayer2 = function(player, deltaTime, env) {
+                            if (pad && pad.connected) {
 
-      // Limit player velocity
-      if (player.mBody.speed > player_top_speed) {
+                              if (pad.buttons[0].pressed) {
 
-        var vel = Matter.Vector.normalise(player.mBody.velocity);
+                                var F = player.forwardDirection();
 
-        vel.x *= player_top_speed;
-        vel.y *= player_top_speed;
+                                player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
+                              }
 
-        Matter.Body.setVelocity(player.mBody, vel);
-      }
+                              if (pad.buttons[1].pressed) {
 
-      const inputMethod = overdrive.settings.players[1].mode;
+                                var F = player.forwardDirection();
 
-      // Gamepad input
-      if (inputMethod == OverDrive.Game.InputMode.Gamepad) {
+                                player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce * 0.25, y : -F.y * player.forwardForce *0.25 }); // scale reverse force
+                              }
 
-        this.handleGamepadInput(player, 1, deltaTime);
-      }
-      else if (inputMethod == OverDrive.Game.InputMode.Keyboard) {
+                              // Calculate turn as a continuous function of pad.axes[0]
+                              Matter.Body.setAngularVelocity(player.mBody, 0);
 
-        if (this.keyPressed(overdrive.settings.players[1].keys.forward)) {
+                              if (Math.abs(pad.axes[0]) > 0.1) {
 
-          var F = player.forwardDirection();
+                                player.rotate((Math.PI/180) * player.rotateSpeed * pad.axes[0] * (deltaTime / 1000));
+                              }
+                            }
+                          }
 
-          player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
-        }
 
-        if (this.keyPressed(overdrive.settings.players[1].keys.reverse)) {
+                        };
 
-          var F = player.forwardDirection();
 
-          player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce, y : -F.y * player.forwardForce });
-        }
+                        return stage;
 
-        if (this.keyPressed(overdrive.settings.players[1].keys.left)) {
-
-          Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((-Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
-          //player.rotate(-Math.PI * player.rotateSpeed);
-        }
-
-        if (this.keyPressed(overdrive.settings.players[1].keys.right)) {
-
-          Matter.Body.setAngularVelocity(player.mBody, 0);
-          player.rotate((Math.PI/180) * player.rotateSpeed * (deltaTime/1000));
-          //player.rotate(Math.PI * player.rotateSpeed);
-        }
-      }
-    }
-
-
-    // Controller input handlers
-    this.handleGamepadInput = function(player, playerIndex, deltaTime) {
-
-      const gamepadIndex = overdrive.Gamepad.bindings[playerIndex].gamepadIndex;
-
-      // Ensure still connected
-      var pad = overdrive.Gamepad.gamepads[gamepadIndex];
-
-      if (pad && pad.connected) {
-
-        if (pad.buttons[0].pressed) {
-
-          var F = player.forwardDirection();
-
-          player.applyForce(player.mBody.position, { x : F.x * player.forwardForce, y : F.y * player.forwardForce });
-        }
-
-        if (pad.buttons[1].pressed) {
-
-          var F = player.forwardDirection();
-
-          player.applyForce(player.mBody.position, { x : -F.x * player.forwardForce * 0.25, y : -F.y * player.forwardForce *0.25 }); // scale reverse force
-        }
-
-        // Calculate turn as a continuous function of pad.axes[0]
-        Matter.Body.setAngularVelocity(player.mBody, 0);
-
-        if (Math.abs(pad.axes[0]) > 0.1) {
-
-          player.rotate((Math.PI/180) * player.rotateSpeed * pad.axes[0] * (deltaTime / 1000));
-        }
-      }
-    }
-
-
-  };
-
-
-  return stage;
-
-})((OverDrive.Stages.MainGame || {}), OverDrive.canvas, OverDrive.context);
+                      })((OverDrive.Stages.MainGame || {}), OverDrive.canvas, OverDrive.context);
