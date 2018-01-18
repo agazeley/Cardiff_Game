@@ -162,6 +162,33 @@ OverDrive.Pickup = (function(lib, canvas, context) {
     };
   }
 
+  lib.initPickups = function(num,pickupTypes,engine,regions){
+    var pickups = [];
+
+    for(i =0; i < num; i++){
+
+      let rIndex = Math.floor(Math.random() * (regions.length - 1));
+      let pos = Matter.Vertices.centre(regions[rIndex].collisionModel.vertices);
+
+      pos.x *= canvas.width;
+      pos.y *= canvas.height;
+
+      let keys = Object.keys(pickupTypes);
+      let numKeys = keys.length;
+      let keyIndex = (Math.round(Math.random() * numKeys)) % numKeys;
+      let typeKey = keys[keyIndex];
+
+      newPickup = new lib.Pickup( { pos : pos,
+                                type : pickupTypes[typeKey],
+                                world : engine.world,
+                                boundingVolumeScale : 0.75,
+                                isStatic : true
+                              } );
+      pickups.push(newPickup);
+    }
+    return pickups;
+  }
+
   return lib;
 
 })((OverDrive.Pickup || {}), OverDrive.canvas, OverDrive.context);

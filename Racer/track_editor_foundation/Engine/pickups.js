@@ -116,6 +116,24 @@ function Pickup(config) {
 }
 
 
+function initPickups(num,pickupTypes,engine){
+  var pickups = [];
+
+  for(i =0; i < num; i++){
+    let keyIndex = (Math.round(Math.random() * numKeys)) % numKeys;
+    let typeKey = keys[keyIndex];
+    let pos = { x : Math.random() * 800, y : Math.random() * 600 };
+    newPickup = new Pickup( { pos : pos,
+                              type : pickupTypes[typeKey],
+                              world : engine.world,
+                              boundingVolumeScale : 0.75,
+                              isStatic : true
+                            } );
+    pickups.push(newPickup);
+  }
+  return pickups;
+}
+
 // Global pickup handler.  Return an object with the new pickup timer value and any new pickup object that has been created
 function processPickups(pickupTypes, engine, pickupTime, tDelta) {
 
@@ -131,7 +149,6 @@ function processPickups(pickupTypes, engine, pickupTime, tDelta) {
     let keys = Object.keys(pickupTypes);
     let numKeys = keys.length;
     let keyIndex = (Math.round(Math.random() * numKeys)) % numKeys;
-    let typeKey = keys[keyIndex];
 
     newPickup = new Pickup( { pos : pos,
                               type : pickupTypes[typeKey],
