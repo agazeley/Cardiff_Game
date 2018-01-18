@@ -6,6 +6,7 @@
 const main_game_font = 'tronregular'
 const secondary_game_font = 'tronsecondary';
 const tron_blue = '#18CAE6'
+const CONFIG_lapsToWin = 1;
 
 const player1Name = 'Player 1';
 

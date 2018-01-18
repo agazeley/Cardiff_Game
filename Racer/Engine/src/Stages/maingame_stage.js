@@ -113,7 +113,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
   let scenery = OverDrive.Game.scenery;
 
   // Should be 3, currently is 1 for testing
-  let lapsToWin = 1;
+  let lapsToWin = CONFIG_lapsToWin;
 
 
   //
@@ -531,7 +531,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
             this.mainLoopActual = function() {
 
-            
+
             // Manage pickups
             let pickupStatus = OverDrive.Pickup.processPickups(
                 self.pickupTypes,

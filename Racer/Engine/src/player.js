@@ -252,7 +252,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
         // Now you can fire a shell
         // config requirements
         // type, owner, type.range, type.strength, type.mass, type.range,type.rechargeTime,type.spriteURI
-        
+
         Matter.World.add(overdrive.engine.world, []);
       }
     }
@@ -261,12 +261,13 @@ OverDrive.Game = (function(gamelib, canvas, context) {
     //
 
     this.doCollision = function(otherBody, env) {
+      // DEBUGGING MESS  UNCOMMENT TO SEE ALL COLLISIONS
       //console.log('Collision with ' + otherBody.mbody.type + ' at ' + otherBody.mBody.position.x + ', ' + otherBody.mBody.position.y);
-      console.log('doCollision called');
-      console.log('This');
-      console.log(this);
-      console.log('otherBody');
-      console.log(otherBody);
+      //console.log('doCollision called');
+      // console.log('This');
+      //console.log(this);
+      //console.log('otherBody');
+      //console.log(otherBody);
       otherBody.collideWithPlayer(this, {
 
         objA: env.objB,
