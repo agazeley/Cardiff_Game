@@ -15,7 +15,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
   stage.MainGame.prototype.createTrack = function() {
     var self = this;
-    console.log('Creating Track with trackIndex: ' + OverDrive.Stages.MainGame.trackIndex);
+
     var track = tracks[self.trackIndex];
 
     // Setup region model for track
@@ -38,7 +38,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
   stage.MainGame.prototype.createScenery = function() {
 
     var self = this;
-    console.log('Creating scenery for track: ' + self.trackIndex);
+    
     // Setup track and scenery
     var track = tracks[self.trackIndex];
 

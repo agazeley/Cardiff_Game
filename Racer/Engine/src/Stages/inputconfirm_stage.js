@@ -124,15 +124,19 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       track1 = new Image;
       track1.src = tracks[0].trackImage.imageURL;
-      self.drawMapIMG(track1,50,90,tracks[0].name,100,60);
+      self.drawMapIMG(track1,20,90,tracks[0].name,70,60);
 
       track2 = new Image;
       track2.src = tracks[1].trackImage.imageURL;
-      self.drawMapIMG(track2,350,90,tracks[1].name,400,60);
+      self.drawMapIMG(track2,220,90,tracks[1].name,250,60);
 
       track3 = new Image;
       track3.src = tracks[2].trackImage.imageURL;
-      self.drawMapIMG(track3,650,90,tracks[2].name,700,60);
+      self.drawMapIMG(track3,420,90,tracks[2].name,470,60);
+
+      track4 = new Image;
+      track4.src = tracks[3].trackImage.imageURL;
+      self.drawMapIMG(track4,640,90,tracks[3].name,690,60);
 
       // Need to make it so when the 'returnToMenuButton' is clicked that the 'mapSelected' property becomes false again
       if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
@@ -148,6 +152,10 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
           self.mapSelected = true;
           OverDrive.Stages.MainGame.trackIndex = 2;
         }
+        else if (self.keyPressed('K_4')){
+          self.mapSelected = true;
+          OverDrive.Stages.mainGame.trackIndex = 3;
+        }
         else if (self.keyPressed('ESC')) {
           self.returnToMainMenu = true;
         }
@@ -155,7 +163,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
 
       if (self.mapSelected) {
-
         window.requestAnimationFrame(self.player1PreConfirm);
       }
       else if (self.returnToMainMenu) {
@@ -449,7 +456,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
     this.drawMapIMG = function(image, x, y,text,tx,ty) {
       context.fillText(text,tx,ty);
-      context.drawImage(image,x,y,300,300);
+      context.drawImage(image,x,y,200,200);
     }
   };
 
