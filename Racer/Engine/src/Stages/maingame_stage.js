@@ -309,7 +309,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       self.pickupArray = [];
       self.pickup_timer = pickup_time_delay;
 
-      //gain 100 points
+      //gain 50 points
       self.pickupTypes['points_pickup'] = new OverDrive.Pickup.PickupType(
       {
         spriteURI : 'Assets//Images//pw1.png',
@@ -321,7 +321,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         }
       } );
 
-      //gain temporary speed boost (2 seconds) and 50 points
+      //gain temporary speed boost (2 seconds)
       self.pickupTypes['speed_pickup'] = new OverDrive.Pickup.PickupType(
       {
         spriteURI : 'Assets//Images//pw2.png',
@@ -330,12 +330,13 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
           console.log('speed pickup');
           collector.addSpeed(0.004);
-          collector.addPoints(50);
           setTimeout(function(){collector.addSpeed(-0.004)},2000);
+          //add 10 points for a pickup
+          collector.addPoints(10);
         }
       } );
 
-      //increases car size (5 seconds) and 50 points
+      //increases car size (5 seconds)
       self.pickupTypes['scale_pickup'] = new OverDrive.Pickup.PickupType(
       {
         spriteURI : 'Assets//Images//pw3.png',
@@ -344,24 +345,25 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
           console.log('scale pickup');
           collector.increaseSize(0.5);
-          collector.addPoints(50);
           setTimeout(function(){collector.increaseSize(-0.5)},5000);
+          //add 10 points for a pickup
+          collector.addPoints(10);
         }
       } );
 
-      //decrease car size (5 seconds)
-      self.pickupTypes['scaledown_pickup'] = new OverDrive.Pickup.PickupType(
-      {
-        spriteURI : 'Assets//Images//pw5.png',
-        collisionGroup : 0,
-        handler : function(collector) {
-
-          console.log('scaledown pickup');
-          collector.increaseSize(-0.5);
-          collector.addPoints(50);
-          setTimeout(function(){collector.increaseSize(0.5)},5000);
-        }
-      } );
+      // //decrease car size (5 seconds)
+      // self.pickupTypes['scaledown_pickup'] = new OverDrive.Pickup.PickupType(
+      // {
+      //   spriteURI : 'Assets//Images//pw5.png',
+      //   collisionGroup : 0,
+      //   handler : function(collector) {
+      //
+      //     console.log('scaledown pickup');
+      //     collector.increaseSize(-0.5);
+      //     collector.addPoints(50);
+      //     setTimeout(function(){collector.increaseSize(0.5)},5000);
+      //   }
+      // } );
 
       //slowdown opponent (3 seconds)
       self.pickupTypes['slowdown_pickup'] = new OverDrive.Pickup.PickupType(
@@ -371,15 +373,16 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         handler : function(collector) {
 
           console.log('slowdown pickup');
-          console.log(collector.mBody.id)
-          if(collector.mBody.id === 60){
+          if(collector.pid === self.player2.pid){
             self.player1.addSpeed(-0.004);
             setTimeout(function(){self.player1.addSpeed(0.004)},3000);
           }
-          else {
+          else if (collector.pid === self.player1.pid) {
             self.player2.addSpeed(-0.004);
             setTimeout(function(){self.player2.addSpeed(0.004)},3000);
           }
+          //add 10 points for a pickup
+          collector.addPoints(10);
         }
       } );
 
@@ -391,15 +394,16 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         handler : function(collector) {
 
           console.log('friction pickup');
-          console.log(collector.mBody.id);
-          if(collector.mBody.id === 60){
+          if(collector.pid === self.player2.pid){
             self.player1.friction(500);
             setTimeout(function(){self.player1.friction(180)},5000);
           }
-          else {
+          else if (collector.pid === self.player1.pid) {
             self.player2.friction(500);
             setTimeout(function(){self.player2.friction(180)},5000);
           }
+          //add 10 points for a pickup
+          collector.addPoints(10);
         }
       } );
 
@@ -409,7 +413,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         spriteURI : 'Assets//Images//pw4.png',
         collisionGroup : 0,
         handler : function(collector) {
-          var numOfPickups = 3;
+          var numOfPickups = 5;
           var choice = Math.floor(Math.random() * (numOfPickups)) + 1;
 
           if (choice == 1){   //add 50 points
@@ -429,39 +433,39 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             collector.increaseSize(0.5);
             setTimeout(function(){collector.increaseSize(-0.5)},5000);
           }
-
-          else if (choice == 4) { //decrease car size
-
-            console.log('scaledown pickup');
-            collector.increaseSize(-0.5);
-            setTimeout(function(){collector.increaseSize(0.5)},5000);
-          }
-          else if (choice == 5) {   //slowdown opponent
+          // else if (choice == 4) { //decrease car size
+          //
+          //   console.log('scaledown pickup');
+          //   collector.increaseSize(-0.5);
+          //   setTimeout(function(){collector.increaseSize(0.5)},5000);
+          // }
+          else if (choice == 4) {   //slowdown opponent
 
             console.log('slowdown pickup');
-            if(collector.mBody.id === 60){
+            if(collector.pid === self.player2.pid) {
               self.player1.addSpeed(-0.004);
               setTimeout(function(){self.player1.addSpeed(0.004)},3000);
             }
-            else {
+            else if (collector.pid === self.player1.pid) {
               self.player2.addSpeed(-0.004);
               setTimeout(function(){self.player2.addSpeed(0.004)},3000);
             }
           }
-          else if (choice == 6) {   //rotate speed set to 500
+          else if (choice == 5) {   //rotate speed set to 500
 
             console.log('friction pickup');
-            if(collector.mBody.id === 60){
+            if(collector.pid === self.player2.pid){
               self.player1.friction(500);
               setTimeout(function(){self.player1.friction(180)},5000);
             }
-            else {
+            else if (collector.pid === self.player1.pid) {
               self.player2.friction(500);
               setTimeout(function(){self.player2.friction(180)},5000);
             }
           }
 
-
+          //add 10 points for a pickup
+          collector.addPoints(10);
         }
       } );
 
@@ -590,7 +594,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         overdrive.scores = [];
       }
       overdrive.scores.push({name : wname, score : wscore, time : wtime, track : wtrack});
-      overdrive.sortTimes();
+      overdrive.sortScores();
       overdrive.scores.splice(10);
       this.storeLeaderboard();
     }
