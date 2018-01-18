@@ -124,15 +124,15 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
       track1 = new Image;
       track1.src = tracks[0].trackImage.imageURL;
-      self.drawMapIMG(track1,50,90,'T Outline',100,60);
+      self.drawMapIMG(track1,50,90,tracks[0].name,100,60);
 
       track2 = new Image;
       track2.src = tracks[1].trackImage.imageURL;
-      self.drawMapIMG(track2,350,90,'T track',410,60);
+      self.drawMapIMG(track2,350,90,tracks[1].name,400,60);
 
       track3 = new Image;
       track3.src = tracks[2].trackImage.imageURL;
-      self.drawMapIMG(track3,650,90,'Test Track',700,60);
+      self.drawMapIMG(track3,650,90,tracks[2].name,700,60);
 
       // Need to make it so when the 'returnToMenuButton' is clicked that the 'mapSelected' property becomes false again
       if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Keyboard) {
