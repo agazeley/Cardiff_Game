@@ -44,7 +44,7 @@ OverDrive.Pickup = (function(lib, canvas, context) {
 
     // DEBUG
     var vertices = self.mBody.vertices;
-    console.log('pickup at : ' + vertices[0].x + ', ' + vertices[0].y);
+    //console.log('pickup at : ' + vertices[0].x + ', ' + vertices[0].y);
 
 
 

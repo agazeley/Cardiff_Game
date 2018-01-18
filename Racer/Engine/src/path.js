@@ -76,7 +76,6 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     // Path collision interface
     this.doCollision = function(otherBody, env) {
-
       // Reverse collider order for 2nd dispatch - so all recievers assume objA is associated collider
       otherBody.collideWithPath(this, {
 
@@ -170,6 +169,9 @@ OverDrive.Game = (function(gamelib, canvas, context) {
               pathLocation.nextExpectedRegions.push(self.regions[pathLocation.currentRegionIndex].graph[j].index);
           }
         }
+      }
+      else{
+        console.log('Not valid region?');
       }
 
     }

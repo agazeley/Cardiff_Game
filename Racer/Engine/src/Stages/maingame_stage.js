@@ -371,7 +371,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         handler : function(collector) {
 
           console.log('slowdown pickup');
-          console.log(collector.mBody.id)
+          //console.log(collector.mBody.id)
           if(collector.mBody.id === 60){
             self.player1.addSpeed(-0.004);
             setTimeout(function(){self.player1.addSpeed(0.004)},3000);
@@ -391,7 +391,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         handler : function(collector) {
 
           console.log('friction pickup');
-          console.log(collector.mBody.id);
+          //console.log(collector.mBody.id);
           if(collector.mBody.id === 60){
             self.player1.friction(500);
             setTimeout(function(){self.player1.friction(180)},5000);
