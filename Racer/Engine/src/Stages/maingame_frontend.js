@@ -14,13 +14,15 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.initialiseCamera();
 
     this.initialisePickupTypes();
+    console.log('Pickup types created');
     this.createStartingPickups();
-
+    console.log('Starting pickups created');
     this.createPlayer1();
     this.createPlayer2();
     this.startClock();
 
     this.startGameLoop();
+    console.log('MainGame Setup complete');
   }
 
 

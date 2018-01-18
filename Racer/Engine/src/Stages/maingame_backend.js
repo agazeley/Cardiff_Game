@@ -221,7 +221,8 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       self.regions
     );
 
-    self.starting_pickups = starting_pickups;
+    OverDrive.Stages.MainGame.starting_pickups = starting_pickups;
+    console.log(self);
   }
 
   stage.MainGame.prototype.createPlayer1 = function() {
