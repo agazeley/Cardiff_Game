@@ -12,6 +12,10 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.createScenery();
     this.setupBackground();
     this.initialiseCamera();
+
+    this.initialisePickupTypes();
+    this.createStartingPickups();
+
     this.createPlayer1();
     this.createPlayer2();
     this.startClock();

@@ -173,9 +173,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.lapTime = 0;
 
     this.pickupTypes = null; // Pickup TYPES
-    this.pickupArray = OverDrive.Pickup.initPickups(
-      self.pickupTypes
-    )
+    this.pickupArray = this.starting_pickups;
 
 
     //
@@ -336,7 +334,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
                     //add 10 points for collecting a pickup
                     collector.addPoints(10);
                   }
-                } );
+              });
 
                 // //increases car size (5 seconds)
                 // self.pickupTypes['scale_pickup'] = new OverDrive.Pickup.PickupType(
@@ -370,7 +368,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
                 //slowdown opponent (3 seconds)
             self.pickupTypes['slowdown_pickup'] = new OverDrive.Pickup.PickupType(
-                  {
+              {
                     spriteURI : 'Assets//Images//pw6.png',
                     collisionGroup : 0,
                     handler : function(collector) {
@@ -388,10 +386,9 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
                       collector.addPoints(10);
                     }
                   } );
-
-                  //decreases friction of opponent (5 seconds)
+            //decreases friction of opponent (5 seconds)
             self.pickupTypes['friction_pickup'] = new OverDrive.Pickup.PickupType(
-                    {
+              {
                       spriteURI : 'Assets//Images//pw7.png',
                       collisionGroup : 0,
                       handler : function(collector) {

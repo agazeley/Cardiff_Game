@@ -184,6 +184,7 @@ OverDrive.Pickup = (function(lib, canvas, context) {
                                 boundingVolumeScale : 0.75,
                                 isStatic : true
                               } );
+      console.log(newPickup);
       pickups.push(newPickup);
     }
     return pickups;
