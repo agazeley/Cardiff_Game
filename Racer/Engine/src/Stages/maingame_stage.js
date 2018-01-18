@@ -536,7 +536,6 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         Matter.World.add(overdrive.engine.world, [pickupStatus.newPickup.mBody]);
         self.pickupArray.push(pickupStatus.newPickup);
-      else if(shell){}
       }
 
 
