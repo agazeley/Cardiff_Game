@@ -12,7 +12,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.createScenery();
     this.setupBackground();
     this.initialiseCamera();
-
+    console.log('Camera Init');
     this.initialisePickupTypes();
     console.log('Pickup types created');
     this.createStartingPickups();

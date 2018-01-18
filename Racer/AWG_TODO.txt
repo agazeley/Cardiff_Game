@@ -1,7 +1,6 @@
 TODO
 
 Leadboard
-
 - Add map based leaderboard
 
 TrackSelect
@@ -12,4 +11,3 @@ TrackSelect
 MainMenu
 - Test for bugs you havent found
 - formatting?
-

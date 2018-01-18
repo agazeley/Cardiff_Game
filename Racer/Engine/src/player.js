@@ -285,7 +285,6 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     this.collideWithPickup = function(pickup, env) {
       console.log('collided with pickup at ' + pickup.x + '  ' + pickup.y);
-      console.log(pickup)
       pickup.collideWithPlayer(this, {
 
         objA: env.objB,
