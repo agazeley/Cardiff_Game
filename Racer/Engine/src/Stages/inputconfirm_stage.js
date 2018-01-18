@@ -212,6 +212,9 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
 
           self.player1Selected = true;
         }
+        else if (self.keyPressed('ESC')) {
+          self.returnToMainMenu = true;
+        }
       }
       else if (overdrive.settings.players[0].mode==OverDrive.Game.InputMode.Gamepad) {
 
@@ -303,6 +306,9 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
         if (self.keyPressed(overdrive.settings.players[1].keys.forward)) {
 
           self.player2Selected = true;
+        }
+        else if (self.keyPressed('ESC')) {
+          self.returnToMainMenu = true;
         }
       }
       else if (overdrive.settings.players[1].mode==OverDrive.Game.InputMode.Gamepad) {
