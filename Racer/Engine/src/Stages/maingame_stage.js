@@ -210,6 +210,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
             $(document).on('keyup', self.onKeyUp);
             $(document).on('keydown', self.onKeyDown);
+            $("#canvas").css('left', '0px');
 
             var track = tracks[self.trackIndex];
 
@@ -679,6 +680,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             self.leaveState.id = 'mainMenu';
             self.leaveState.params = {}; // params setup as required by target state
 
+            $("#canvas").css('left', '500px');
 
             var target = self.transitionLinks[self.leaveState.id];
 
