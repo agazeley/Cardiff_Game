@@ -22,9 +22,10 @@
   <img src='Assets/Images/tron_banner.jpg' class='banner' />
 
   <div id='GameDiv'>
-    <canvas id='fullCanvas' width='600' height='400'>:(</canvas>
-    <canvas id='canvas' width='600' height='200'>:(</canvas>
-    <canvas id='canvas2' width='600' height='200'>:(</canvas>
+    <canvas id='fullCanvas' width='1000' height='800'>:(</canvas>
+    <canvas id='canvas' width='1000' height='400'>:(</canvas>
+    <canvas id='canvas2' width='1000' height='400'>:(</canvas>
+    <canvas id='canvas2-overlay' width='1000' height='400'>:(</canvas>
   </div>
 
   <div>
@@ -45,7 +46,6 @@
   <script>
     // Minimise global namespace pollution - all relevant types reside in OverDrive
     var OverDrive = {
-
       Game: {
         tracks: [],
         scenery: []
@@ -53,16 +53,15 @@
       Stages: {},
       stageGraph: null
     }
-
     OverDrive.canvas = document.getElementById('canvas');
     OverDrive.context = OverDrive.canvas.getContext('2d');
     OverDrive.canvas2 = document.getElementById('canvas2');
     OverDrive.context2 = OverDrive.canvas2.getContext('2d');
+    OverDrive.canvas2overlay = document.getElementById('canvas2-overlay');
+    OverDrive.context2overlay = OverDrive.canvas2overlay.getContext('2d');
     OverDrive.fullCanvas = document.getElementById('fullCanvas');
     OverDrive.fullContext = OverDrive.fullCanvas.getContext('2d');
-
     OverDrive.init = function() {
-
       // Create and run game stage graph
       let splashScreen = OverDrive.Stages.SplashScreen.Create();
       let mainMenu = OverDrive.Stages.MainMenu.Create();
@@ -71,22 +70,18 @@
       let mainGame = OverDrive.Stages.MainGame.Create();
       let settings = OverDrive.Stages.Config.Create();
       let leaderboard = OverDrive.Stages.Leaderboard.Create();
-
       splashScreen.setTransition('mainMenu', mainMenu);
       mainMenu.setTransition('credits', credits);
       mainMenu.setTransition('mainGame', inputConfirm);
       mainMenu.setTransition('config', settings);
       mainMenu.setTransition('highScores', leaderboard);
-
       leaderboard.setTransition('mainMenu', mainMenu);
       credits.setTransition('mainMenu', mainMenu);
       inputConfirm.setTransition('mainGame', mainGame);
       inputConfirm.setTransition('mainMenu', mainMenu);
       mainGame.setTransition('mainMenu', mainMenu);
       settings.setTransition('mainMenu', mainMenu);
-
-      OverDrive.stageGraph = splashScreen;
-
+      OverDrive.stageGraph = mainGame;
       OverDrive.stageGraph.init();
     }
   </script>
@@ -126,8 +121,8 @@
   <script src='Engine/src/Stages/mainmenu_stage.js'></script>
 
   <!-- Level and Track models -->
-  <script src='Levels/mario.odt.js'></script>
-  <script src='Levels/mario.od_scenery.js'></script>
+  <script src='Levels/mario_big.odt.js'></script>
+  <script src='Levels/mario_big.od_scenery.js'></script>
 
 </body>
 

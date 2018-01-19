@@ -42,7 +42,7 @@ OverDrive.Game = (function(gamelib) {
         this.pos.x = (player.mBody.position.x);
         this.pos.y = (player.mBody.position.y);
 
-        this.width = 500;
+        this.width = 400;
         this.height = this.width * (self.canvas.height / self.canvas.width);
 
         this.netRotation = player.mBody.angle;
@@ -218,7 +218,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
 
       // Add bounds so you cannot go off the screen
-      var b0 = Matter.Bodies.rectangle(-50, self.canvas.height / 2, 100, self.canvas.height, {
+      /*var b0 = Matter.Bodies.rectangle(-50, self.canvas.height / 2, 100, self.canvas.height, {
         isStatic: true
       });
       var b1 = Matter.Bodies.rectangle(self.canvas.width + 50, self.canvas.height / 2, 100, self.canvas.height, {
@@ -247,7 +247,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       b3.collisionFilter.category = OverDrive.Game.CollisionModel.StaticScene.Category;
       b3.collisionFilter.mask = OverDrive.Game.CollisionModel.StaticScene.Mask;
 
-      Matter.World.add(OverDrive.Game.system.engine.world, [b0, b1, b2, b3]);
+      Matter.World.add(OverDrive.Game.system.engine.world, [b0, b1, b2, b3]);*/
 
 
       // Register on-collision event
@@ -362,7 +362,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       OverDrive.Game.drawHUD(self.player1, self.player2, false, self.lapTime, self.path.maxIterations);
 
       // Iterate through countdown
-      if (self.countDownSecondsElapsed < 3) {
+      if (false && self.countDownSecondsElapsed < 3) {
 
         window.requestAnimationFrame(self.phaseInLoop);
       } else {
@@ -535,16 +535,16 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
         self.context.save();
 
-        //self.context.scale(self.canvas.width / self.orthoCamera.width, self.canvas.height / self.orthoCamera.height);
-        //self.context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
+        self.context.scale(self.canvas.width / self.orthoCamera.width, self.canvas.height / self.orthoCamera.height);
+        self.context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
 
         // Center rotation axis on player
-        //self.context.translate(self.orthoCamera.pos.x,
-        //  self.orthoCamera.pos.y);
+        self.context.translate(self.orthoCamera.pos.x,
+          self.orthoCamera.pos.y);
         // Rotate map to align with player orientation
-        //self.context.rotate(-self.orthoCamera.netRotation);
+        self.context.rotate(-self.orthoCamera.netRotation);
         // Revert canvas to original position
-        //self.context.translate(-self.orthoCamera.pos.x, -self.orthoCamera.pos.y);
+        self.context.translate(-self.orthoCamera.pos.x, -self.orthoCamera.pos.y);
       }
 
 
@@ -564,7 +564,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
     this.renderSecondScene = function() {
 
       // Update camera
-      self.orthoCamera.calculateCameraWindow(self.player1);
+      self.orthoCamera.calculateCameraWindow(self.player2);
 
       if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
 
@@ -600,7 +600,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       // Draw background
       if (self.backgroundImage) {
 
-        self.backgroundImage.draw(self.canvas, self.context);
+        self.backgroundImage.drawNormal(self.canvas, self.context);
       }
 
       // Draw player1
@@ -626,7 +626,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
       // Draw background
       if (self.backgroundImage) {
 
-        self.backgroundImage.draw2(self.canvas2, self.context2);
+        self.backgroundImage.drawNormal2(self.canvas2, self.context2);
       }
 
       // Draw player1

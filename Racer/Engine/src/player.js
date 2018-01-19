@@ -221,7 +221,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
         this.rotate = function(dTheta) {
 
-            Body.rotate(this.mBody, dTheta);
+            Body.rotate(this.mBody, dTheta * 0.4);
         }
 
 

@@ -1,4 +1,3 @@
-
 /* OverDrive page layout and style properties */
 
 
@@ -52,8 +51,8 @@ body {
 
 #GameDiv {
 
-  width : 604px;
-  height : 404px;
+  width : 1004px;
+  height : 804px;
   position : relative;
   margin-left : auto;
   margin-right : auto;
@@ -66,7 +65,11 @@ body {
   position: absolute;
 }
 
-
+#canvas2-overlay {
+    position: absolute;
+    top: 200;
+    left: 0;
+}
 
 #player1Div {
 
