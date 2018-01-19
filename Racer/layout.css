@@ -93,6 +93,7 @@ body {
 #canvas {
     position: relative;
     float: left;
+    left: 500px;
 }
 
 #canvas2 {

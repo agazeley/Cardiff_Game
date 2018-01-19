@@ -40,7 +40,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
           height: h * self.scale * config.boundingVolumeScale
         };
 
-        self.mBody = Bodies.rectangle(config.x, config.y, size.width, size.height);
+        self.mBody = Bodies.circle(config.x, config.y, size.width/2);
         Body.setAngle(self.mBody, config.angle);
         self.size = size;
 
@@ -198,22 +198,22 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     this.applyTorque = function(pos, t) {
 
-      var F = this.forwardDirection();
+      /*var F = this.forwardDirection();
       var T = {
         x: -F.y,
         y: F.x
       };
 
       player1.applyForce(pos, {
-        x: T.x * t,
-        y: T.y * t
-      });
+        x: T.x * t*0.2,
+        y: T.y * t*0.2
+    });*/
 
       // Apply inverse force to centre of mass to only induce rotation (TOO SPECIFIC TO OVERDRIVE???)
-      player1.applyForce(player1.mBody.position, {
+      /*player1.applyForce(player1.mBody.position, {
         x: T.x * -t,
         y: T.y * -t
-      });
+    });*/
     }
 
 
@@ -242,7 +242,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     this.friction = function(frictionDelta) {
 
-      this.rotateSpeed = frictionDelta;
+      this.rotateSpeed = 0 ;
     }
 
     this.updateStrength = function(strengthDelta) {
