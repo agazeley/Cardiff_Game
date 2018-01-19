@@ -23,6 +23,7 @@
 
   <div id='GameDiv'>
     <canvas id='canvas' width='1000' height='800'>:(</canvas>
+    <canvas id='canvas2' width='1000' height='800'>:(</canvas>
   </div>
 
   <div>
@@ -54,6 +55,8 @@
 
     OverDrive.canvas = document.getElementById('canvas');
     OverDrive.context = OverDrive.canvas.getContext('2d');
+    OverDrive.canvas2 = document.getElementById('canvas2');
+    OverDrive.context2 = OverDrive.canvas2.getContext('2d');
 
     OverDrive.init = function() {
 
@@ -79,7 +82,7 @@
       mainGame.setTransition('mainMenu', mainMenu);
       settings.setTransition('mainMenu', mainMenu);
 
-      OverDrive.stageGraph = splashScreen;
+      OverDrive.stageGraph = mainGame;
 
       OverDrive.stageGraph.init();
     }

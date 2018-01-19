@@ -16,6 +16,9 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     var self = this;
 
+    this.canvas2 = OverDrive.canvas;
+    this.context2 = OverDrive.context2;
+
     this.strength = 100;
     this.score = 0;
     this.scale = config.scale;
@@ -84,6 +87,25 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
         context.restore();
       }
+
+    }
+
+    this.draw2 = function() {
+
+        if (this.mBody) {
+
+            this.context2.save();
+
+            var pos = this.mBody.position;
+            var theta = this.mBody.angle;
+
+            this.context2.translate(pos.x, pos.y);
+            this.context2.rotate(theta);
+            this.context2.translate(-this.sprite.image.width * this.scale / 2, -this.sprite.image.height * this.scale / 2);
+            this.sprite.draw2(0, 0, this.scale, this.canvas2, this.context2);
+
+            this.context2.restore();
+        }
 
     }
 

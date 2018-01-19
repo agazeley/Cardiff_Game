@@ -23,6 +23,9 @@ OverDrive.Pickup = (function(lib, canvas, context) {
     this.type = config.type;
     this.scale = pickup_sprite_scale;
 
+    this.canvas2 = OverDrive.canvas2;
+    this.context2 = OverDrive.context2;
+
     var size = { width : this.type.sprite.image.width * this.scale * config.boundingVolumeScale,
                  height : this.type.sprite.image.height * this.scale * config.boundingVolumeScale };
 
@@ -69,6 +72,23 @@ OverDrive.Pickup = (function(lib, canvas, context) {
       }
     }
 
+    this.draw2 = function() {
+
+      if (self.mBody) {
+
+        this.context2.save();
+
+        var pos = self.mBody.position;
+
+        this.context2.translate(pos.x, pos.y);
+        this.context2.translate(-self.type.sprite.image.width * self.scale / 2, -self.type.sprite.image.height * self.scale / 2);
+        self.type.sprite.draw2(0, 0, self.scale);
+
+        this.context2.restore();
+
+        //this.drawBoundingVolume();
+      }
+    }
 
     this.drawBoundingVolume = function() {
 
