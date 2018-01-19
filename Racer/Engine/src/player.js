@@ -262,9 +262,9 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
     this.doCollision = function(otherBody, env) {
       // DEBUGGING MESS  UNCOMMENT TO SEE ALL COLLISIONS
-      //console.log('Collision with ' + otherBody.mbody.type + ' at ' + otherBody.mBody.position.x + ', ' + otherBody.mBody.position.y);
+      console.log('Collision with ' + otherBody.mBody.type + ' at ' + otherBody.mBody.position.x + ', ' + otherBody.mBody.position.y);
       //console.log('doCollision called');
-      // console.log('This');
+      //console.log('This');
       //console.log(this);
       //console.log('otherBody');
       //console.log(otherBody);
@@ -284,7 +284,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
     this.collideWithProjectile = function(projectile, env) {}
 
     this.collideWithPickup = function(pickup, env) {
-      console.log('collided with pickup at ' + pickup.x + '  ' + pickup.y);
+      console.log('collided with pickup at ' + pickup.mBody.position.x + '  ' + pickup.mBody.position.y);
       pickup.collideWithPlayer(this, {
 
         objA: env.objB,

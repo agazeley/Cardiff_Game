@@ -3,7 +3,6 @@
 // Pickup handling
 //
 
-
 OverDrive.Pickup = (function(lib, canvas, context) {
 
   // Pickup type
@@ -122,6 +121,10 @@ OverDrive.Pickup = (function(lib, canvas, context) {
 
   }
 
+  // Map 1 inited pickups player goes right through
+  // Map 2 inited pickups player can collect but they have no properties?
+  // Map 3 inited pickups work?
+  // Map 4 does not  work....needs to be re-bounded in region 18-20?
 
 
   // Global pickup handler.  Return an object with the new pickup timer value and any new pickup object that has been created
@@ -162,12 +165,18 @@ OverDrive.Pickup = (function(lib, canvas, context) {
     };
   }
 
+  function getRandom(min,max){
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   lib.initPickups = function(num,pickupTypes,engine,regions){
     var pickups = [];
 
     for(i =0; i < num; i++){
-
-      let rIndex = Math.floor(Math.random() * (regions.length - 1));
+      // 31,33,37
+      let rIndex = getRandom(3,20);
       let pos = Matter.Vertices.centre(regions[rIndex].collisionModel.vertices);
 
       pos.x *= canvas.width;
@@ -185,6 +194,7 @@ OverDrive.Pickup = (function(lib, canvas, context) {
                                 isStatic : true
                               } );
       pickups.push(newPickup);
+      console.log('New Pickup at X: ' + newPickup.mBody.position.x + ' Y: ' + newPickup.mBody.position.y)
     }
     return pickups;
   }

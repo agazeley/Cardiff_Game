@@ -154,7 +154,7 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
         }
         else if (self.keyPressed('K_4')){
           self.mapSelected = true;
-          OverDrive.Stages.mainGame.trackIndex = 3;
+          OverDrive.Stages.MainGame.trackIndex = 3;
         }
         else if (self.keyPressed('ESC')) {
           self.returnToMainMenu = true;
