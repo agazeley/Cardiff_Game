@@ -17,13 +17,17 @@ OverDrive.Game = (function(gamelib, canvas, context) {
 
         var self = this;
 
-        this.pos = {
+        this.pos1 = {
             x: canvas.width / 2,
             y: canvas.height / 2
         };
-        this.width = canvas.width;
-        this.height = canvas.height;
-
+        this.pos2 = {
+            x: canvas.width / 2,
+            y: canvas.height / 2
+        };
+        this.width = 200;
+        this.height = this.width * (canvas.height / canvas.width);
+        this.netRotation = 0;
         this.mode = initMode;
 
 
@@ -44,21 +48,22 @@ OverDrive.Game = (function(gamelib, canvas, context) {
             // Note: self.pos is in an intermediate state after calling this function.
             var preCalculatePosition = function(player1, player2) {
 
-                self.pos.x = (player1.mBody.position.x + player2.mBody.position.x) / 2;
-                self.pos.y = (player1.mBody.position.y + player2.mBody.position.y) / 2;
+                self.pos1.x = player1.mBody.position.x;
+                self.pos1.y = player1.mBody.position.y;
+                self.pos2.x = player2.mBody.position.x;
+                self.pos2.y = player2.mBody.position.y;
             }
 
             var calculateWindowExtent = function(player1, player2) {
 
-                var dx = Math.abs(player1.mBody.position.x - player2.mBody.position.x);
+                /*var dx = Math.abs(player1.mBody.position.x - player2.mBody.position.x);
                 var dy = Math.abs(player1.mBody.position.y - player2.mBody.position.y);
 
                 //var dist = Math.max(dx, dy);
                 var dist = Math.sqrt(dx * dx + dy * dy);
 
-                self.width = Math.min(canvas.width, Math.max(300, fn(dist)));
-
-                self.height = self.width * (canvas.height / canvas.width);
+                self.width = 100;
+                self.height = this.width * (canvas.height / canvas.width);*/
             }
 
             if (player1.mBody && player2.mBody) {
@@ -66,27 +71,13 @@ OverDrive.Game = (function(gamelib, canvas, context) {
                 preCalculatePosition(player1, player2);
                 calculateWindowExtent(player1, player2);
 
-                // Now calculate final position, ensuring camera window does not extend beyond the canvas
-                if (self.pos.x - (self.width / 2) < 0) {
-
-                    self.pos.x = self.width / 2;
-                } else if (self.pos.x + (self.width / 2) >= canvas.width) {
-
-                    self.pos.x = canvas.width - (self.width / 2);
-                }
-
-                if (self.pos.y - (self.height / 2) < 0) {
-
-                    self.pos.y = self.height / 2;
-                } else if (self.pos.y + (self.height / 2) >= canvas.height) {
-
-                    self.pos.y = canvas.height - (self.height / 2);
-                }
+                this.netRotation1 = player1.mBody.angle;
+                this.netRotation2 = player2.mBody.angle;
             }
         }
 
         this.drawTestWindow = function() {
-
+/*
             if (self.mode == gamelib.CameraMode.Test) {
 
                 context.beginPath();
@@ -101,7 +92,7 @@ OverDrive.Game = (function(gamelib, canvas, context) {
                 context.lineWidth = 1;
                 context.strokeStyle = '#FFF';
                 context.stroke();
-            }
+            }*/
         }
     }
 
@@ -184,6 +175,11 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         this.initialPickups = null;
         this.pickupArray = null;
 
+
+        this.canvas = OverDrive.canvas;
+        this.context = OverDrive.context;
+        this.canvas2 = OverDrive.canvas2;
+        this.context2 = OverDrive.context2;
 
         //
         // Stage interface implementation
@@ -520,6 +516,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
 
             // Redraw scene
             self.renderMainScene();
+            self.renderSecondScene();
 
             // Draw countdown
             context.fillStyle = '#FFF';
@@ -606,6 +603,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             Matter.Engine.update(overdrive.engine, overdrive.gameClock.deltaTime);
 
             self.renderMainScene();
+            self.renderSecondScene();
 
             // Draw winner message
             context.fillStyle = '#FFF';
@@ -722,7 +720,15 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
                 context.save();
 
                 context.scale(canvas.width / self.orthoCamera.width, canvas.height / self.orthoCamera.height);
-                context.translate(-(self.orthoCamera.pos.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos.y - (self.orthoCamera.height / 2)));
+                context.translate(-(self.orthoCamera.pos1.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos1.y - (self.orthoCamera.height / 2)));
+
+                // Center rotation axis on player
+                context.translate(self.orthoCamera.pos1.x,
+                  self.orthoCamera.pos1.y);
+                // Rotate map to align with player orientation
+                context.rotate(-self.orthoCamera.netRotation1);
+                // Revert canvas to original position
+                context.translate(-self.orthoCamera.pos1.x, -self.orthoCamera.pos1.y);
             }
 
 
@@ -739,6 +745,40 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             }
         }
 
+
+        this.renderSecondScene = function() {
+
+              // Update camera
+              //self.orthoCamera.calculateCameraWindow(self.player1, self.player2);
+
+              if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
+
+                self.context2.save();
+
+                self.context2.scale(self.canvas2.width / self.orthoCamera.width, self.canvas2.height / self.orthoCamera.height);
+                self.context2.translate(-(self.orthoCamera.pos2.x - (self.orthoCamera.width / 2)), -(self.orthoCamera.pos2.y - (self.orthoCamera.height / 2)));
+
+                // Center rotation axis on player
+                self.context2.translate(self.orthoCamera.pos2.x,
+                  self.orthoCamera.pos2.y);
+                // Rotate map to align with player orientation
+                self.context2.rotate(-self.orthoCamera.netRotation2);
+                // Revert canvas to original position
+                self.context2.translate(-self.orthoCamera.pos2.x, -self.orthoCamera.pos2.y);
+              }
+
+              // Render latest frame
+              self.drawLevel2();
+
+
+              if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Normal) {
+
+                self.context2.restore();
+              } else if (self.orthoCamera.mode == OverDrive.Game.CameraMode.Test) {
+
+                self.orthoCamera.drawTestWindow();
+              }
+        }
 
         this.drawLevel = function() {
 
@@ -766,6 +806,31 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
             OverDrive.Game.drawObjects(self.pickupArray);
         }
 
+        this.drawLevel2 = function() {
+
+              // Draw background
+              if (self.backgroundImage) {
+
+                self.backgroundImage.draw2(self.canvas2, self.context2);
+              }
+
+              // Draw player1
+              if (self.player1) {
+
+                self.player1.draw2(self.canvas2, self.context2);
+                //self.player1.drawBoundingVolume('#FFF');
+              }
+
+              // Draw player2
+              if (self.player2) {
+
+                self.player2.draw2(self.canvas2, self.context2);
+                //self.player2.drawBoundingVolume('#FFF');
+              }
+
+              // Render pickups
+              OverDrive.Game.drawObjects2(self.pickupArray);
+        }
 
         // Return true if any key is pressed at the time the function is called
         this.keyPressed = function(keyCode) {

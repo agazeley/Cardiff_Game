@@ -313,6 +313,7 @@ OverDrive.Stages.MainGame = (function(stage, canvas, context) {
         var self = this;
 
         self.renderMainScene();
+        self.renderSecondScene();
 
         // Draw Status
         OverDrive.Game.drawHUD(self.player1, self.player2, true, self.lapTime, self.path.maxIterations);

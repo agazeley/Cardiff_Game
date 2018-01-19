@@ -51,7 +51,7 @@ body {
 
 #GameDiv {
 
-  width : 1004px;
+  width : 2004px;
   height : 804px;
   position : relative;
   margin-left : auto;
@@ -60,15 +60,6 @@ body {
   background-color: black;
   border: 2px solid #18CAE6;
 }
-
-#canvas {
-
-  position: absolute;
-  left : 0px;
-  top : 0px;
-  z-index : 0;
-}
-
 
 
 #player1Div {
@@ -99,6 +90,15 @@ body {
   background-color: #fff9;
 }
 
+#canvas {
+    position: relative;
+    float: left;
+}
+
+#canvas2 {
+    position: relative;
+    float: right;
+}
 
 .form-control{
   width: 105%;

@@ -14,6 +14,18 @@ OverDrive.Game = (function(gamelib, canvas, context) {
     }
   }
 
+  // Function to iterate through an array and draw contained objects
+  gamelib.drawObjects2 = function(collection) {
+
+    for (i=0;i<collection.length; ++i) {
+
+      if (collection[i]) {
+
+        collection[i].draw2();
+      }
+    }
+  }
+
 
   // canvas event handler to enter fullscreen mode
   gamelib.enterFullscreen = function(element) {
