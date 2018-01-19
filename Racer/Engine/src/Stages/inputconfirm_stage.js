@@ -400,7 +400,6 @@ OverDrive.Stages.InputConfirm = (function(stage, canvas, context) {
       self.leaveState.params = null;
     }
 
-
     // Event handling functions
 
     this.onKeyDown = function(event) {

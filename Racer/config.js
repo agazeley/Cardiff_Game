@@ -9,9 +9,9 @@ const secondary_game_font = 'tronsecondary';
 
 const tron_blue = '#18CAE6'
 
-const CONFIG_lapsToWin = 1;
+const CONFIG_lapsToWin = 3;
 
-const initial_pickup_counter = 5;
+const initial_pickup_counter = 2;
 
 const player_name_max_length = '4';
 
@@ -33,7 +33,6 @@ const pickup_sprite_scale = 0.75; // Bigger number = larger sprite!
 
 const pickup_time_delay = 5; // Delay (in seconds) between coins appearing
 
-const starting_pickups = 5;
 
 const points_on_hit = 100; // depricated
 const player_sprite_scale = 2.5; // depricated
