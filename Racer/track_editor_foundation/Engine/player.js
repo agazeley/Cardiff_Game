@@ -208,11 +208,6 @@ OverDrive.Game = (function(gamelib, canvas, context) {
       this.forwardForce =  Math.max(0.001, this.forwardForce + speedDelta);
     }
 
-    this.increaseSize = function(size) {
-
-      this.scale = Math.max(0.5, this.scale + size);
-    }
-
     this.friction = function(frictionDelta) {
 
       this.rotateSpeed = frictionDelta;
