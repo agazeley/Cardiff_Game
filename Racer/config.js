@@ -13,9 +13,11 @@ const CONFIG_lapsToWin = 1;
 
 const initial_pickup_counter = 5;
 
-const player1Name = 'Player 1';
+const player_name_max_length = '4';
 
-const player2Name = 'Player 2';
+const player1Name = 'P1';
+
+const player2Name = 'P2';
 
 const track_friction = 0.05; // Smaller number means more slippery surface
 

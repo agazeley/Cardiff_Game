@@ -289,6 +289,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           p1NameInput.setAttribute('class', 'form-control');
           p1NameInput.setAttribute('id', 'player1NameField');
           p1NameInput.setAttribute('value', overdrive.settings.players[0].name);
+          p1NameInput.setAttribute('maxLength',player_name_max_length);
 
           p1NameFieldDiv.appendChild(p1NameInput);
 
@@ -365,6 +366,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           fkInput.setAttribute('class', 'form-control');
           fkInput.setAttribute('id', 'p1AccelKeyField');
           fkInput.setAttribute('value', overdrive.settings.players[0].keys.forward);
+          fkInput.setAttribute('maxLength','1');
 
           fkFieldDiv.appendChild(fkInput);
 
@@ -386,6 +388,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           bkInput.setAttribute('class', 'form-control');
           bkInput.setAttribute('id', 'p1BrakeKeyField');
           bkInput.setAttribute('value', overdrive.settings.players[0].keys.reverse);
+          bkInput.setAttribute('maxLength','1');
 
           bkFieldDiv.appendChild(bkInput);
 
@@ -407,6 +410,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           lInput.setAttribute('class', 'form-control');
           lInput.setAttribute('id', 'p1LeftKeyField');
           lInput.setAttribute('value', overdrive.settings.players[0].keys.left);
+          lInput.setAttribute('maxLength','1');
 
           lFieldDiv.appendChild(lInput);
 
@@ -428,6 +432,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           rInput.setAttribute('class', 'form-control');
           rInput.setAttribute('id', 'p1RightKeyField');
           rInput.setAttribute('value', overdrive.settings.players[0].keys.right);
+          rInput.setAttribute('maxLength','1');
 
           rFieldDiv.appendChild(rInput);
 
@@ -474,6 +479,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           p2NameInput.setAttribute('class', 'form-control');
           p2NameInput.setAttribute('id', 'player2NameField');
           p2NameInput.setAttribute('value', overdrive.settings.players[1].name);
+          p2NameInput.setAttribute('maxLength',player_name_max_length);
 
           p2NameFieldDiv.appendChild(p2NameInput);
 
@@ -550,6 +556,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           fkInput.setAttribute('class', 'form-control');
           fkInput.setAttribute('id', 'p2AccelKeyField');
           fkInput.setAttribute('value', overdrive.settings.players[1].keys.forward);
+          fkInput.setAttribute('maxLength','1');
 
           fkFieldDiv.appendChild(fkInput);
 
@@ -571,6 +578,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           bkInput.setAttribute('class', 'form-control');
           bkInput.setAttribute('id', 'p2BrakeKeyField');
           bkInput.setAttribute('value', overdrive.settings.players[1].keys.reverse);
+          bkInput.setAttribute('maxLength','1');
 
           bkFieldDiv.appendChild(bkInput);
 
@@ -592,6 +600,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           lInput.setAttribute('class', 'form-control');
           lInput.setAttribute('id', 'p2LeftKeyField');
           lInput.setAttribute('value', overdrive.settings.players[1].keys.left);
+          lInput.setAttribute('maxLength','1');
 
           lFieldDiv.appendChild(lInput);
 
@@ -613,6 +622,7 @@ OverDrive.Stages.Config = (function(stage, canvas, context) {
           rInput.setAttribute('class', 'form-control');
           rInput.setAttribute('id', 'p2RightKeyField');
           rInput.setAttribute('value', overdrive.settings.players[1].keys.right);
+          rInput.setAttribute('maxLength','1');
 
           rFieldDiv.appendChild(rInput);
 
